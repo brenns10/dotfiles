@@ -1,0 +1,54 @@
+# -*- mode: conf; -*-
+
+#-------------------------------------------------------------------------------
+#
+# File:         ~/.hgrc
+#
+# Author:       Stephen Brennan
+#
+# Date Created: Friday,  1 August 2014
+#
+# Description:  Mercurial configuration file.
+#
+#-------------------------------------------------------------------------------
+
+[ui]
+username = Stephen Brennan <stephen.brennan@case.edu>
+editor = emacs -nw
+merge=meld
+
+[extensions]
+# HGK is a graphical viewer.  Shows the repository history if you do "hg view".
+hgk =
+
+# Progress is a progress bar extension, so HG will show progress bars on jobs.
+progress =
+
+# Color?
+color =
+
+# Graphlog does a graph style log
+graphlog =
+
+pager =
+
+# HG-GIT!!
+hgext.bookmarks =
+hggit =
+
+[diff]
+# Use Git style diffs
+git = True
+
+[alias]
+nlog = log --style=/home/stephen/repos/mercurial-cli-templates/map-cmdline.nlog
+slog = log --template '{rev} {node|short} | {date|isodatesec} | {author|user}: {desc|strip|firstline}\n'
+rv = revert --no-backup
+cm = commit -m
+
+[pager]
+pager = LESS='FRX' less -rd
+attend = diff, status, log, nlog, slog, diff, glog, summary
+
+[merge-tools]
+meld.args = $local $base $other -o $output
