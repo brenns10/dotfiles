@@ -1,0 +1,49 @@
+Host hp
+     HostName stephen-hp.student.cwru.edu
+     Port 2222
+     User stephen
+
+Host acm
+     HostName people.acm.case.edu
+     Port 22
+     User stephen
+
+Host sdf
+     HostName tty.sdf.org
+     Port 22
+     User brenns10
+
+Host jennings
+     HostName eecslinab4.eecs.case.edu
+     Port 22
+     User smb196
+
+Host koding
+     User brenns10
+     HostName vm-0.brenns10.koding.kd.io
+     ProxyCommand ssh %r@ssh.koding.com nc %h %p
+
+Host phc
+     HostName penthousecult.case.edu
+     Port 22
+     User smb196
+
+Host schmosby
+     HostName schmosby.case.edu
+     Port 2222
+     User stephen
+
+Host hkn
+     HostName hkn.case.edu
+     Port 22
+     User stephen
+
+Host singularity
+     HostName singularity.case.edu
+     Port 22
+     User sbrennan
+
+Host schmosbyhome
+     HostName 192.168.0.196
+     Port 2222
+     User stephen
