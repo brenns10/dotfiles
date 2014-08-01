@@ -26,6 +26,7 @@
 ;; - tabbar-mode
 ;; - dired+
 ;; - projectile
+;; - ecb
 ;; - yasnippet
 ;; - auto-complete
 ;; - CEDET (specifically, Semantic)
