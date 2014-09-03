@@ -23,6 +23,9 @@ alias la='ls -a'
 alias ll='ls -l'
 alias lla='ls -la'
 alias cls='clear'
+alias x='xclip -selection c -i'
+alias c='xclip -selection c -i -f'
+alias v='xclip -selection c -o'
 
 # Function definitions
 bitb() {
