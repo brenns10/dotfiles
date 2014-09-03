@@ -1,12 +1,7 @@
-Host hp
-     HostName stephen-hp.student.cwru.edu
-     Port 2222
-     User stephen
-
 Host acm
-     HostName people.acm.case.edu
+     HostName acm-people.case.edu
      Port 22
-     User stephen
+     User smb196
 
 Host sdf
      HostName tty.sdf.org
@@ -29,8 +24,8 @@ Host phc
      User smb196
 
 Host schmosby
-     HostName schmosby.case.edu
-     Port 2222
+     HostName penthousecult.noip.me
+     Port 2223
      User stephen
 
 Host hkn
@@ -42,8 +37,3 @@ Host singularity
      HostName singularity.case.edu
      Port 22
      User sbrennan
-
-Host schmosbyhome
-     HostName 192.168.0.196
-     Port 2222
-     User stephen
