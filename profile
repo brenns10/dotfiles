@@ -19,6 +19,7 @@ export EDITOR=emacs
 export BROWSER=chromium
 export PAGER=less
 export XCURSOR_THEME=whiteglass
+export PYTHONPATH=$PYTHONPATH:/home/stephen/repos/tcga
 
 # Add my SSH key to the keychain
 eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
