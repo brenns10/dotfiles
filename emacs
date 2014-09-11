@@ -17,28 +17,30 @@
 ;;             complete, and yasnippet to best work together.
 ;; 2014-07-29  Switched to whitespace-mode from highlight-chars.  Added
 ;;             Projectile, added some neat shortcuts to Semantic features.
+;; 2014-09-
 ;;
 ;; LIST OF INSTALLED PACKAGES (MELPA OR OTHERWISE)
 ;; -----------------------------------------------
 ;;
-;; - solarized dark theme
-;; - whitespace-mode
-;; - tabbar-mode
-;; - dired+
-;; - projectile
-;; - ecb
-;; - yasnippet
-;; - auto-complete
-;; - CEDET (specifically, Semantic)
-;; - nimrod-mode
-;; - jinja2-mode
-;; - markdown-mode
-;; - haskell-mode
+;; - solarized dark theme:
+;;   $ git clone https://github.com/sellout/emacs-color-theme-solarized
+;; - MELPA--Core Packages:
+;;   - tabbar
+;;   - dired+
+;;   - projectile
+;;   - ecb
+;;   - yasnippet
+;;   - auto-complete
+;; - MELPA--Optional Language Support
+;;   - nimrod-mode
+;;   - jinja2-mode
+;;   - markdown-mode
+;;   - haskell-mode
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; MELPA PACKAGES
+;; MELPA SUPPORT
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (when (>= emacs-major-version 24)
@@ -51,19 +53,16 @@
 ;; EDITOR SETTINGS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Parapraph Reflowing
+;; Parapraph Reflowing - 80 characters
 (setq-default fill-column 80)
 
 ;; Solarized Theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-color-theme-solarized")
 (load-theme 'solarized-dark t)
 
-;; ONLY use spaces to indent things.  I like using spaces, but more importantly
-;; is that I use consistency.  I think that emaacs shouldn't define TAB=8 spaces
-;; and then when I indent by 10 spaces, do a tab and 2 spaces.  Use tabs or use
-;; spaces, but use them consistently.
+;; ONLY use spaces to indent things.
 (setq-default indent-tabs-mode nil)
-;; Display tabs as 4 spaces
+;; Display tabs as 4 spaces.
 (setq tab-width 4)
 
 ;; Whitespace mode -- highlight trailing whitespace, tabs, and parts of lines
@@ -75,23 +74,25 @@
 ;; Line numbering on every buffer!!
 (global-linum-mode t)
 
-;; Auto insert brackets and parens...
+;; Auto insert brackets and parens.  This got pretty annoying pretty quick.
 ;;(electric-pair-mode 1)
 
-;; Highlight matching parenthesis
+;; Highlight matching parenthesis.
 (show-paren-mode 1) ; turn on the match highlighting
 (setq show-paren-style 'expression) ; highlight the whole bracketed expression
 
 ;; Make backups in central dir, not the same one as the original.
 (setq backup-directory-alist `(("." . "~/.emacs.d/emacs-backup")))
 
-;; Always highlight the current line
-(global-hl-line-mode 1)
+;; Highlight the current line when running in X.  Don't highlight when running
+;; in terminal, because it makes the current line invisible.
+(when (display-graphic-p)
+  (global-hl-line-mode 1))
 
 ;; Show a buffer tab bar!  Requires tabbar package.
 (tabbar-mode)
 
-;; Force dired to use the same buffer for directories.  Requires dired+.el.
+;; Force dired to use the same buffer for directories.  Requires dired+ package.
 (toggle-diredp-find-file-reuse-dir 1)
 
 ;; I don't want a toolbar or scrollbars.  The menu bar can stay for now.
@@ -109,20 +110,15 @@
 
 ;; Yasnippet load must be before Auto Complete load.
 
-(add-to-list 'load-path
-              "~/.emacs.d/yasnippet")
 (require 'yasnippet)
+(setq yas-snippet-dirs (list "~/.snippets" yas-installed-snippets-dir))
 (yas-global-mode 1)
-
-;; may remove this later
-;;(setq ac-source-yasnippet nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Auto Complete
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Enable Auto Complete
-(add-to-list 'load-path "~/.emacs.d/auto-complete")
 (require 'auto-complete)
 (global-auto-complete-mode t)
 
@@ -146,13 +142,6 @@
 
 ;; And, this is the trigger key for outside of ac-completing mode.
 (ac-set-trigger-key "TAB")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; CompletionUI (disabled)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;(add-to-list 'load-path "~/.emacs.d/completion-ui")
-;;(require 'completion-ui)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CEDET STUFF
@@ -188,10 +177,7 @@
 (require 'semantic/ia)
 (require 'semantic/bovine/gcc)
 (semantic-mode 1)
-
-;; Add project roots
-(add-to-list 'semanticdb-project-roots "~/repos/libstephen")
-(add-to-list 'semanticdb-project-roots "~/repos/cky")
+(global-ede-mode 1)
 
 ;; Set the order semantic looks
 (setq-mode-local cpp-mode semanticdb-find-default-throttle
@@ -203,6 +189,20 @@
 (defun my-semantic-hook ()
   (imenu-add-to-menubar "TAGS"))
 (add-hook 'semantic-init-hooks 'my-semantic-hook)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; PROJECTS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(ede-cpp-root-project "libstephen"
+  :file "~/repos/libstephen/Makefile"
+  :include-path '( "/src" "/inc" )
+)
+
+(ede-cpp-root-project "cky"
+  :file "~/repos/cky/Makefile"
+  :include-path '( "/src" "/libstephen/inc" )
+)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MODE HOOKS
@@ -234,32 +234,33 @@
   (flymake-mode)
 )
 
-;; Insertions
+(defun my-doc-view-mode-hook ()
+  ;; Try to make reloading the doc-view buffer as painless as possible.
+  (flymake-mode)
+  (auto-revert-mode)
+)
 
+;; Insertions
 (add-hook 'c-mode-common-hook 'my-c-mode-hook)
 (add-hook 'cpp-mode-common-hook 'my-cpp-mode-hook)
 (add-hook 'python-mode-hook 'my-python-mode-hook)
 (add-hook 'vc-dir-mode-hook 'my-vc-dir-mode-hook)
+(add-hook 'doc-view-mode-hook 'my-doc-view-mode-hook)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ADDITIONAL MAJOR MODES
+;; ADDITIONAL MAJOR MODES (OPTIONAL)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Nimrod mode: for nimrod programming language.
-(add-to-list 'load-path "~/.emacs.d/nimrod-mode")
 (require 'nimrod-mode)
 
 ;; CSharp Mode: for C#
-(add-to-list 'load-path "~/.emacs.d/csharp-mode")
 (require 'csharp-mode)
 
 ;; Jinja2 Mode: for Flask/Jinja2 HTML templates
-(add-to-list 'load-path "~/.emacs.d/jinja2")
 (require 'jinja2-mode)
 
 ;; Markdown Mode
-(add-to-list 'load-path
-             "~/.emacs.d/markdown-mode")
 (autoload 'markdown-mode "markdown-mode"
   "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
