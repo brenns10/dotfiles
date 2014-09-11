@@ -37,3 +37,8 @@ Host singularity
      HostName singularity.case.edu
      Port 22
      User sbrennan
+
+Host optiplex
+     HostName samadhi.eecs.cwru.edu
+     Port 22
+     User stephen
