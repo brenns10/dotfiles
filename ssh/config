@@ -40,5 +40,5 @@ Host singularity
 
 Host optiplex
      HostName samadhi.eecs.cwru.edu
-     Port 22
+     Port 2222
      User stephen
