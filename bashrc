@@ -37,6 +37,9 @@ bitb() {
 # Bash prompt
 PS1='[\u@\h \W]\$ '
 
+# Command not found
+[ -r /etc/profile.d/cnf.sh ] && . /etc/profile.d/cnf.sh
+
 # Arch logo and info
 archey
 
