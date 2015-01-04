@@ -14,15 +14,12 @@
 #zenity --warning --text="Running .profile"
 #echo "Running .profile"
 
-export PATH=$PATH:/home/stephen/.gem/ruby/2.1.0/bin:/home/stephen/code
+export PATH=$PATH:/home/stephen/.gem/ruby/2.1.0/bin:/home/stephen/bin
 export EDITOR=emacs
 export BROWSER=chromium
 export PAGER=less
-export XCURSOR_THEME=whiteglass
 export PYTHONPATH=$PYTHONPATH:/home/stephen/repos/tcga
-
-# Add my SSH key to the keychain
-eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
+export _JAVA_OPTIONS='-Dawn.useSystemAAFontSettings=setting'
 
 # Run my .bashrc only if this is an interactive login shell.  Do not run it when
 # this is a graphical login.
