@@ -14,11 +14,11 @@
 #zenity --warning --text="Running .profile"
 #echo "Running .profile"
 
-export PATH=$PATH:/home/stephen/.gem/ruby/2.1.0/bin:/home/stephen/bin
+export PATH=$PATH:/home/stephen/.gem/ruby/2.2.0/bin:/home/stephen/bin
 export EDITOR=emacs
-export BROWSER=chromium
+export BROWSER=firefox
 export PAGER=less
-export PYTHONPATH=$PYTHONPATH:/home/stephen/repos/tcga
+export PYTHONPATH=$PYTHONPATH:/home/stephen/repos/tcga:/home/stephen/repos/notifyme
 export _JAVA_OPTIONS='-Dawn.useSystemAAFontSettings=setting'
 
 # Run my .bashrc only if this is an interactive login shell.  Do not run it when
