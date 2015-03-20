@@ -41,7 +41,7 @@ PS1='[\u@\h \W]\$ '
 [ -r /etc/profile.d/cnf.sh ] && . /etc/profile.d/cnf.sh
 
 # Arch logo and info
-archey
+archey3
 
 # Random command of the day
 echo "Your random command for the day:"
