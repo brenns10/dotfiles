@@ -42,3 +42,8 @@ Host optiplex
      HostName samadhi.eecs.cwru.edu
      Port 2222
      User stephen
+
+Host serenity
+     HostName penthousecult.noip.me
+     Port 2222
+     User stephen
