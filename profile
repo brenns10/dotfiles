@@ -23,6 +23,6 @@ export _JAVA_OPTIONS='-Dawn.useSystemAAFontSettings=setting'
 export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
 
 if [ -z "$SSH_AGENT_PID" ]; then
-	eval `ssh-agent`
+	eval `ssh-agent` &> /dev/null
 fi
 ssh-add

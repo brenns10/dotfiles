@@ -15,6 +15,7 @@ link .bashrc bashrc
 link .hgrc hgrc
 link .profile profile
 link .xprofile profile
+link .zprofile zprofile
 link .ssh/config ssh/config
 link .ssh/authorized_keys ssh/authorized_keys
 link .zshrc zshrc
