@@ -20,9 +20,14 @@ export BROWSER=firefox
 export PAGER=less
 export PYTHONPATH=$PYTHONPATH:/home/stephen/repos/tcga:/home/stephen/repos/notifyme
 export _JAVA_OPTIONS='-Dawn.useSystemAAFontSettings=setting'
+export SSH_AUTH_SOCK="/home/stephen/ssh-agent.socket"
 export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
 
-if [ -z "$SSH_AGENT_PID" ]; then
-	eval `ssh-agent` &> /dev/null
-fi
-ssh-add
+if [ ! -a "$SSH_AUTH_SOCK" ]; then
+   ssh-agent -a "$SSH_AUTH_SOCK"
+fi &> /dev/null
+
+if not ssh-add -l; then
+   ssh-add
+fi &> /dev/null
+
