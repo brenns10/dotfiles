@@ -20,7 +20,7 @@ export BROWSER=firefox
 export PAGER=less
 export PYTHONPATH=$PYTHONPATH:/home/stephen/repos/tcga:/home/stephen/repos/notifyme
 export _JAVA_OPTIONS='-Dawn.useSystemAAFontSettings=setting'
-export SSH_AUTH_SOCK="/home/stephen/ssh-agent.socket"
+export SSH_AUTH_SOCK="/home/stephen/ssh-agent.sock"
 export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
 
 if [ ! -a "$SSH_AUTH_SOCK" ]; then
