@@ -20,7 +20,9 @@ export BROWSER=firefox
 export PAGER=less
 export PYTHONPATH=$PYTHONPATH:/home/stephen/repos/tcga:/home/stephen/repos/notifyme
 export _JAVA_OPTIONS='-Dawn.useSystemAAFontSettings=setting'
+export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
 
-# Run my .bashrc only if this is an interactive login shell.  Do not run it when
-# this is a graphical login.
-case "$-" in *i*) if [ -r ~/.bashrc ]; then . ~/.bashrc; fi;; esac
+if [ -z "$SSH_AGENT_PID" ]; then
+	eval `ssh-agent`
+fi
+ssh-add
