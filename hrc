@@ -1,0 +1,8 @@
+diff --git a/zprofile b/zprofile
+index d470de4..648052f 100644
+--- a/zprofile
++++ b/zprofile
+@@ -1,2 +1,2 @@
+-emulate sh -c '. ~/.profile'
++emulate bash -c '. ~/.profile'
+ 
