@@ -79,6 +79,7 @@ alias cls='clear'
 alias x='xclip -selection c -i'
 alias c='xclip -selection c -i -f'
 alias v='xclip -selection c -o'
+alias fuck='$(thefuck $(fc -ln -1))'
 
 # Command not found
 [ -r /etc/profile.d/cnf.sh ] && . /etc/profile.d/cnf.sh
