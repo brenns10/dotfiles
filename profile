@@ -14,9 +14,9 @@
 #zenity --warning --text="Running .profile"
 #echo "Running .profile"
 
-export PATH=$PATH:/home/stephen/.gem/ruby/2.2.0/bin:/home/stephen/bin
-export EDITOR=emacs
-export BROWSER=firefox
+export PATH=$PATH:/home/stephen/bin
+export EDITOR=nano
+#export BROWSER=firefox
 export PAGER=less
 export PYTHONPATH=$PYTHONPATH:/home/stephen/repos/tcga:/home/stephen/repos/notifyme
 export _JAVA_OPTIONS='-Dawn.useSystemAAFontSettings=setting'
@@ -30,4 +30,3 @@ fi &> /dev/null
 if not ssh-add -l; then
    ssh-add
 fi &> /dev/null
-
