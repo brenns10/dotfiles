@@ -18,7 +18,7 @@ export PATH=$PATH:/home/stephen/.gem/ruby/2.2.0/bin:/home/stephen/bin
 export EDITOR=emacs
 export BROWSER=firefox
 export PAGER=less
-export PYTHONPATH=$PYTHONPATH:/home/stephen/repos/tcga
+export PYTHONPATH=$PYTHONPATH:/home/stephen/repos/tcga:/home/stephen/repos/smbio
 export _JAVA_OPTIONS='-Dawn.useSystemAAFontSettings=setting'
 export SSH_AUTH_SOCK="/home/stephen/ssh-agent.sock"
 export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
