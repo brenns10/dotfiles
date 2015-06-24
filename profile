@@ -18,15 +18,18 @@ export PATH=$PATH:/home/stephen/bin
 export EDITOR=nano
 #export BROWSER=firefox
 export PAGER=less
-export PYTHONPATH=$PYTHONPATH:/home/stephen/repos/tcga:/home/stephen/repos/notifyme
+export PYTHONPATH=$PYTHONPATH:/home/stephen/repos/tcga:/home/stephen/repos/smbio
 export _JAVA_OPTIONS='-Dawn.useSystemAAFontSettings=setting'
 export SSH_AUTH_SOCK="/home/stephen/ssh-agent.sock"
 export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
 
-if [ ! -a "$SSH_AUTH_SOCK" ]; then
-   ssh-agent -a "$SSH_AUTH_SOCK"
-fi &> /dev/null
-
-if not ssh-add -l; then
-   ssh-add
-fi &> /dev/null
+# Run SSH-Agent command for its status code.
+ssh-add -l &> /dev/null
+RESULT=$?
+if [ "$RESULT" -eq 2 ]; then
+    rm "$SSH_AUTH_SOCK"
+    ssh-agent -a "$SSH_AUTH_SOCK"
+    ssh-add
+elif [ "$RESULT" -eq 1 ]; then
+    ssh-add
+fi
