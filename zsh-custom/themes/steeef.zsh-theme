@@ -36,6 +36,12 @@ else
     red="$fg[red]"
 fi
 
+if [[ -n "$SSH_CLIENT"  ||  -n "$SSH2_CLIENT" ]]; then
+  host="%U$orange" # underlined during ssh connection
+else
+  host="$orange"
+fi
+
 # enable VCS systems you use
 zstyle ':vcs_info:*' enable git svn
 
@@ -98,5 +104,5 @@ function steeef_precmd {
 add-zsh-hook precmd steeef_precmd
 
 PROMPT=$'
-%{$purple%}%n%{$reset_color%} at %{$orange%}%m%{$reset_color%} in %{$limegreen%}%~%{$reset_color%} $vcs_info_msg_0_$(virtualenv_info)%{$reset_color%}%(?..(%{$red%}%?⏎%{$reset_color%}%) )
+%{$purple%}%n%{$reset_color%} at %{$host%}%m%{$reset_color%} in %{$limegreen%}%~%{$reset_color%} $vcs_info_msg_0_$(virtualenv_info)%{$reset_color%}%(?..(%{$red%}%?⏎%{$reset_color%}%) )
 $ '
