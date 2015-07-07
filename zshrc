@@ -86,3 +86,6 @@ alias fuck='eval $(thefuck $(fc -ln -1 | tail -n 1)); fc -R'
 
 # Arch logo and info
 archey3
+
+# Display Tmux info
+tmux ls
