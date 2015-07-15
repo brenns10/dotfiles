@@ -15,7 +15,9 @@
 #echo "Running .profile"
 
 export PATH=$PATH:/home/stephen/.gem/ruby/2.2.0/bin:/home/stephen/bin
-export EDITOR=emacs
+export EDITOR="emacsclient -t"
+export VISUAL="emacsclient -c"
+export ALTERNATE_EDITOR=""
 export BROWSER=firefox
 export PAGER=less
 export PYTHONPATH=$PYTHONPATH:/home/stephen/repos/tcga:/home/stephen/repos/smbio
