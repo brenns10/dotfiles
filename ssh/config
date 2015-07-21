@@ -23,7 +23,7 @@ Host hkn
 # Personal Computers
 
 Host schmosby
-     HostName penthousecult.noip.me
+     HostName home.brenns10.com
      Port 2223
      User stephen
 
@@ -38,6 +38,6 @@ Host gluttony
      User stephen
 
 Host greed
-     HostName penthousecult.noip.me
+     HostName home.brenns10.com
      Port 2222
      User stephen
