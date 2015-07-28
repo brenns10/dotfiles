@@ -1,0 +1,15 @@
+[push]
+	default = simple
+[user]
+	email = smb196@case.edu
+	name = Stephen Brennan
+[core]
+	autocrlf = input
+[alias]
+	st = status
+	ci = commit
+	cm = commit -m
+	com = commit
+	df = diff
+	co = checkout
+	cb = checkout -b

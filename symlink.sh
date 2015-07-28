@@ -19,3 +19,4 @@ link .zprofile zprofile
 link .ssh/config ssh/config
 link .ssh/authorized_keys ssh/authorized_keys
 link .zshrc zshrc
+link .gitconfig gitconfig
