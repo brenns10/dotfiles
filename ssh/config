@@ -33,7 +33,7 @@ Host singularity
      User sbrennan
 
 Host gluttony
-     HostName samadhi.eecs.cwru.edu
+     HostName gluttony.case.edu
      Port 2222
      User stephen
 
