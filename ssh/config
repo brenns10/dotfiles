@@ -32,6 +32,11 @@ Host singularity
      Port 22
      User sbrennan
 
+Host intractable
+     HostName intractable.case.edu
+     Port 22
+     User sbrennan
+
 Host gluttony
      HostName gluttony.case.edu
      Port 2222
