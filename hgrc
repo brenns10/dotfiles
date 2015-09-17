@@ -32,10 +32,6 @@ graphlog =
 
 pager =
 
-# HG-GIT!!
-hgext.bookmarks =
-hggit =
-
 [diff]
 # Use Git style diffs
 git = True
