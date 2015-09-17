@@ -14,7 +14,7 @@
 #zenity --warning --text="Running .profile"
 #echo "Running .profile"
 
-export PATH=$PATH:/home/stephen/.gem/ruby/2.2.0/bin:/home/stephen/bin
+export PATH=$PATH:/home/stephen/.gem/ruby/2.2.0/bin:/home/stephen/bin:/home/stephen/.local/bin
 export EDITOR="emacsclient -t"
 export VISUAL="emacsclient -c"
 export ALTERNATE_EDITOR=""
@@ -23,7 +23,7 @@ export PAGER=less
 export PYTHONPATH=$PYTHONPATH:/home/stephen/repos/tcga:/home/stephen/repos/smbio
 export _JAVA_OPTIONS='-Dawn.useSystemAAFontSettings=setting'
 export SSH_AUTH_SOCK="/home/stephen/ssh-agent.sock"
-export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
+export SSH_ASKPASS=/usr/bin/ksshaskpass
 
 # Run SSH-Agent command for its status code.
 ssh-add -l &> /dev/null
