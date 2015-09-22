@@ -70,6 +70,11 @@ source $ZSH/oh-my-zsh.sh
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
+# This prevents the control sequences ^[[2004h in Emacs shell.
+if [ -n "$INSIDE_EMACS" ]; then
+    unset zle_bracketed_paste  # This line
+fi
+
 # Alias definitions
 alias ls='ls --color=auto'
 alias la='ls -a'
