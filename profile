@@ -17,6 +17,7 @@
 export PATH=$PATH:/home/stephen/.gem/ruby/2.2.0/bin:/home/stephen/bin:/home/stephen/.local/bin
 export EDITOR="emacsclient -t"
 export VISUAL="emacsclient -c"
+export SUDO_EDITOR="emacsclient -t"
 export ALTERNATE_EDITOR=""
 export BROWSER=firefox
 export PAGER=less

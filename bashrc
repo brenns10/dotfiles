@@ -27,6 +27,7 @@ alias x='xclip -selection c -i'
 alias c='xclip -selection c -i -f'
 alias v='xclip -selection c -o'
 alias xbox='sudo xboxdrv -d -s'
+alias se=sudoedit
 
 # Function definitions
 bitb() {
