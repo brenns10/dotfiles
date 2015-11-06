@@ -20,6 +20,11 @@ Host hkn
      Port 22
      User stephen
 
+Host gh
+     HostName github.com
+     Port 22
+     User git
+
 # Personal Computers
 
 Host schmosby
