@@ -20,7 +20,7 @@ merge=meld
 [extensions]
 # HGK is a graphical viewer.  Shows the repository history if you do "hg view".
 hgk =
-
+hggit =
 # Progress is a progress bar extension, so HG will show progress bars on jobs.
 progress =
 
