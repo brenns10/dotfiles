@@ -13,3 +13,5 @@
 	df = diff
 	co = checkout
 	cb = checkout -b
+[color]
+	ui = auto
