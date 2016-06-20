@@ -1,0 +1,6 @@
+#key: ifm
+#name: If name is main.
+#contributor: brenns10 <brenns10@gmail.com>
+# --
+if __name__ == '__main__':
+    $0

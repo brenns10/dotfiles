@@ -1,0 +1,7 @@
+#key: testadd
+#name: Libstephen add test to group.
+#contributor: Stephen Brennan <stephen.brennan@case.edu>
+#expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# --
+smb_ut_test *$1 = su_create_test("$1", $2$1);
+su_add_test(group, $1);$0

@@ -1,0 +1,21 @@
+#key: homework
+#name: Homework template.
+#contributor: Stephen Brennan <stephen.brennan@case.edu>
+#expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# --
+\documentclass[fleqn]{homework}
+
+\student{Stephen Brennan (smb196)}
+\course{$1}
+\assignment{$2}
+\duedate{$3}
+
+%\usepackage{mathtools}
+%\usepackage{graphicx}
+
+\begin{document}
+  \maketitle
+
+  $0
+
+\end{document}

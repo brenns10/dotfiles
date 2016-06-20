@@ -1,0 +1,17 @@
+#key: header
+#name: Common file header for Python code files.
+#contributor: brenns10 <brenns10@gmail.com>
+# --
+#-------------------------------------------------------------------------------
+#
+# File:         `(file-name-nondirectory buffer-file-name)`
+#
+# Author:       Stephen Brennan
+#
+# Date Created: `(format-time-string "%A, %e %B %Y")`
+#
+# Description:  $1
+#
+#-------------------------------------------------------------------------------
+
+$0

@@ -1,0 +1,21 @@
+#key: math201
+#name: MATH 201 Homework Template
+#contributor: Stephen Brennan <stephen.brennan@case.edu>
+#expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# --
+\documentclass[fleqn]{homework}
+
+\student{Stephen Brennan (smb196)}
+\course{MATH 201}
+\assignment{Homework $1}
+\duedate{$2}
+
+\input{../math201.tex}
+%\usepackage{graphicx}
+
+\begin{document}
+  \maketitle
+
+  $0
+
+\end{document}

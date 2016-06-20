@@ -1,0 +1,29 @@
+#key: presentation
+#name: Beamer presentation template.
+#contributor: Stephen Brennan <stephen.brennan@case.edu>
+#expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# --
+\documentclass{beamer}
+\usetheme{CWRU}
+
+\title{$1}
+%\subtitle{Subtitle}
+\author{Stephen Brennan}
+\institute[CWRU]{
+  Case Western Reserve University\\\\
+  Department of Electrical Engineering \& Computer Science
+}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section{Introduction}
+
+\begin{frame}
+  \frametitle{$2}
+
+  $0
+\end{frame}
+
+\end{document}

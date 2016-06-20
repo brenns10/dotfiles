@@ -1,0 +1,14 @@
+#key: testgrp
+#name: Libstephen test group function.
+#contributor: Stephen Brennan <stephen.brennan@case.edu>
+#expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# --
+void $1_test(void)
+{
+  smb_ut_group *group = su_create_test_group("$1");
+
+  $0
+
+  su_run_group(group);
+  su_delete_group(group);
+}

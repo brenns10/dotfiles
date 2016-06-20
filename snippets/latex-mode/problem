@@ -1,0 +1,10 @@
+#key: problem
+#name: Homework problem.
+#contributor: Stephen Brennan <stephen.brennan@case.edu>
+#expand-env: ((yas-indent-line 'auto) (yas-wrap-around-region 't))
+# --
+\begin{problem}{$1}
+  \begin{question}
+    $0
+  \end{question}
+\end{problem}

@@ -1,0 +1,8 @@
+#key: begin
+#name: Begin LaTeX environment.
+#contributor: Stephen Brennan <stephen.brennan@case.edu>
+#expand-env: ((yas-indent-line 'auto) (yas-wrap-around-region 't))
+# --
+\begin{$1}
+  $0
+\end{$1}

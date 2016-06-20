@@ -1,0 +1,21 @@
+#key: bsdheader
+#name: Common file header for code files, with BSD license.
+#contributor: Stephen Brennan <stephen.brennan@case.edu>
+#expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# --
+/***************************************************************************//**
+
+  @file         `(file-name-nondirectory buffer-file-name)`
+
+  @author       Stephen Brennan
+
+  @date         Created `(format-time-string "%A, %e %B %Y")`
+
+  @brief        $1
+
+  @copyright    Copyright (c) `(format-time-string "%Y")`, Stephen Brennan.  Released under the Revised
+                BSD License.  See LICENSE.txt for details.
+
+*******************************************************************************/
+
+$0

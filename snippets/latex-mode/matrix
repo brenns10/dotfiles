@@ -1,0 +1,6 @@
+#key: matrix
+#name: Math mode matrix.
+#contributor: Stephen Brennan <stephen.brennan@case.edu>
+#expand-env: ((yas-indent-line 'auto) (yas-wrap-around-region 't))
+# --
+\begin{bmatrix*} $0 \end{bmatrix*}

@@ -1,0 +1,6 @@
+#key: rmatrix
+#name: Right aligned math mode matrix
+#contributor: Stephen Brennan <stephen.brennan@case.edu>
+#expand-env: ((yas-indent-line 'auto) (yas-wrap-around-region 't))
+# --
+\begin{bmatrix*}[r] $0 \end{bmatrix*}

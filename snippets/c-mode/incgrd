@@ -1,0 +1,11 @@
+#key: incgrd
+#name: Include guard for headers.
+#contributor: Stephen Brennan <stephen.brennan@case.edu>
+#expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# --
+#ifndef $1
+#define $1
+
+$0
+
+#endif // $1

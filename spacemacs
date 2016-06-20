@@ -223,7 +223,7 @@ values."
    dotspacemacs-highlight-delimiters 'all
    ;; If non nil advises quit functions to keep server open when quitting.
    ;; (default nil)
-   dotspacemacs-persistent-server nil
+   dotspacemacs-persistent-server t
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
    ;; (default '("ag" "pt" "ack" "grep"))
@@ -264,7 +264,6 @@ you should place your code here."
   (add-hook 'c-mode-hook 'fci-mode)
   (add-hook 'python-mode-hook 'fci-mode)
   (add-hook 'markdown-mode-hook 'fci-mode)
-  (add-hook 'lisp-mode-hook 'fci-mode)
 
   ;; Recognize UTF-8 as utf-8
   (define-coding-system-alias 'UTF-8 'utf-8)
@@ -296,7 +295,7 @@ you should place your code here."
   ;; store email in ~/gmail directory
   (setq nnml-directory "~/gmail")
   (setq message-directory "~/gmail")
-
+  ;; Store user info
   (setq user-full-name "Stephen Brennan"
         user-mail-address "brenns10@gmail.com")
   ;; Pretty inbox.
@@ -343,7 +342,6 @@ you should place your code here."
   (add-hook 'kill-emacs-hook (lambda ()
                                (when (boundp 'gnus-group-exit)
                                  (gnus-group-exit))))
-
   (setq gnus-use-full-window nil)
   ;; A function that will switch window and close it.
   (defun stemacs-switch-close ()

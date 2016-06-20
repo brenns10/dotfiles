@@ -1,0 +1,18 @@
+#key: header
+#name: Common file header for code files
+#contributor: Stephen Brennan <stephen.brennan@case.edu>
+#expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# --
+/***************************************************************************//**
+
+  @file         `(file-name-nondirectory buffer-file-name)`
+
+  @author       Stephen Brennan
+
+  @date         `(format-time-string "%A, %e %B %Y")`
+
+  @brief        $1
+
+*******************************************************************************/
+
+$0

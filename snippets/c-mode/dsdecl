@@ -1,0 +1,9 @@
+#key: dsdecl
+#name: Libstephen data structure declarations, with params.
+#contributor: Stephen Brennan <stephen.brennan@case.edu>
+#expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# --
+void $1_init($2 *obj, $3);
+$2 *$1_create($3);
+void $1_destroy($2 *obj);
+void $1_delete($2 *obj);

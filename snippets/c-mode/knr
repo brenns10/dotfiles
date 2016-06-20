@@ -1,0 +1,20 @@
+#key: knr
+#name: Header for KNR C book exercises.
+#contributor: brenns10 <brenns10@hotmail.com>
+#expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# --
+/*******************************************************************************
+
+  File:         `(file-name-nondirectory buffer-file-name)`
+
+  Author:       Stephen Brennan
+
+  Date Created: `(format-time-string "%A, %e %B %Y")`
+
+  Exercise:     KNR `(file-name-base buffer-file-name)`
+
+  Description:  $1
+
+*******************************************************************************/
+
+$0

@@ -1,0 +1,27 @@
+#key: dsfuncnoparam
+#name: Libstephen data structure functions, no params.
+#contributor: Stephen Brennan <stephen.brennan@case.edu>
+#expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# --
+void $1_init($2 *obj)
+{
+  // Initialization logic
+  $0
+}
+
+$2 *$1_create(void)
+{
+  $2 *obj = smb_new($2, 1);
+  $1_init(obj);
+  return obj;
+}
+
+void $1_destroy($2 *obj)
+{
+  // Cleanup logic
+}
+
+void $1_delete($2 *obj) {
+  $1_destroy(obj);
+  smb_free(obj);
+}

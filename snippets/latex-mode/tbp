@@ -1,0 +1,6 @@
+#key: tbp
+#name: Text bold parens
+#contributor: Stephen Brennan <stephen.brennan@case.edu>
+#expand-env: ((yas-indent-line 'auto) (yas-wrap-around-region 't))
+# --
+\textbf{($1)} $0
