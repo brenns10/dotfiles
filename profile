@@ -10,30 +10,25 @@
 #
 #-------------------------------------------------------------------------------
 
-## Print a notification when this file runs.
-#zenity --warning --text="Running .profile"
-#echo "Running .profile"
-
-export PATH=$PATH:/home/stephen/.gem/ruby/2.2.0/bin:/home/stephen/bin:/home/stephen/.local/bin
+# Variables
+export PATH=$HOME/bin:$HOME/.local/bin:$HOME/.rvm/bin:$PATH
 export EDITOR="emacsclient -t"
 export VISUAL="emacsclient -c"
 export SUDO_EDITOR="emacsclient -t"
 export ALTERNATE_EDITOR=""
-export BROWSER=firefox
+export BROWSER=chromium
 export PAGER=less
-export PYTHONPATH=$PYTHONPATH:/home/stephen/repos/tcga:/home/stephen/repos/smbio
 export _JAVA_OPTIONS='-Dawn.useSystemAAFontSettings=setting'
-export SSH_AUTH_SOCK="/home/stephen/ssh-agent.sock"
+export SSH_AUTH_SOCK=$HOME/ssh-agent.sock
 export SSH_ASKPASS=/usr/bin/ksshaskpass
 
-# Run SSH-Agent command for its status code.
+# RVM
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# Start SSH agent if not running.
 ssh-add -l &> /dev/null
 RESULT=$?
 if [ "$RESULT" -eq 2 ]; then
     rm "$SSH_AUTH_SOCK"
     ssh-agent -a "$SSH_AUTH_SOCK"
-    ssh-add
-elif [ "$RESULT" -eq 1 ]; then
-    ssh-add
 fi
-
