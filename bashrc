@@ -26,15 +26,9 @@ alias cls='clear'
 alias x='xclip -selection c -i'
 alias c='xclip -selection c -i -f'
 alias v='xclip -selection c -o'
+alias fuck='eval $(thefuck $(fc -ln -1 | tail -n 1)); fc -R'
 alias xbox='sudo xboxdrv -d -s'
 alias se=sudoedit
-
-# Function definitions
-bitb() {
-    local P="$(hg paths 2>/dev/null | grep 'bitbucket.org' | head -1)"
-    local URL="$(echo $P | sed -e's|.*\(bitbucket.org.*\)|http://\1|')"
-    [[ -n $URL ]] && /usr/bin/chromium $URL || echo "No BitBucket path found!"
-}
 
 # Bash prompt
 PS1='[\u@\h \W]\$ '
