@@ -11,7 +11,8 @@
 #-------------------------------------------------------------------------------
 
 # Variables
-export PATH=$HOME/bin:$HOME/.local/bin:$HOME/.rvm/bin:$PATH
+export GOPATH=$HOME/go
+export PATH=$HOME/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/.rvm/bin:$PATH
 export EDITOR="emacsclient -t"
 export VISUAL="emacsclient -c"
 export SUDO_EDITOR="emacsclient -t"
