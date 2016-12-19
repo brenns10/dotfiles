@@ -21,7 +21,6 @@ export PAGER=less
 export _JAVA_OPTIONS='-Dawn.useSystemAAFontSettings=setting'
 export SSH_AUTH_SOCK=$HOME/ssh-agent.sock
 export SSH_ASKPASS=/usr/bin/ksshaskpass
-export TERM=xterm-256color
 
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
