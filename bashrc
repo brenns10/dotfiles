@@ -31,6 +31,7 @@ alias v='xclip -selection c -o'
 alias fuck='eval $(thefuck $(fc -ln -1 | tail -n 1)); fc -R'
 alias xbox='sudo xboxdrv -d -s'
 alias se=sudoedit
+alias mc='sudo -i -u minecraft screen -r'
 
 # Bash prompt
 export PURPLE="\[\033[0;35m\]"
