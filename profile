@@ -11,7 +11,8 @@
 #-------------------------------------------------------------------------------
 
 # Variables
-export PATH=$HOME/bin:$HOME/.local/bin:$HOME/.rvm/bin:$PATH
+export GOPATH=$HOME/go
+export PATH=$HOME/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/.rvm/bin:$PATH
 export EDITOR="emacsclient -t"
 export VISUAL="emacsclient -c"
 export SUDO_EDITOR="emacsclient -t"
@@ -21,7 +22,6 @@ export PAGER=less
 export _JAVA_OPTIONS='-Dawn.useSystemAAFontSettings=setting'
 export SSH_AUTH_SOCK=$HOME/ssh-agent.sock
 export SSH_ASKPASS=/usr/bin/ksshaskpass
-export TERM=xterm-256color
 
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

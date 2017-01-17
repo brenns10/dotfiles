@@ -10,6 +10,8 @@ link() {
     ln -s $DIR/$file $HOME/$homename
 }
 
+mkdir -p ~/.spacemacs.d/
+
 link .archey3.cfg archey3.cfg
 link .bashrc bashrc
 link .hgrc hgrc
@@ -21,5 +23,4 @@ link .ssh/authorized_keys ssh/authorized_keys
 link .zshrc zshrc
 link .gitconfig gitconfig
 link .spacemacs spacemacs
-
-ln -s $DIR/snippets/* $HOME/.emacs.d/private/snippets
+link .spacemacs.d/snippets snippets

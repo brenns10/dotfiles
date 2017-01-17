@@ -51,3 +51,10 @@ Host greed
      HostName home.brenns10.com
      Port 2222
      User stephen
+
+Host greedl
+     HostName 192.168.0.2
+     Port 2222
+     User stephen
+
+Include config_yelp
