@@ -1,2 +1,0 @@
-emulate bash -c '. ~/.profile'
-
