@@ -1,3 +1,4 @@
+# -*- mode: sh -*-
 #-------------------------------------------------------------------------------
 #
 # File:         ~/.profile
@@ -33,3 +34,6 @@ if [ "$RESULT" -eq 2 ]; then
     rm "$SSH_AUTH_SOCK"
     ssh-agent -a "$SSH_AUTH_SOCK"
 fi
+
+# Run .bashrc if interactive.
+[[ $- = *i* ]] && . ~/.bashrc
