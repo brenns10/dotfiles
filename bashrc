@@ -72,7 +72,7 @@ export GREEN="\[\033[0;32m\]"
 export CYAN="\[\033[0;36m\]"
 export NO_COLOR="\[\033[0m\]"
 export PS1="
-${PURPLE}\\u${NO_COLOR} at ${ORANGE}\\h${NO_COLOR} in ${GREEN}\\W${NO_COLOR} $PS1
+${PURPLE}\\u${NO_COLOR} at ${ORANGE}\\h${NO_COLOR} in ${GREEN}\\w${NO_COLOR} $PS1
 \$ "
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
