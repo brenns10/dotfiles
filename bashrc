@@ -32,6 +32,7 @@ alias fuck='eval $(thefuck $(fc -ln -1 | tail -n 1)); fc -R'
 alias xbox='sudo xboxdrv -d -s'
 alias se=sudoedit
 alias mc='sudo -i -u minecraft screen -r'
+alias g=git
 
 # Bash prompt
 export PURPLE="\[\033[0;35m\]"
