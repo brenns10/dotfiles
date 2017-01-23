@@ -52,18 +52,18 @@ alias mc='sudo -i -u minecraft screen -r'
 alias g=git
 
 # Where are the git scripts?
-GIT_SCRIPTS='$HOME'
-if [[ "$OS" == 'mac' ]]; then
-    GIT_SCRIPTS='/usr/share/git'
-elif [[ "$OS" == 'linux']]; then
+GIT_SCRIPTS="$HOME"
+if [[ "$OS" == 'linux' ]]; then
+    GIT_SCRIPTS='/usr/share/git/completion'
+elif [[ "$OS" == 'mac' ]]; then
     GIT_SCRIPTS='/Applications/Xcode.app/Contents/Developer/usr/share/git-core'
 fi
 
 # Use __git_ps1 and git completion if they're available.
 PS1=''
-if [ -f "$GIT_SCRIPTS/git-prompt.sh" ]; then
+if [ -r "$GIT_SCRIPTS/git-prompt.sh" ]; then
     source $GIT_SCRIPTS/git-prompt.sh
-    source $GIT_SCRIPTS/git-completion.sh
+    source $GIT_SCRIPTS/git-completion.bash
     PS1='$(__git_ps1 "(%s)")'
 fi
 export PURPLE="\[\033[0;35m\]"
