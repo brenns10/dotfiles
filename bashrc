@@ -48,6 +48,8 @@ alias cls='clear'
 alias fuck='eval $(thefuck $(fc -ln -1 | tail -n 1)); fc -R'
 alias xbox='sudo xboxdrv -d -s'
 alias se=sudoedit
+alias mc='sudo -i -u minecraft screen -r'
+alias g=git
 
 # Where are the git scripts?
 GIT_SCRIPTS='$HOME'
