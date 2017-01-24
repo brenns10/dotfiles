@@ -7,12 +7,9 @@
 #
 # Date Created: Tuesday, 29 July 2014
 #
-# Description:  Run by bash for any interactive shell.
+# Description:  Run by bash for any interactive (non-login) shell.
 #
 #-------------------------------------------------------------------------------
-
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
 
 # Determine OS for later configuration.
 # http://stackoverflow.com/a/394247
@@ -107,9 +104,3 @@ export GIT_PS1_SHOWUPSTREAM="auto git"
 
 # Arch logo and info, if it exists
 which archey3 >/dev/null && archey3
-
-# RBenv, if it exists
-if [ -d "$HOME/.rbenv" ]; then
-    export PATH="$HOME/.rbenv/bin:$PATH"
-    eval "$(rbenv init -)"
-fi

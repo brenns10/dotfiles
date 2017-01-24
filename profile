@@ -24,6 +24,12 @@ export _JAVA_OPTIONS='-Dawn.useSystemAAFontSettings=setting'
 export SSH_AUTH_SOCK=$HOME/ssh-agent.sock
 export SSH_ASKPASS=/usr/bin/ksshaskpass
 
+# RBenv, if it exists
+if [ -d "$HOME/.rbenv" ]; then
+    export PATH="$HOME/.rbenv/bin:$PATH"
+    eval "$(rbenv init -)"
+fi
+
 # Start SSH agent if not running.
 ssh-add -l &> /dev/null
 RESULT=$?
@@ -31,6 +37,3 @@ if [ "$RESULT" -eq 2 ]; then
     rm "$SSH_AUTH_SOCK"
     ssh-agent -a "$SSH_AUTH_SOCK"
 fi
-
-# Run .bashrc if interactive.
-[[ $- = *i* ]] && . ~/.bashrc
