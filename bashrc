@@ -66,14 +66,35 @@ if [ -r "$GIT_SCRIPTS/git-prompt.sh" ]; then
     source $GIT_SCRIPTS/git-completion.bash
     PS1='$(__git_ps1 "(%s)")'
 fi
-export PURPLE="\[\033[0;35m\]"
-export ORANGE="\[\033[0;33m\]"
-export GREEN="\[\033[0;32m\]"
-export CYAN="\[\033[0;36m\]"
-export NO_COLOR="\[\033[0m\]"
-export PS1="
-${PURPLE}\\u${NO_COLOR} at ${ORANGE}\\h${NO_COLOR} in ${GREEN}\\w${NO_COLOR} $PS1
-\$ "
+# Foreground colors
+FG_RED="\[\033[0;31m\]"
+FG_ORANGE="\[\033[1;31m\]"
+FG_GREEN="\[\033[0;32m\]"
+FG_YELLOW="\[\033[0;33m\]"
+FG_BLUE="\[\033[0;34m\]"
+FG_MAGENTA="\[\033[0;35m\]"
+FG_PURPLE="\[\033[1;35m\]"
+FG_CYAN="\[\033[0;36m\]"
+# Background colors
+BG_LIGHT="\[\033[40m\]"
+BG_RED="\[\033[41m\]"
+BG_GREEN="\[\033[42m\]"
+BG_YELLOW="\[\033[43m\]"
+BG_BLUE="\[\033[44m\]"
+BG_MAGENTA="\[\033[45m\]"
+BG_CYAN="\[\033[46m\]"
+BG_WHITE="\[\033[47m\]"
+# Reset
+RESET="\[\033[0m\]"
+# And the actual declarations + PS1
+user="$FG_MAGENTA"
+if [ -n "$SSH_CLIENT" ]; then
+    host="$FG_ORANGE$BG_LIGHT"
+else
+    host="$FG_YELLOW"
+fi
+dir="$FG_GREEN"
+export PS1="\n$user\\u$RESET at $host\\h$RESET in $dir\\w$RESET $PS1\n\$ "
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 # Explicitly unset color (default anyhow). Use 1 to set it.
