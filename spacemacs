@@ -336,6 +336,9 @@ you should place your code here."
   ;; Recognize UTF-8 as utf-8
   (define-coding-system-alias 'UTF-8 'utf-8)
 
+  ;; Map single control to ESC
+  (with-eval-after-load 'evil-maps
+    (define-key evil-insert-state-map (kbd "TAB") 'evil-force-normal-state))
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;                                 GNUS                                     ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
