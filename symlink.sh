@@ -23,3 +23,5 @@ link .ssh/authorized_keys ssh/authorized_keys
 link .gitconfig gitconfig
 link .spacemacs spacemacs
 link .spacemacs.d/snippets snippets
+link .vimrc vimrc
+link .vim vim
