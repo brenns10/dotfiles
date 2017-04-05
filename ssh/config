@@ -1,7 +1,7 @@
 # External Services
 
 Host acm
-     HostName acm-people.case.edu
+     HostName jump.mtb.wtf
      Port 22
      User smb196
 
@@ -10,20 +10,15 @@ Host sdf
      Port 22
      User brenns10
 
-Host phc
-     HostName penthousecult.case.edu
-     Port 22
-     User smb196
-
-Host hkn
-     HostName hkn.case.edu
-     Port 22
-     User stephen
-
 Host gh
      HostName github.com
      Port 22
      User git
+
+# Firewall Bypass
+
+Host *.case.edu
+     ProxyCommand ssh acm nc %h %p
 
 # Personal Computers
 
