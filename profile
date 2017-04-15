@@ -11,6 +11,16 @@
 #
 #-------------------------------------------------------------------------------
 
+# Determine OS for later configuration.
+# http://stackoverflow.com/a/394247
+OS='unknown'
+unamestr=$(uname)
+if [[ "$unamestr" == 'Linux' ]]; then
+    OS='linux'
+elif [[ "$unamestr" == 'Darwin' ]]; then
+    OS='mac'
+fi
+
 # Variables
 export GOPATH=$HOME/go
 export PATH=$HOME/bin:$GOPATH/bin:$HOME/.local/bin:$PATH
@@ -21,7 +31,6 @@ export ALTERNATE_EDITOR=""
 export BROWSER=chromium
 export PAGER=less
 export _JAVA_OPTIONS='-Dawn.useSystemAAFontSettings=setting'
-export SSH_AUTH_SOCK=$HOME/ssh-agent.sock
 export SSH_ASKPASS=/usr/bin/ksshaskpass
 
 # RBenv, if it exists
@@ -30,10 +39,13 @@ if [ -d "$HOME/.rbenv" ]; then
     eval "$(rbenv init -)"
 fi
 
-# Start SSH agent if not running.
-ssh-add -l &> /dev/null
-RESULT=$?
-if [ "$RESULT" -eq 2 ]; then
-    rm "$SSH_AUTH_SOCK"
-    ssh-agent -a "$SSH_AUTH_SOCK"
+if [ "$OS" != "mac" ]; then
+    export SSH_AUTH_SOCK=$HOME/ssh-agent.sock
+    # Start SSH agent if not running.
+    ssh-add -l &> /dev/null
+    RESULT=$?
+    if [ "$RESULT" -eq 2 ]; then
+        rm "$SSH_AUTH_SOCK"
+        ssh-agent -a "$SSH_AUTH_SOCK"
+    fi
 fi
