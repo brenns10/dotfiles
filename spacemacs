@@ -1,4 +1,4 @@
-;; -*- mode: emacs-lisp -*-
+;; -*- mode: emacs-lisp; no-byte-compile: t -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
@@ -31,6 +31,9 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     nginx
+     docker
+     csv
      ruby
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -40,7 +43,10 @@ values."
      gtags
      erc
      helm
-     auto-completion
+     (auto-completion
+      :variables
+      auto-completion-enable-help-tooltip t
+      )
      ;; better-defaults
      emacs-lisp
      git
@@ -54,9 +60,9 @@ values."
      javascript
      gnus
      (go :variables go-tab-width 4)
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
      spell-checking
      syntax-checking
      ;; version-control
@@ -301,7 +307,6 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  (spacemacs/toggle-smartparens-globally-off)
   )
 
 (defun dotspacemacs/user-config ()
@@ -323,12 +328,32 @@ you should place your code here."
             (lambda ()
               (setq indent-tabs-mode t
                     tab-width 8)))
+
+  ;; Get auto-completion from ggtags, which makes writing kernel code a dream
+  ;; come true...
+  (add-to-list 'company-backends-c-mode-common 'company-capf)
+
   ;; 80 Column rule
   (turn-on-fci-mode)
 
   ;; Recognize UTF-8 as utf-8
   (define-coding-system-alias 'UTF-8 'utf-8)
 
+  ;; Map single control to ESC
+  (with-eval-after-load 'evil-maps
+    (define-key evil-insert-state-map (kbd "TAB") 'evil-force-normal-state))
+
+  ;; Defaults
+  (add-hook 'prog-mode-hook
+            (lambda ()
+              (spacemacs/toggle-fill-column-indicator-on)
+              ))
+  (add-hook 'text-mode-hook
+            (lambda ()
+              (spacemacs/toggle-fill-column-indicator-on)
+              (spacemacs/toggle-auto-fill-mode-on)
+              ))
+  (add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;                                 GNUS                                     ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -473,4 +498,5 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
