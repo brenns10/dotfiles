@@ -37,11 +37,6 @@ Host intractable
      Port 22
      User sbrennan
 
-Host gluttony
-     HostName gluttony.case.edu
-     Port 2222
-     User stephen
-
 Host greed
      HostName home.brenns10.com
      Port 2222
@@ -57,10 +52,19 @@ Host pride
      Port 2224
      User stephen
 
+# Yelp
+
 Host dev
      HostName dev3-uswest1cdevc.dev.yelpcorp.com
      User sbrennan
      ForwardAgent Yes
+
+# Thesis
+
+Host client detour server
+    User ubuntu
+    StrictHostKeyChecking no
+    HostName %h.thesis.brennan.io
 
 Host mn
      HostName localhost
