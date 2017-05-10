@@ -1,5 +1,7 @@
 # External Services
 
+VisualHostKey yes
+
 Host acm
      HostName jump.mtb.wtf
      Port 22
