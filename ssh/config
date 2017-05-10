@@ -60,6 +60,7 @@ Host pride
 Host dev
      HostName dev3-uswest1cdevc.dev.yelpcorp.com
      User sbrennan
+     ForwardAgent Yes
 
 Host mn
      HostName localhost
