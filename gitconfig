@@ -1,10 +1,11 @@
 [push]
 	default = simple
 [user]
-	email = smb196@case.edu
+	email = stephen@brennan.io
 	name = Stephen Brennan
 [core]
 	autocrlf = input
+	editor = vim
 [alias]
 	st = status
 	ci = commit
