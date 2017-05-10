@@ -1,0 +1,41 @@
+set message_cachedir=~/.cache/mutt/messages
+set header_cache=~/.cache/mutt/headers
+set editor="vim"
+set my_name = "Stephen Brennan"
+set sort=reverse-threads
+set edit_headers = yes
+set charset = UTF-8
+
+# imap
+set imap_user=stephen@brennan.io
+source "$HOME/.mutt/passwords" # imap_pass
+set folder=imaps://imap.zoho.com:993/
+set spoolfile=+INBOX
+mailboxes +INBOX
+
+# smtp
+set realname = "Stephen Brennan"
+set from = stephen@brennan.io
+set use_from = yes
+unset use_domain
+set smtp_url=smtps://$imap_user:$imap_pass@smtp.zoho.com
+set ssl_force_tls = yes
+
+# lists
+lists kernelnewbies@kernelnewbies.org
+lists multipathtcp@ietf.org
+
+# useful customizations
+# 1. refresh with G
+bind index G imap-fetch-mail
+# 2. always view top message on start
+push <first-entry>
+# 3. use j and k to *scroll through* a message, not move among messages
+bind pager j next-line
+bind pager k previous-line
+# 4. to compensate for lack of message browsing, use h and l to move among
+#    messages within the pager
+bind pager h previous-undeleted
+bind pager l next-undeleted
+# 5. to compensate for lack of "h" to see headers, use "H" for that
+bind pager H display-toggle-weed
