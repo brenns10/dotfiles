@@ -24,9 +24,9 @@ fi
 # Variables
 export GOPATH=$HOME/go
 export PATH=$HOME/bin:$GOPATH/bin:$HOME/.local/bin:$PATH
-export EDITOR="emacsclient -t"
-export VISUAL="emacsclient -c"
-export SUDO_EDITOR="emacsclient -t"
+export EDITOR="vim"
+export VISUAL="vim"
+export SUDO_EDITOR="vim"
 export ALTERNATE_EDITOR=""
 export BROWSER=chromium
 export PAGER=less

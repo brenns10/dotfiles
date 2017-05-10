@@ -65,7 +65,7 @@ Without these this whole exercise would probably be pointless.
 You'll probably want at least some of these tools, because they are kinda why I
 have my configuration version controlled.
 
-- `emacs` + `spacemacs`, since the editor is set to this
+- `emacs` + `spacemacs`
 
         $ git clone git@github.com:syl20bnr/spacemacs.git .emacs.d
 
