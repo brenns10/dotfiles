@@ -65,3 +65,8 @@ Host client detour server
     User ubuntu
     StrictHostKeyChecking no
     HostName %h.thesis.brennan.io
+
+Host mn
+     HostName localhost
+     Port 22222
+     User mininet
