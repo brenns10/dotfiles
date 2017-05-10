@@ -110,7 +110,29 @@ set cc=+1
 " gets rid of startup messages
 set shm=I
 
+" MAIL OPTIONS
+" Generally speaking, I would like my emails to be wrapped at 75 characters
+" rather than 80. This is in line with Linux kernel patch submission guidelines.
+" Additionally, mail messages do not have auto line wrapping or any nonsense
+" that might disturb a nicely formatted patch.
+autocmd FileType mail setlocal textwidth=75
+
 noremap <Leader>! :!
+
+" FORMAT OPTIONS AND WHEN TO USE THEM (:help fo-table)
+" *** The following are good for general use. They do not interfere with code
+" *** editing, and they make life easier.
+" c: auto-wrap comments (this is usally acceptable)
+" r: auto insert comment char in INSERT when editing comment
+" o: auto insert commend char with o/O in NORMAL
+" j: when joining comments, remove comment leader
+" q: allow comments to be formatted with gq (Reminder: vipgq to reformat)
+set formatoptions=crojq
+" t: break text lines over 80 characters as you type them. This absolutely sucks
+"    for anything involving code or configuration, but for most text editing it
+"    is nice.
+autocmd FileType markdown setlocal formatoptions+=t
+autocmd FileType text setlocal formatoptions+=t
 
 nnoremap <Leader>gs :!echo --- LATEST OUTPUT ---; git status<Enter>
 nnoremap <Leader>gd :!git diff %
