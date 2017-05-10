@@ -6,10 +6,10 @@ symlinks. Should work on Mac and Linux equally well.
 
 ![terminal preview](term.png)
 
-## Workflows
+## Environment
 
 I've maintained these dotfiles for a fairly long time now, and they support some
-very particular workflows and behaviors.
+very particular work environments.
 
 ### Operating System
 
@@ -19,23 +19,16 @@ these dotfiles apply on that machine.
 
 ### Editing
 
-My history with editors has been a long one. I started with Emacs and all its
-glory. I have grown from a heavily customized, flung-together Emacs
-[config][old-emacs] (now unused), to using the Spacemacs distribution with some
-mild customizations. Spacemacs provides nice, happy defaults, dependency
-management (I hate installing emacs packages) and a good deal of other goodies,
-along with nice eye candy. It also pre-configures programming modes to be mostly
-functional, which is hugely helpful.
+I use Vim for quick editing - email, configuration files, small code files. I
+use Emacs + Spacemacs for large projects where more functionality is required
+(Latex + previewing, large codebases with tags + completion, etc).
 
-[old-emacs]: https://github.com/brenns10/emacs
+### Languages
 
-My main development editor is stil Emacs, but recently I have made the jump to
-the Vim style keybindings (via Evil+Spacemacs support). I have also made the
-jump to Vim for small editing (READMEs, emails, small amounts of C code, etc).
-It starts up quickly and is pretty universal. However, when working in large
-projects where I want IDE-like features (C tags support, jump to definition,
-etc), I simply use Emacs. I like this arrangement, and in order to maintain that
-boundary, I'm trying to impose a strict no-plugins rule on my vim config.
+I regularly use C, Python, and Go. I also edit a fair amount of shell scripts
+and the occasional JS + HTML + CSS combination.
+
+Outside of programming, I heavily use LaTeX, Markdown, and restructured Text.
 
 ### Git
 
@@ -44,20 +37,19 @@ important.
 
 ### Email
 
-The further I get into reading mailing lists, doing kernel dev, and doing the
-[Eudyptula Challenge][], the more I need to have a good console email client. I
-certainly don't use it for all of my email - Gmail and Inbox are superb clients
-for the everyday sort of mail. But lots of email lists expect text-only emails,
-and for that you need a suitable mail client.
+Most of my email is routed into a central Google Inbox account. I like HTML
+based email and I use it plenty.
 
-I have one email account in particular that I use for these communications. I
-filter mailing lists into an IMAP folder and I read that in mutt. The main inbox
-also gets forwarded into my Google Inbox so that I can read everyday emails
-there as well.
+I have a "primary" development account that I use for my Git identity, Linux
+kernel mailing lists and patches, and other mailing list activity. I filter
+mailing lists into separate IMAP folders, and I use mutt to browse those along
+with any text-mode email I need to send or receive.
 
-[Eudyptula Challenge]: http://eudyptula-challenge.org/
+### SSH
 
-I have Gnus set up for Emacs, but just don't bother with that.
+I need to manage several personal computers from a distance, and a few
+non-personal computers as well. Each computer I own has a separate ssh key, and
+the authorized keys file enables communication between all of them.
 
 ## Setup
 
