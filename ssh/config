@@ -1,5 +1,5 @@
 # Secret things I don't want to commit to git.
-Include local.conf
+Include local
 
 # At least I can pretend to verify host keys.
 VisualHostKey yes
