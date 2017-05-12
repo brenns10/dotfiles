@@ -19,6 +19,9 @@ if [[ "$unamestr" == 'Linux' ]]; then
     OS='linux'
 elif [[ "$unamestr" == 'Darwin' ]]; then
     OS='mac'
+    # mac has python3 installed
+    PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
+    export PATH
 fi
 
 # Alias definitions
