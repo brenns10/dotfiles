@@ -24,6 +24,7 @@ set ssl_force_tls = yes
 # lists
 lists kernelnewbies@kernelnewbies.org
 lists multipathtcp@ietf.org
+lists mptcp-dev@listes.uclouvain.be
 
 # useful customizations
 # 1. refresh with G
