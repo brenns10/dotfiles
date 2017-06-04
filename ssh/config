@@ -63,7 +63,7 @@ Host dev
 
 # Thesis
 
-Host client detour server
+Host client detour server build
     User ubuntu
     StrictHostKeyChecking no
     HostName %h.thesis.brennan.io
