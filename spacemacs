@@ -150,7 +150,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+                               :size 11
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -489,6 +489,44 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(TeX-expand-list
+   (quote
+    (("%(-PDF)"
+      (lambda nil
+        (cond
+         ((and
+           (eq TeX-engine
+               (quote default))
+           TeX-PDF-mode auctex-latexmk-inherit-TeX-PDF-mode)
+          "-pdf ")
+         ((eq TeX-engine
+              (quote xetex))
+          "-xelatex ")
+         ((eq TeX-engine
+              (quote luatex))
+          "-lualatex ")
+         (t ""))))
+     ("%(masterdir)"
+      (lambda nil
+        (file-truename
+         (TeX-master-directory)))))))
+ '(TeX-source-correlate-method (quote synctex))
+ '(TeX-source-correlate-mode t)
+ '(TeX-source-correlate-start-server t)
+ '(TeX-view-program-list
+   (quote
+    (("Okular"
+      ("okular --noraise --unique %o#src:%n%(masterdir)./%b")
+      "/usr/bin/okular"))))
+ '(TeX-view-program-selection
+   (quote
+    (((output-dvi has-no-display-manager)
+      "dvi2tty")
+     ((output-dvi style-pstricks)
+      "dvips and gv")
+     (output-dvi "xdvi")
+     (output-pdf "Okular")
+     (output-html "xdg-open"))))
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote

@@ -1,7 +1,10 @@
-# External Services
+# Secret things I don't want to commit to git.
+Include local
 
+# At least I can pretend to verify host keys.
 VisualHostKey yes
 
+# Some external servers
 Host acm
      HostName jump.mtb.wtf
      Port 22
@@ -17,18 +20,6 @@ Host gh
      Port 22
      User git
 
-# Firewall Bypass
-
-Host *.case.edu
-     ProxyCommand ssh acm nc %h %p
-
-# Personal Computers
-
-Host schmosby
-     HostName home.brenns10.com
-     Port 2223
-     User stephen
-
 Host singularity
      HostName singularity.case.edu
      Port 22
@@ -39,6 +30,11 @@ Host intractable
      Port 22
      User sbrennan
 
+# CWRU Firewall Bypass
+Host *.case.edu
+     ProxyCommand ssh acm nc %h %p
+
+# Personal Computers
 Host greed
      HostName home.brenns10.com
      Port 2222
@@ -55,20 +51,20 @@ Host pride
      User stephen
 
 # Yelp
-
 Host dev
      HostName dev3-uswest1cdevc.dev.yelpcorp.com
      User sbrennan
      ForwardAgent Yes
 
-# Thesis
-
+# Thesis AWS
 Host client detour server build
     User ubuntu
     StrictHostKeyChecking no
     HostName %h.thesis.brennan.io
 
+# Thesis VM
 Host mn
      HostName localhost
      Port 22222
      User mininet
+     StrictHostKeyChecking no
