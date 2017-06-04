@@ -28,7 +28,7 @@ export EDITOR="vim"
 export VISUAL="vim"
 export SUDO_EDITOR="vim"
 export ALTERNATE_EDITOR=""
-export BROWSER=chromium
+export BROWSER=google-chrome-stable
 export PAGER=less
 export _JAVA_OPTIONS='-Dawn.useSystemAAFontSettings=setting'
 export SSH_ASKPASS=/usr/bin/ksshaskpass
