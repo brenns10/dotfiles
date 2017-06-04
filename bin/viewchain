@@ -1,0 +1,7 @@
+#!/bin/sh
+# View a certificate bundle/chain, in order.
+# Like I would ever remember a command like this.
+# https://serverfault.com/questions/590870/how-to-view-all-ssl-certificates-in-a-bundle
+
+# Add -text to second command to see more details. I don't need em
+openssl crl2pkcs7 -nocrl -certfile $1 | openssl pkcs7 -print_certs -noout

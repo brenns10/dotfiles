@@ -12,6 +12,7 @@ link() {
 
 mkdir -p ~/.spacemacs.d/
 mkdir -p ~/.mutt
+mkdir -p ~/bin
 
 link .archey3.cfg archey3.cfg
 link .bashrc bashrc
@@ -27,3 +28,4 @@ link .spacemacs.d/snippets snippets
 link .vimrc vimrc
 link .vim vim
 link .mutt/muttrc muttrc
+link bin/viewchain bin/viewchain
