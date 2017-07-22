@@ -29,3 +29,4 @@ link .vimrc vimrc
 link .vim vim
 link .mutt/muttrc muttrc
 link bin/viewchain bin/viewchain
+link bin/monitor-internet bin/monitor-internet

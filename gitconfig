@@ -16,3 +16,5 @@
 	cb = checkout -b
 [color]
 	ui = auto
+[sendemail]
+	smtpserver = /usr/bin/msmtp

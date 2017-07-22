@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Run this script in order to monitor the Internet connection. If the connection
+# goes down, sends a desktop notification.
+
+echo Don\'t worry boss, I\'m watching!
+
+while :
+do
+	if ! ping -c4 8.8.8.8 ; then
+		notify-send \
+			-u critical \
+			'Lost Internet!' \
+			'We lost ping with Google...'
+		exit
+	fi
+	sleep 1
+done

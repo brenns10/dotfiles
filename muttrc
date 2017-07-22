@@ -3,8 +3,10 @@ set header_cache=~/.cache/mutt/headers
 set editor="vim"
 set my_name = "Stephen Brennan"
 set sort=reverse-threads
+set sort_aux=last-date-received
 set edit_headers = yes
 set charset = UTF-8
+#set display_filter = ~/bin/muttdate
 
 # imap
 set imap_user=stephen@brennan.io
@@ -14,12 +16,16 @@ set spoolfile=+INBOX
 mailboxes +INBOX
 
 # smtp
-set realname = "Stephen Brennan"
-set from = stephen@brennan.io
-set use_from = yes
-unset use_domain
-set smtp_url=smtps://$imap_user:$imap_pass@smtp.zoho.com
-set ssl_force_tls = yes
+#set realname = "Stephen Brennan"
+#set from = stephen@brennan.io
+#set use_from = yes
+#unset use_domain
+#set smtp_url=smtps://$imap_user:$imap_pass@smtp.zoho.com
+#set ssl_force_tls = yes
+set sendmail="/usr/bin/msmtp"
+set envelope_from=yes
+set from="Stephen Brennan <stephen@brennan.io>"
+set use_from=yes
 
 # lists
 lists kernelnewbies@kernelnewbies.org
