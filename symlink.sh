@@ -27,6 +27,9 @@ link .spacemacs spacemacs
 link .spacemacs.d/snippets snippets
 link .vimrc vimrc
 link .vim vim
+link .tmux.conf tmux.conf
 link .mutt/muttrc muttrc
 link bin/viewchain bin/viewchain
 link bin/monitor-internet bin/monitor-internet
+link bin/yank bin/yank
+link bin/sbrennan-setup bin/sbrennan-setup

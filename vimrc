@@ -20,6 +20,7 @@ endif
 " Use :help 'option' to see the documentation for the given option.
 
 set autoindent
+set nocompatible
 set backspace=indent,eol,start
 set complete-=i
 set smarttab
@@ -95,7 +96,7 @@ inoremap <C-U> <C-G>u<C-U>
 " --- End sensible.vim ---
 " --- Begin my customization ---
 set background=dark
-colorscheme solarized
+colorscheme solarized8_dark
 let mapleader=' '
 
 " run commands from the proper directory
@@ -109,6 +110,16 @@ set textwidth=80
 set cc=+1
 " gets rid of startup messages
 set shm=I
+" mouse scrolling in tmux
+set mouse=a
+
+" Copy to cliboard! Classy & Useful AF
+" https://sunaku.github.io/tmux-yank-osc52.html
+if has('gui_running') || has('nvim') && exists('$DISPLAY')
+  noremap <Leader>y "+y
+else
+  noremap <silent> <Leader>y y:call system('yank > /dev/tty', @0)<Return>
+endif
 
 " MAIL OPTIONS
 " Generally speaking, I would like my emails to be wrapped at 75 characters

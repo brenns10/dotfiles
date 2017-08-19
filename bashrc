@@ -1,16 +1,3 @@
-# -*- mode: sh -*-
-#-------------------------------------------------------------------------------
-#
-# File:         ~/.bashrc
-#
-# Author:       Stephen Brennan
-#
-# Date Created: Tuesday, 29 July 2014
-#
-# Description:  Run by bash for any interactive (non-login) shell.
-#
-#-------------------------------------------------------------------------------
-
 # Determine OS for later configuration.
 # http://stackoverflow.com/a/394247
 OS='unknown'
@@ -102,8 +89,20 @@ export GIT_PS1_SHOWCOLORHINTS=1
 export GIT_PS1_DESCRIBE_STYLE="branch"
 export GIT_PS1_SHOWUPSTREAM="auto git"
 
+# fzf
+fzfc=$GOPATH/src/github.com/junegunn/fzf/shell/completion.bash
+[ -r $fzfc ] && . $fzfc
+fzfk=$GOPATH/src/github.com/junegunn/fzf/shell/key-bindings.bash
+[ -r $fzfk ] && . $fzfk
+export FZF_COMPLETION_OPTS='--bind ctrl-k:kill-line'
+
 # Command not found, if it exists
 [ -r /etc/profile.d/cnf.sh ] && . /etc/profile.d/cnf.sh
 
 # Arch logo and info, if it exists
 which archey3 >/dev/null && archey3
+
+# Work around weird double run issue, once without path
+if hash sbrennan-setup 2>/dev/null; then
+	sbrennan-setup --prompt
+fi
