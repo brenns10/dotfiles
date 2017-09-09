@@ -37,6 +37,9 @@ alias xbox='sudo xboxdrv -d -s'
 alias se=sudoedit
 alias mc='sudo -i -u minecraft screen -r'
 alias g=git
+alias diff='diff --color=auto'
+alias grep='grep --color=auto'
+export LESS=-R
 
 # Where are the git scripts?
 GIT_SCRIPTS="$HOME"
@@ -82,12 +85,12 @@ else
 fi
 dir="$FG_GREEN"
 export PS1="\n$user\\u$RESET at $host\\h$RESET in $dir\\w$RESET $PS1\n\$ "
-export GIT_PS1_SHOWDIRTYSTATE=1
-export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWDIRTYSTATE=0
+export GIT_PS1_SHOWUNTRACKEDFILES=0
 # Explicitly unset color (default anyhow). Use 1 to set it.
 export GIT_PS1_SHOWCOLORHINTS=1
 export GIT_PS1_DESCRIBE_STYLE="branch"
-export GIT_PS1_SHOWUPSTREAM="auto git"
+#export GIT_PS1_SHOWUPSTREAM="auto git"
 
 # fzf
 fzfc=$GOPATH/src/github.com/junegunn/fzf/shell/completion.bash
