@@ -50,12 +50,6 @@ Host pride
      Port 2224
      User stephen
 
-# Yelp
-Host dev
-     HostName dev3-uswest1cdevc.dev.yelpcorp.com
-     User sbrennan
-     ForwardAgent Yes
-
 # Thesis AWS
 Host client detour server build
     User ubuntu
