@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Wait for internet to come, then loudly proclaim that it's here.
+
+HOST=8.8.8.8
+PROCLAIM="The Internet Is Back!"
+
+while ! ping -c1 $HOST; do
+	# sleep makes it easier to Ctrl-C out
+	sleep 0.5
+done
+
+espeak "$PROCLAIM"
+sleep 1
+espeak "$PROCLAIM"
+sleep 1
+espeak "$PROCLAIM"
+sleep 1
+espeak "$PROCLAIM"
+sleep 1
+espeak "$PROCLAIM"
