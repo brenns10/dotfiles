@@ -29,6 +29,7 @@ link .vimrc vimrc
 link .vim vim
 link .tmux.conf tmux.conf
 link .mutt/muttrc muttrc
+link .mutt/vim-keys.rc mutt_vim-keys.rc
 link bin/viewchain bin/viewchain
 link bin/monitor-internet bin/monitor-internet
 link bin/yank bin/yank

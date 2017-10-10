@@ -34,15 +34,17 @@ lists mptcp-dev@listes.uclouvain.be
 
 # useful customizations
 # 1. refresh with G
-bind index G imap-fetch-mail
+bind index R imap-fetch-mail
 # 2. always view top message on start
 push <first-entry>
 # 3. use j and k to *scroll through* a message, not move among messages
-bind pager j next-line
-bind pager k previous-line
+#bind pager j next-line
+#bind pager k previous-line
 # 4. to compensate for lack of message browsing, use h and l to move among
 #    messages within the pager
 bind pager h previous-undeleted
 bind pager l next-undeleted
 # 5. to compensate for lack of "h" to see headers, use "H" for that
 bind pager H display-toggle-weed
+
+source ~/.mutt/vim-keys.rc
