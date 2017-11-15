@@ -46,5 +46,6 @@ bind pager h previous-undeleted
 bind pager l next-undeleted
 # 5. to compensate for lack of "h" to see headers, use "H" for that
 bind pager H display-toggle-weed
+set pager_format="%4C %Z %[!%b %e at %I:%M %p]  %.20n  %s%* -- (%P)"
 
 source ~/.mutt/vim-keys.rc
