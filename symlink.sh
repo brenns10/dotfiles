@@ -35,3 +35,4 @@ link bin/monitor-internet bin/monitor-internet
 link bin/wait-for-internet bin/wait-for-internet
 link bin/yank bin/yank
 link bin/sbrennan-setup bin/sbrennan-setup
+link bin/newmirrors bin/newmirrors

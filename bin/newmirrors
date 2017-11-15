@@ -1,0 +1,46 @@
+#!/bin/sh
+# Pacman Mirrorlist Updater
+# Stephen Brennan <stephen@stephen-brennan.com>
+
+# Display help.
+if [ "$1" = "-h" -o "$1" = "--help" ]; then
+    echo "usage: newmirrors"
+    echo "All-in-one utility for dealing with pacman mirrorlist updates."
+    echo
+    echo "Steps:"
+    echo "1. Backs up current mirrorlist to datestamped file."
+    echo "2. Ranks the pacnew mirrorlist and uses the top 10."
+    echo "3. Deletes the pacnew mirrorlist."
+    echo "4. Updates pacman's databases."
+    echo
+    echo "It takes a while!  Just don't interrupt it."
+    exit 0
+fi
+
+# Check if running as root.  I don't know if this is the "right" way to do it,
+# but it works.
+if [ `whoami` != root ]; then
+    echo "You must update the mirrorlist as root."
+    exit 1
+fi
+
+# Check if there's a new mirrorlist.  Don't want to get rid of the old one if
+# there is.
+if [ ! -f /etc/pacman.d/mirrorlist.pacnew ]; then
+    echo "There is no new mirrorlist."
+    exit 2
+fi
+
+# First, backup mirrorlist using a timestamp.
+TIME=`date +%F`
+mv /etc/pacman.d/mirrorlist "/etc/pacman.d/mirrorlist.$TIME"
+
+# Uncomment all the mirrors from the mirrorlist, and rank the top ten of them.
+sed 's/#//' /etc/pacman.d/mirrorlist.pacnew | rankmirrors -n 10 - \
+                                            >/etc/pacman.d/mirrorlist
+
+# Delete the pacnew mirrorlist.
+rm /etc/pacman.d/mirrorlist.pacnew
+
+# Force pacman to refresh its cache.
+pacman -Syy
