@@ -104,8 +104,3 @@ export FZF_COMPLETION_OPTS='--bind ctrl-k:kill-line'
 
 # Arch logo and info, if it exists
 which archey3 >/dev/null && archey3
-
-# Work around weird double run issue, once without path
-if hash sbrennan-setup 2>/dev/null; then
-	sbrennan-setup --prompt
-fi
