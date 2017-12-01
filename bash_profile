@@ -16,3 +16,4 @@
 
 # When interactive, run bashrc.
 [[ $- = *i* ]] && [[ -r ~/.bashrc ]] && . ~/.bashrc
+eval "$(aactivator init)"

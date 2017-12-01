@@ -31,8 +31,8 @@ Host intractable
      User sbrennan
 
 # CWRU Firewall Bypass
-Host *.case.edu
-     ProxyCommand ssh acm nc %h %p
+#Host *.case.edu
+#     ProxyCommand ssh acm nc %h %p
 
 # Personal Computers
 Host greed
@@ -49,6 +49,42 @@ Host pride
      HostName home.brenns10.com
      Port 2224
      User stephen
+
+# Yelp
+Host dev
+     HostName dev19-uswest1cdevc.dev.yelpcorp.com
+     User sbrennan
+     ForwardAgent Yes
+
+Host dev17
+     HostName dev17-uswest1cdevc.dev.yelpcorp.com
+     User sbrennan
+     ForwardAgent Yes
+
+Host dev19
+     HostName dev19-uswest1cdevc.dev.yelpcorp.com
+     User sbrennan
+     ForwardAgent Yes
+
+Host dev2
+     HostName dev2-uswest1cdevc.dev.yelpcorp.com
+     User sbrennan
+     ForwardAgent Yes
+
+Host dev3
+     HostName dev3-uswest1cdevc.dev.yelpcorp.com
+     User sbrennan
+     ForwardAgent Yes
+
+Host spamdev
+     HostName spamdev1-r6-devc.dev.yelpcorp.com
+     User sbrennan
+     ForwardAgent Yes
+
+Host spamaws
+     HostName spamdev2-uswest1adevc.dev.yelpcorp.com
+     User sbrennan
+     ForwardAgent Yes
 
 # Thesis AWS
 Host client detour server build
