@@ -50,3 +50,11 @@ bind pager H display-toggle-weed
 set pager_format="%4C %Z %[!%b %e at %I:%M %p]  %.20n  %s%* -- (%P)"
 
 source ~/.mutt/vim-keys.rc
+
+color body cyan default "^diff \-.*"
+color body cyan default "^index [a-f0-9].*"
+color body cyan default "^\-\-\- .*"
+color body cyan default "^[\+]{3} .*"
+color body green default "^[\+][^\+]+.*"
+color body red  default "^\-[^\-]+.*"
+color body yellow default "^@@ .*"
