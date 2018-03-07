@@ -31,6 +31,7 @@ set use_from=yes
 lists kernelnewbies@kernelnewbies.org
 lists multipathtcp@ietf.org
 lists mptcp-dev@listes.uclouvain.be
+lists mptcp@lists.01.org
 
 # useful customizations
 # 1. refresh with G
