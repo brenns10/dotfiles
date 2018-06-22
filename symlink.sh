@@ -28,6 +28,8 @@ link .spacemacs.d/snippets snippets
 link .vimrc vimrc
 link .vim vim
 link .tmux.conf tmux.conf
+link .mbsyncrc mbsyncrc
+link .msmtprc msmtprc
 link .mutt/muttrc muttrc
 link .mutt/vim-keys.rc mutt_vim-keys.rc
 link bin/viewchain bin/viewchain
@@ -36,3 +38,4 @@ link bin/wait-for-internet bin/wait-for-internet
 link bin/yank bin/yank
 link bin/sbrennan-setup bin/sbrennan-setup
 link bin/newmirrors bin/newmirrors
+link bin/imap-pass bin/imap-pass
