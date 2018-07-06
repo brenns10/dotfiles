@@ -13,6 +13,7 @@ link() {
 mkdir -p ~/.spacemacs.d/
 mkdir -p ~/.mutt
 mkdir -p ~/bin
+mkdir -p ~/.Xresources.d
 
 link .archey3.cfg archey3.cfg
 link .bashrc bashrc
@@ -39,3 +40,6 @@ link bin/yank bin/yank
 link bin/sbrennan-setup bin/sbrennan-setup
 link bin/newmirrors bin/newmirrors
 link bin/imap-pass bin/imap-pass
+link .Xresources Xresources
+link .Xresources.d/solarized.dark Xresources.d/solarized.dark
+link .Xresources.d/solarized.light Xresources.d/solarized.light

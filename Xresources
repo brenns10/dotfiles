@@ -1,0 +1,13 @@
+XTerm.termName: xterm-256color
+XTerm.vt100.backarrowKey: false
+XTerm.ttyModes: erase ^?
+XTerm.vt100.metaSendsEscape: true
+XTerm.vt100.locale: true
+XTerm.eightBitInput: false
+XTerm.vt100.selectToClipboard: true
+XTerm.vt100.faceName: Meslo LG M:size=10:antialias=True
+XTerm.vt100.font: 7x13
+XTerm.vt100.allowWindowOps: true
+
+#include ".Xresources.d/solarized.dark"
+!#include ".Xresources.d/solarized.light"
