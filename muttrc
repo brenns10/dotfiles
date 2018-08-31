@@ -1,4 +1,4 @@
-set message_cachedir=~/.cache/mutt/messages
+#set message_cachedir=~/.cache/mutt/messages
 set header_cache=~/.cache/mutt/headers
 set editor="vim"
 set my_name = "Stephen Brennan"
@@ -9,9 +9,9 @@ set charset = UTF-8
 #set display_filter = ~/bin/muttdate
 
 # imap
-set imap_user=stephen@brennan.io
-source "$HOME/.mutt/passwords" # imap_pass
-set folder=imaps://imap.zoho.com:993/
+#set imap_user=stephen@brennan.io
+#source "$HOME/.mutt/passwords" # imap_pass
+set folder=~/mail
 set spoolfile=+INBOX
 mailboxes +INBOX
 
@@ -31,10 +31,11 @@ set use_from=yes
 lists kernelnewbies@kernelnewbies.org
 lists multipathtcp@ietf.org
 lists mptcp-dev@listes.uclouvain.be
+lists mptcp@lists.01.org
 
 # useful customizations
 # 1. refresh with G
-bind index R imap-fetch-mail
+#bind index R imap-fetch-mail
 # 2. always view top message on start
 push <first-entry>
 # 3. use j and k to *scroll through* a message, not move among messages
@@ -49,3 +50,11 @@ bind pager H display-toggle-weed
 set pager_format="%4C %Z %[!%b %e at %I:%M %p]  %.20n  %s%* -- (%P)"
 
 source ~/.mutt/vim-keys.rc
+
+color body cyan default "^(> ?)*diff \-.*"
+color body cyan default "^(> ?)*index [a-f0-9].*"
+color body cyan default "^(> ?)*\-\-\- .*"
+color body cyan default "^(> ?)*[\+]{3} .*"
+color body green default "^(> ?)*[\+][^\+]+.*"
+color body red  default "^(> ?)*\-[^\-]+.*"
+color body yellow default "^(> ?)*@@ .*"

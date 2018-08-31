@@ -1,0 +1,21 @@
+[general]
+accounts = brennan.io
+
+[Account brennan.io]
+localrepository = brennan.io-local
+remoterepository = brennan.io-remote
+
+[Repository brennan.io-local]
+type = Maildir
+localfolders = ~/mail
+
+[Repository brennan.io-remote]
+type = IMAP
+remotehost = imap.zoho.com
+remoteuser = stephen@brennan.io
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+# password info should be stored in ~/.netrc:
+#
+#     machine imap.zoho.com
+#         login stephen@brennan.io
+#         password "something here"

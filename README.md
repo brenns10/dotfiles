@@ -40,10 +40,10 @@ important.
 Most of my email is routed into a central Google Inbox account. I like HTML
 based email and I use it plenty.
 
-I have a "primary" development account that I use for my Git identity, Linux
-kernel mailing lists and patches, and other mailing list activity. I filter
-mailing lists into separate IMAP folders, and I use mutt to browse those along
-with any text-mode email I need to send or receive.
+However, one of my email accounts serves as a development, text-mode email
+account as well. I synchronize my email folders to my local machines via IMAP
+with `mbsync`, and I use `msmtp` as my standard `sendmail` utility. I can send
+emails via `get send-email`, and view and compose emails with `mutt`.
 
 ### SSH
 
@@ -77,11 +77,13 @@ have my configuration version controlled.
         $ git clone https://github.com/rbenv/rbenv.git ~/.rbenv
         $ git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 
-- Mutt is a console email client. I have a configuration that is tied to my own
-  email account -- you'd need to edit it to connect to your own SMTP, IMAP, and
-  account. You will of course need to install Mutt.
-  - A private file `passwords` is stored outside of version control inn
-    `~/.mutt`, containing `set imap_pass=<password>`.
+- For email, mutt is the mail user agent. My email setup also depends on mbsync
+  and msmtp. The password keychain script depends on python, and the `keyring`
+  library (`pip install --user keyring`). To insert the password into the
+  keyring, simply use:
+
+        $ imap-pass -s EMAIL_ADDRESS
+
 - Similarly, Gnus is an Emacs-based mail client. I never use it, but I have it
   configured in `.spacemacs`. The passwords are stored in a standard `.authinfo`
   file.
