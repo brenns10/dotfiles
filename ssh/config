@@ -76,25 +76,7 @@ Host dev3
      User sbrennan
      ForwardAgent Yes
 
-Host spamdev
-     HostName spamdev1-r6-devc.dev.yelpcorp.com
-     User sbrennan
-     ForwardAgent Yes
-
 Host spamaws
      HostName spamdev2-uswest1adevc.dev.yelpcorp.com
      User sbrennan
      ForwardAgent Yes
-
-# Thesis AWS
-Host client detour server build
-    User ubuntu
-    StrictHostKeyChecking no
-    HostName %h.thesis.brennan.io
-
-# Thesis VM
-Host mn
-     HostName localhost
-     Port 22222
-     User mininet
-     StrictHostKeyChecking no
