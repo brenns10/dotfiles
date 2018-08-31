@@ -1,12 +1,22 @@
 # Dotfiles
 
 This repository contains my dotfiles. I usually keep the repository in
-`~/.dotfiles`. The shell script `symlink.sh` should create all the necessary
-symlinks. Should work on Mac and Linux equally well.
+`~/.dotfiles`. The shell script `setup` should do everything necessary to
+install the dotfiles on your machine (Mac and Linux both work). It will not ask
+permission, so be careful.
 
 ![terminal preview](term.png)
 
-## How it works
+Some neat features:
+- Email accessible via CLI, offline or online. Can send patches for review on
+  mailing list with git send-email.
+- Universal copy/paste (assuming you use this tmux + bin/yank command across
+  your various remote hosts)
+- ssh agent, works with Mac keyring on whatever the update that added it was
+- Configuration can be different for Mac or Linux (or maybe other environment
+  constraints).
+
+## How this repo works
 
 `setup` contains an array called `LINKS`. This should contain paths within this
 repository, which should map directly to files in the home directory. For
@@ -24,50 +34,42 @@ create `.bashrc` from `.bashrc.m4`, and then do the same symlinking as above.
 The M4 context contains `OS`, which may be `mac` or `linux`. It can easily be
 extended by modifying the `setup` script.
 
-## Environment
+## Notes on my environment
 
 I've maintained these dotfiles for a fairly long time now, and they support some
 very particular work environments.
 
-### Operating System
 
-I work mainly in Arch Linux, using KDE Plasma as my desktop environment. I also
-use Mac OS (macOS? whatever they're styling it these days) for work, and many of
-these dotfiles apply on that machine.
+- I work mainly in Arch Linux, using KDE Plasma as my desktop environment. I
+  also use Mac OS (macOS? whatever they're styling it these days) for work, and
+  many of these dotfiles apply on that machine.
 
-### Editing
+- On Linux, I typically use Konsole, but I have slowly been adopting xterm for
+  its ease of configuration (the Xresources files configure it), and for its
+  support of OSC 52 escape sequences for remote copy/paste. Konsole requires
+  some manual configuration for the themes I want.
 
-I use Vim for quick editing - email, configuration files, small code files. I
-use Emacs + Spacemacs for large projects where more functionality is required
-(Latex + previewing, large codebases with tags + completion, etc).
+- On Mac, I use iTerm2. This also supports OSC 52. There's some manual
+  configuration necessary, and it's sad.
 
-### Languages
+- My main editor is Vim. I also have a configuration for Emacs (+Spacemacs) with
+  vim keybindings, but I rarely use it.
 
-I regularly use C, Python, and Go. I also edit a fair amount of shell scripts
-and the occasional JS + HTML + CSS combination.
+- I prefer to use solarized dark color schemes, unless I am in the sun, in which
+  case I need a light color scheme. So I keep both available.
 
-Outside of programming, I heavily use LaTeX, Markdown, and restructured Text.
+- Most of my email is routed into a central Google Inbox account. I like HTML
+  based email and I use it plenty.
 
-### Git
+  However, one of my email accounts serves as a development, text-mode email
+  account as well. I synchronize my email folders to my local machines via IMAP
+  with `mbsync`, and I use `msmtp` as my standard `sendmail` utility. I can send
+  emails via `get send-email`, and view and compose emails with `mutt`.
 
-My git config has a few shortcuts, and the email/editor settings are most
-important.
-
-### Email
-
-Most of my email is routed into a central Google Inbox account. I like HTML
-based email and I use it plenty.
-
-However, one of my email accounts serves as a development, text-mode email
-account as well. I synchronize my email folders to my local machines via IMAP
-with `mbsync`, and I use `msmtp` as my standard `sendmail` utility. I can send
-emails via `get send-email`, and view and compose emails with `mutt`.
-
-### SSH
-
-I need to manage several personal computers from a distance, and a few
-non-personal computers as well. Each computer I own has a separate ssh key, and
-the authorized keys file enables communication between all of them.
+- My SSH config contains some fairly useful shortcuts for me. There is also a
+  `~/.ssh/local` configuration file, which can be used to store things outside
+  version control, if they are especially private or unique to one machine (e.g.
+  my work machine).
 
 ## Setup
 
@@ -76,22 +78,24 @@ the authorized keys file enables communication between all of them.
 Without these this whole exercise would probably be pointless.
 
 - `git` is pretty required
-- `bash` too
+- `bash`, tested with >=3.2 on mac
+- `m4`, which ought to be standard on unixy systems
 
 ### Optional Prereqs
 
 You'll probably want at least some of these tools, because they are kinda why I
 have my configuration version controlled.
 
-- If you use Arch, `archey3` is supported. Install it to get a nice startup
-  screen on all your terminals.
-- For email, mutt is the mail user agent. My email setup also depends on mbsync
-  and msmtp. The password keychain script depends on python, and the `keyring`
-  library (`pip install --user keyring`). To insert the password into the
-  keyring, simply use:
-
-        $ imap-pass -s EMAIL_ADDRESS
-
+- `archey3` for a pretty terminal splash screen on Arch Linux
+- Email
+  - `mutt` for email browsing
+  - `isync` for downloading email
+  - `msmtp` for sending email
+  - `python` with the `keyring` package installed. Easy to setup with
+    `pip install --user keyring`. Then run `imap-pass -s EMAIL` and paste the
+    email password into it.
+  - git email packages may need to be installed if you intend to send patches
+    out for review
 - If you use Ruby, `rbenv` is supported. You'll want to do:
 
         $ git clone https://github.com/rbenv/rbenv.git ~/.rbenv
@@ -103,8 +107,8 @@ have my configuration version controlled.
 
 - If you want to use mercurial, make sure you have `hg-git` installed.
 - Similarly, Gnus is an Emacs-based mail client. I never use it, but I have it
-  configured in `.spacemacs`. The passwords are stored in a standard `.authinfo`
-  file.
+  configured in `.spacemacs`. The passwords are stored in a 'standard'
+  `.authinfo` file.
 
 ### Install
 
@@ -116,13 +120,14 @@ clobbered.
 
     $ git clone https://github.com/brenns10/dotfiles.git ~/.dotfiles
     $ cd ~/.dotfiles
-    $ ./symlink.sh
+    $ ./setup
 
 ### Post Install
 
 Some things will want to be run for the first time in order to be fully
 configured, or need a logout/login to take full effect.
 
+- Configure email password as mentioned in optional prereqs
 - Emacs will need to run in order to download and install a bunch of packages.
 - The ssh-agent won't be running until you log out and back in.
 
@@ -148,4 +153,4 @@ Some examples:
 
 The only exception is Mac OS X. Although `profile` is run when you log in, the
 Terminal app runs Bash as a login shell, meaning that `profile` will run a
-second time. To avoid this, use iTerm :)
+second time. To avoid this, use iTerm2 :)
