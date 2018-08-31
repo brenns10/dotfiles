@@ -3,6 +3,32 @@
 DIR=$(pwd)
 
 LINKS=(
+	.archey3.cfg
+	.bash_profile
+	.bashrc
+	.hgrc
+	.profile
+	.xprofile
+	.ssh/config
+	.ssh/authorized_keys
+	.gitconfig
+	.vimrc
+	.vim
+	.spacemacs
+	.spacemacs.d/snippets
+	.tmux.conf
+	.mutt/muttrc
+	.mutt/vim-keys.rc
+	bin/viewchain
+	bin/monitor-internet
+	bin/wait-for-internet
+	bin/yank
+	bin/sbrennan-setup
+	bin/newmirrors
+	bin/imap-pass
+	.Xresources
+	.Xresources.d/solarized.dark
+	.Xresources.d/solarized.light
 )
 
 M4_LINKS=(

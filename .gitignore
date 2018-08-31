@@ -1,4 +1,5 @@
-vim/.netrwhist
+.vim/.netrwhist
 ssh/local
 .mbsyncrc
 .msmtprc
+*.swp
