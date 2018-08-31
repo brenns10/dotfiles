@@ -23,6 +23,10 @@ fi
 
 # Variables
 export GOPATH=$HOME/go
+if [ "$OS" = "mac" ]; then
+    # put homebrew items before system but after local
+    export PATH=/usr/local/sbin:$PATH
+fi
 export PATH=$HOME/bin:$GOPATH/bin:$HOME/.local/bin:$PATH
 export EDITOR="vim"
 export VISUAL="vim"
@@ -49,3 +53,4 @@ if [ "$OS" != "mac" ]; then
         ssh-agent -a "$SSH_AUTH_SOCK"
     fi
 fi
+
