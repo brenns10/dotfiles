@@ -3,6 +3,10 @@
 # Create symlinks for config repository.
 DIR=$(pwd)
 
+LINKS=(
+	.archey3.cfg
+)
+
 link() {
     homename=$1
     file=$2
@@ -29,8 +33,6 @@ link .spacemacs.d/snippets snippets
 link .vimrc vimrc
 link .vim vim
 link .tmux.conf tmux.conf
-link .mbsyncrc mbsyncrc
-link .msmtprc msmtprc
 link .mutt/muttrc muttrc
 link .mutt/vim-keys.rc mutt_vim-keys.rc
 link bin/viewchain bin/viewchain

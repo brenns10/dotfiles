@@ -6,6 +6,24 @@ symlinks. Should work on Mac and Linux equally well.
 
 ![terminal preview](term.png)
 
+## How it works
+
+`setup` contains an array called `LINKS`. This should contain paths within this
+repository, which should map directly to files in the home directory. For
+example, if `.bashrc` is in the array, a symlink will be created such that
+`~/.bashrc` points to the `.bashrc` in this repo. This will work with paths that
+contain subdirectories as well.
+
+This is great, unless you need to customize something about the dotfiles based
+on the environment. For instance, some dotfiles need to be different on Mac vs
+Linux. For this purpose, we also have `M4_LINKS`. M4 is a macro utility which is
+POSIX standard, present on most Linux and Mac machines without any issues. In
+this case, when `.bashrc` is in `M4_LINKS`, the script will first run M4 to
+create `.bashrc` from `.bashrc.m4`, and then do the same symlinking as above.
+
+The M4 context contains `OS`, which may be `mac` or `linux`. It can easily be
+extended by modifying the `setup` script.
+
 ## Environment
 
 I've maintained these dotfiles for a fairly long time now, and they support some
@@ -65,18 +83,8 @@ Without these this whole exercise would probably be pointless.
 You'll probably want at least some of these tools, because they are kinda why I
 have my configuration version controlled.
 
-- `emacs` + `spacemacs`
-
-        $ git clone git@github.com:syl20bnr/spacemacs.git .emacs.d
-
-- If you want to use mercurial, make sure you have `hg-git` installed.
 - If you use Arch, `archey3` is supported. Install it to get a nice startup
   screen on all your terminals.
-- If you use Ruby, `rbenv` is supported. You'll want to do:
-
-        $ git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-        $ git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-
 - For email, mutt is the mail user agent. My email setup also depends on mbsync
   and msmtp. The password keychain script depends on python, and the `keyring`
   library (`pip install --user keyring`). To insert the password into the
@@ -84,6 +92,16 @@ have my configuration version controlled.
 
         $ imap-pass -s EMAIL_ADDRESS
 
+- If you use Ruby, `rbenv` is supported. You'll want to do:
+
+        $ git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+        $ git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+
+- `emacs` + `spacemacs`
+
+        $ git clone git@github.com:syl20bnr/spacemacs.git .emacs.d
+
+- If you want to use mercurial, make sure you have `hg-git` installed.
 - Similarly, Gnus is an Emacs-based mail client. I never use it, but I have it
   configured in `.spacemacs`. The passwords are stored in a standard `.authinfo`
   file.

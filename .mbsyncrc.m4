@@ -1,10 +1,14 @@
+changequote(`<<<',`>>>')
+<<<
 # https://bloerg.net/2013/10/09/syncing-mails-with-mbsync-instead-of-offlineimap.html
 IMAPAccount stephen
 Host imap.zoho.com
 User stephen@brennan.io
 PassCmd "imap-pass -g stephen@brennan.io"
 SSLType IMAPS
-CertificateFile /etc/ssl/certs/ca-certificates.crt
+>>>
+CertificateFile ifelse(OS,mac,/usr/local/etc/openssl/cert.pem,/etc/ssl/certs/ca-certificates.crt)
+<<<
 
 IMAPStore stephen-remote
 Account stephen
@@ -20,3 +24,4 @@ Patterns *
 Create Both
 Expunge None
 SyncState *
+>>>
