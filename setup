@@ -26,6 +26,7 @@ LINKS=(
 	bin/sbrennan-setup
 	bin/newmirrors
 	bin/imap-pass
+	bin/git-when-merged
 	.Xresources
 	.Xresources.d/solarized.dark
 	.Xresources.d/solarized.light
