@@ -1,0 +1,6 @@
+# Since this is gmail, I needed to blacklist labels from appearing in IMAP.
+# There may have been a better way to do that.
+set from = "sbrennan@yelp.com"
+set sendmail = "msmtp -a yelp"
+
+color status red default

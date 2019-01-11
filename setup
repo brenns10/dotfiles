@@ -19,6 +19,8 @@ LINKS=(
 	.tmux.conf
 	.mutt/muttrc
 	.mutt/vim-keys.rc
+	.mutt/account_stephen
+	.mutt/account_yelp
 	bin/viewchain
 	bin/monitor-internet
 	bin/wait-for-internet

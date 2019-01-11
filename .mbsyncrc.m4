@@ -12,8 +12,8 @@ IMAPStore stephen-remote
 Account stephen
 
 MaildirStore stephen-local
-Path ~/mail/
-Inbox ~/mail/INBOX
+Path ~/mail/stephen/
+Inbox ~/mail/stephen/INBOX
 
 Channel stephen
 Master :stephen-remote:
@@ -22,4 +22,30 @@ Patterns *
 Create Both
 Expunge None
 SyncState *
+
+IMAPAccount yelp
+Host imap.gmail.com
+User sbrennan@yelp.com
+PassCmd "imap-pass -g sbrennan@yelp.com"
+SSLType IMAPS
+>>>CertificateFile ifelse(OS,mac,/usr/local/etc/openssl/cert.pem,/etc/ssl/certs/ca-certificates.crt)<<<
+>>>ifelse(OS,mac,AuthMechs LOGIN,)<<<
+>>>ifelse(OS,mac,,# nothing to see)<<<
+
+IMAPStore yelp-remote
+Account yelp
+
+MaildirStore yelp-local
+Path ~/mail/yelp/
+Inbox ~/mail/yelp/INBOX
+SubFolders Verbatim
+
+Channel yelp
+Master :yelp-remote:
+Slave :yelp-local:
+Patterns *
+Create Both
+Expunge None
+SyncState *
+
 >>>

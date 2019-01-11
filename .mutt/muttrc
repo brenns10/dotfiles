@@ -6,26 +6,14 @@ set sort=reverse-threads
 set sort_aux=last-date-received
 set edit_headers = yes
 set charset = UTF-8
+set use_from=yes
 #set display_filter = ~/bin/muttdate
 
-# imap
-#set imap_user=stephen@brennan.io
-#source "$HOME/.mutt/passwords" # imap_pass
 set folder=~/mail
-set spoolfile=+INBOX
-mailboxes +INBOX
+set spoolfile=+stephen/INBOX
 
-# smtp
-#set realname = "Stephen Brennan"
-#set from = stephen@brennan.io
-#set use_from = yes
-#unset use_domain
-#set smtp_url=smtps://$imap_user:$imap_pass@smtp.zoho.com
-#set ssl_force_tls = yes
-set sendmail="/usr/bin/msmtp"
-set envelope_from=yes
-set from="Stephen Brennan <stephen@brennan.io>"
-set use_from=yes
+folder-hook stephen/* source ~/.mutt/account_stephen
+folder-hook yelp/* source ~/.mutt/account_yelp
 
 # lists
 lists kernelnewbies@kernelnewbies.org
@@ -33,24 +21,24 @@ lists multipathtcp@ietf.org
 lists mptcp-dev@listes.uclouvain.be
 lists mptcp@lists.01.org
 
-# useful customizations
-# 1. refresh with G
-#bind index R imap-fetch-mail
-# 2. always view top message on start
+# Useful customizations
+
+# View first message on startup, always
 push <first-entry>
-# 3. use j and k to *scroll through* a message, not move among messages
-#bind pager j next-line
-#bind pager k previous-line
-# 4. to compensate for lack of message browsing, use h and l to move among
-#    messages within the pager
+
+# Use vim keys
+source ~/.mutt/vim-keys.rc
+
+# To compensate for lack of message browsing, use h and l to move among
+# messages within the pager
 bind pager h previous-undeleted
 bind pager l next-undeleted
-# 5. to compensate for lack of "h" to see headers, use "H" for that
+
+# To compensate for lack of "h" to see headers, use "H" for that
 bind pager H display-toggle-weed
 set pager_format="%4C %Z %[!%b %e at %I:%M %p]  %.20n  %s%* -- (%P)"
 
-source ~/.mutt/vim-keys.rc
-
+# Diff colors
 color body cyan default "^(> ?)*diff \-.*"
 color body cyan default "^(> ?)*index [a-f0-9].*"
 color body cyan default "^(> ?)*\-\-\- .*"
