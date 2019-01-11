@@ -2,4 +2,5 @@
 ssh/local
 .mbsyncrc
 .msmtprc
+.mutt/muttrc
 *.swp

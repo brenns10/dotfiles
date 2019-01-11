@@ -1,3 +1,5 @@
+changequote(`<<<',`>>>')
+<<<
 #set message_cachedir=~/.cache/mutt/messages
 set header_cache=~/.cache/mutt/headers
 set editor="vim"
@@ -10,7 +12,14 @@ set use_from=yes
 #set display_filter = ~/bin/muttdate
 
 set folder=~/mail
+
+>>>ifelse(OS,mac,<<<
+set spoolfile=+yelp/INBOX
+source ~/.mutt/account_yelp
+>>>,<<<
 set spoolfile=+stephen/INBOX
+source ~/.mutt/account_stephen
+>>>)<<<
 
 folder-hook stephen/* source ~/.mutt/account_stephen
 folder-hook yelp/* source ~/.mutt/account_yelp
@@ -46,3 +55,4 @@ color body cyan default "^(> ?)*[\+]{3} .*"
 color body green default "^(> ?)*[\+][^\+]+.*"
 color body red  default "^(> ?)*\-[^\-]+.*"
 color body yellow default "^(> ?)*@@ .*"
+>>>

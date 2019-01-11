@@ -17,7 +17,6 @@ LINKS=(
 	.spacemacs
 	.spacemacs.d/snippets
 	.tmux.conf
-	.mutt/muttrc
 	.mutt/vim-keys.rc
 	.mutt/account_stephen
 	.mutt/account_yelp
@@ -37,6 +36,7 @@ LINKS=(
 M4_LINKS=(
 	.msmtprc
 	.mbsyncrc
+	.mutt/muttrc
 )
 
 create_symlink() {
