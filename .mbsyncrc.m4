@@ -30,7 +30,6 @@ PassCmd "imap-pass -g sbrennan@yelp.com"
 SSLType IMAPS
 >>>CertificateFile ifelse(OS,mac,/usr/local/etc/openssl/cert.pem,/etc/ssl/certs/ca-certificates.crt)<<<
 >>>ifelse(OS,mac,AuthMechs LOGIN,)<<<
->>>ifelse(OS,mac,,# nothing to see)<<<
 
 IMAPStore yelp-remote
 Account yelp
