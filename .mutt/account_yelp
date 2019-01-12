@@ -4,3 +4,10 @@ set from = "sbrennan@yelp.com"
 set sendmail = "msmtp -a yelp"
 
 color status red default
+
+mailboxes "=yelp/INBOX"
+mailboxes "=yelp/[Gmail]/Drafts"
+mailboxes "=yelp/[Gmail]/Sent Mail"
+mailboxes "=yelp/[Gmail]/Spam"
+mailboxes "=yelp/[Gmail]/Starred"
+mailboxes "=yelp/[Gmail]/Trash"

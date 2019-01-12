@@ -2,3 +2,14 @@ set from = "stephen@brennan.io"
 set sendmail = "msmtp -a stephen"
 
 color status green default
+
+mailboxes "=stephen/Drafts"
+mailboxes "=stephen/Sent"
+mailboxes "=stephen/Templates"
+mailboxes "=stephen/kernelnewbies"
+mailboxes "=stephen/mptcp-dev"
+mailboxes "=stephen/INBOX"
+mailboxes "=stephen/Spam"
+mailboxes "=stephen/Trash"
+mailboxes "=stephen/mptcp"
+mailboxes "=stephen/multipathtcp

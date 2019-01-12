@@ -66,6 +66,12 @@ very particular work environments.
   with `mbsync`, and I use `msmtp` as my standard `sendmail` utility. I can send
   emails via `get send-email`, and view and compose emails with `mutt`.
 
+  I also have work email setup to be text-mode. I drew upon some of the
+  following resources to build a config:
+
+  https://pbrisbin.com/posts/two_accounts_in_mutt/
+  https://lukespear.co.uk/mutt-multiple-accounts-mbsync-notmuch-gpg-and-sub-minute-updates/
+
 - My SSH config contains some fairly useful shortcuts for me. There is also a
   `~/.ssh/local` configuration file, which can be used to store things outside
   version control, if they are especially private or unique to one machine (e.g.

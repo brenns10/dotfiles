@@ -13,6 +13,11 @@ set use_from=yes
 
 set folder=~/mail
 
+# load both configs to get mailboxes
+source ~/.mutt/account_yelp
+source ~/.mutt/account_stephen
+
+# but have the correct default
 >>>ifelse(OS,mac,<<<
 set spoolfile=+yelp/INBOX
 source ~/.mutt/account_yelp
@@ -21,6 +26,7 @@ set spoolfile=+stephen/INBOX
 source ~/.mutt/account_stephen
 >>>)<<<
 
+# switch sender and account details on folder change
 folder-hook stephen/* source ~/.mutt/account_stephen
 folder-hook yelp/* source ~/.mutt/account_yelp
 
@@ -55,4 +61,23 @@ color body cyan default "^(> ?)*[\+]{3} .*"
 color body green default "^(> ?)*[\+][^\+]+.*"
 color body red  default "^(> ?)*\-[^\-]+.*"
 color body yellow default "^(> ?)*@@ .*"
+
+# Use the sidebar!
+# Unset for small terminal windows
+set sidebar_width=30
+set sidebar_visible=yes
+set sidebar_sort_method=path
+set sidebar_short_path = no
+color sidebar_new yellow default
+bind index '[' sidebar-prev
+bind index ']' sidebar-next
+bind index '#' sidebar-open
+bind pager '[' sidebar-prev
+bind pager ']' sidebar-next
+bind pager '#' sidebar-open
+
+# Continue showing messages even when browsing message.
+# Unset this for small terminal windows.
+set pager_index_lines=20
+
 >>>
