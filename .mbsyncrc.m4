@@ -4,7 +4,7 @@ changequote(`<<<',`>>>')
 IMAPAccount stephen
 Host imap.zoho.com
 User stephen@brennan.io
-PassCmd "imap-pass -g stephen@brennan.io"
+PassCmd "~/bin/imap-pass -g stephen@brennan.io"
 SSLType IMAPS
 >>>CertificateFile ifelse(OS,mac,/usr/local/etc/openssl/cert.pem,/etc/ssl/certs/ca-certificates.crt)<<<
 
@@ -26,7 +26,7 @@ SyncState *
 IMAPAccount yelp
 Host imap.gmail.com
 User sbrennan@yelp.com
-PassCmd "imap-pass -g sbrennan@yelp.com"
+PassCmd "~/bin/imap-pass -g sbrennan@yelp.com"
 SSLType IMAPS
 >>>CertificateFile ifelse(OS,mac,/usr/local/etc/openssl/cert.pem,/etc/ssl/certs/ca-certificates.crt)<<<
 >>>ifelse(OS,mac,AuthMechs LOGIN,)<<<

@@ -3,7 +3,7 @@
 set from = "sbrennan@yelp.com"
 set sendmail = "msmtp -a yelp"
 
-color status red default
+color status red white
 
 mailboxes "=yelp/INBOX"
 mailboxes "=yelp/[Gmail]/Drafts"
