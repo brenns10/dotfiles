@@ -1,11 +1,11 @@
 changequote(`<<<',`>>>')
 <<<
-#set message_cachedir=~/.cache/mutt/messages
+set message_cachedir=~/.cache/mutt/messages
 set header_cache=~/.cache/mutt/headers
 set editor="vim"
 set my_name = "Stephen Brennan"
-set sort=reverse-threads
-set sort_aux=last-date-received
+set sort=threads
+set sort_aux=reverse-last-date-received
 set edit_headers = yes
 set charset = UTF-8
 set use_from=yes
@@ -68,6 +68,8 @@ set sidebar_width=30
 set sidebar_visible=yes
 set sidebar_sort_method=path
 set sidebar_short_path = no
+set sidebar_divider_char = ' '
+color sidebar_divider default color0
 color sidebar_new yellow default
 bind index '[' sidebar-prev
 bind index ']' sidebar-next
@@ -80,4 +82,28 @@ bind pager '#' sidebar-open
 # Unset this for small terminal windows.
 set pager_index_lines=20
 
+# Status Bar -----------------------------------------
+set status_chars  = " *%A"
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+
+# Behavior
+set timeout = 3          # idle time before scanning
+set mail_check = 0       # minimum time between scans>>
+unset mark_old           # read/new is good enough for me
+set beep_new             # bell on new mails
+
+bind index <tab>    sync-mailbox
+bind index <space>  collapse-thread
+set uncollapse_jump                        # don't collapse on an unread message
+set date_format = "%a, %b %d %H:%M"
+set index_format = "[%Z]  %D  %-20.20F  %s"
+
+set pager_stop             # don't go to next message automatically
+set menu_scroll            # scroll in menus
+set tilde                  # show tildes like in vim
+unset markers              # no ugly plus signs
+
+macro index S "<enter-command>unset wait_key<enter><shell-escape>~/bin/mutt-notmuch-py ~/mail/temporary/search<enter><change-folder-readonly>+temporary/search<enter>" "search mail (using notmuch)"
+
+mailboxes =temporary/search
 >>>

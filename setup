@@ -28,6 +28,7 @@ LINKS=(
 	bin/newmirrors
 	bin/imap-pass
 	bin/git-when-merged
+	bin/mutt-notmuch-py
 	.Xresources
 	.Xresources.d/solarized.dark
 	.Xresources.d/solarized.light

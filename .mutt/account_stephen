@@ -1,7 +1,7 @@
 set from = "stephen@brennan.io"
 set sendmail = "msmtp -a stephen"
 
-color status green white
+color status green color0
 
 mailboxes "=stephen/Drafts"
 mailboxes "=stephen/Sent"
