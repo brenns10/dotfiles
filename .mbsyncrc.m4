@@ -42,9 +42,9 @@ SubFolders Verbatim
 Channel yelp
 Master :yelp-remote:
 Slave :yelp-local:
-Patterns *
+Patterns INBOX Finished ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Drafts" "[Gmail]/Spam"
 Create Both
-Expunge None
+Expunge Slave
 SyncState *
 
 >>>

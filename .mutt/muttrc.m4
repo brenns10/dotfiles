@@ -14,8 +14,8 @@ set use_from=yes
 set folder=~/mail
 
 # load both configs to get mailboxes
-source ~/.mutt/account_yelp
 source ~/.mutt/account_stephen
+source ~/.mutt/account_yelp
 
 # but have the correct default
 >>>ifelse(OS,mac,<<<
@@ -94,6 +94,11 @@ set beep_new             # bell on new mails
 
 bind index <tab>    sync-mailbox
 bind index <space>  collapse-thread
+bind index R group-reply
+bind index r reply
+bind pager R group-reply
+bind pager r reply
+
 set uncollapse_jump                        # don't collapse on an unread message
 set date_format = "%a, %b %d %H:%M"
 set index_format = "[%Z]  %D  %-20.20F  %s"

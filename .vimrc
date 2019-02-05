@@ -144,6 +144,9 @@ set formatoptions=crojq
 "    is nice.
 autocmd FileType markdown setlocal formatoptions+=t
 autocmd FileType text setlocal formatoptions+=t
+" a: auto-reflow paragraphs
+" w: whitespace @ end of line
+autocmd FileType mail setlocal formatoptions+=aw
 
 nnoremap <Leader>gs :!echo --- LATEST OUTPUT ---; git status<Enter>
 nnoremap <Leader>gd :!git diff %

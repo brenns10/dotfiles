@@ -2,12 +2,13 @@
 # There may have been a better way to do that.
 set from = "sbrennan@yelp.com"
 set sendmail = "msmtp -a yelp"
+set text_flowed=yes
+#set editor = "vim -c 'setlocal fo+w'"
 
 color status red color0
 
 mailboxes "=yelp/INBOX"
+mailboxes "=yelp/Finished"
 mailboxes "=yelp/[Gmail]/Drafts"
 mailboxes "=yelp/[Gmail]/Sent Mail"
 mailboxes "=yelp/[Gmail]/Spam"
-mailboxes "=yelp/[Gmail]/Starred"
-mailboxes "=yelp/[Gmail]/Trash"
