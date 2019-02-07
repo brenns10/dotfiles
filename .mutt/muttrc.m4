@@ -4,8 +4,8 @@ set message_cachedir=~/.cache/mutt/messages
 set header_cache=~/.cache/mutt/headers
 set editor="vim"
 set my_name = "Stephen Brennan"
-set sort=threads
-set sort_aux=reverse-last-date-received
+set sort=reverse-threads
+set sort_aux=last-date-received
 set edit_headers = yes
 set charset = UTF-8
 set use_from=yes
@@ -109,6 +109,8 @@ set tilde                  # show tildes like in vim
 unset markers              # no ugly plus signs
 
 macro index S "<enter-command>unset wait_key<enter><shell-escape>~/bin/mutt-notmuch-py ~/mail/temporary/search<enter><change-folder-readonly>+temporary/search<enter>" "search mail (using notmuch)"
+
+macro index,pager ,f "<save-message>=yelp/Finished<enter>y"
 
 mailboxes =temporary/search
 >>>
