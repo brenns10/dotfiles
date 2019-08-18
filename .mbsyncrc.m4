@@ -20,7 +20,7 @@ Master :stephen-remote:
 Slave :stephen-local:
 Patterns *
 Create Both
-Expunge None
+Expunge Both
 SyncState *
 
 IMAPAccount yelp
