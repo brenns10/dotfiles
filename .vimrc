@@ -95,12 +95,11 @@ inoremap <C-U> <C-G>u<C-U>
 
 " --- End sensible.vim ---
 " --- Begin my customization ---
-set background=dark
 colorscheme solarized8_dark
 let mapleader=' '
 
 " run commands from the proper directory
-set autochdir
+"set autochdir
 " use line numbering
 set number
 " show tabs
@@ -150,4 +149,14 @@ autocmd FileType mail setlocal formatoptions+=aw
 
 nnoremap <Leader>gs :!echo --- LATEST OUTPUT ---; git status<Enter>
 nnoremap <Leader>gd :!git diff %
+
+"autocmd BufWritePre * :RetabIndents
+command! RetabIndents call RetabIndents()
+
+func! RetabIndents()
+    let saved_view = winsaveview()
+    execute '%s@^\(\ \{'.&ts.'\}\)\+@\=repeat("\t", len(submatch(0))/'.&ts.')@e'
+    call winrestview(saved_view)
+endfunc
+
 " vim:set ft=vim et sw=2:
