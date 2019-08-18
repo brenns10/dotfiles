@@ -32,6 +32,9 @@ LINKS=(
 	.Xresources
 	.Xresources.d/solarized.dark
 	.Xresources.d/solarized.light
+	.config/aerc/aerc.conf
+	.config/aerc/accounts.conf
+	.config/aerc/binds.conf
 )
 
 M4_LINKS=(
