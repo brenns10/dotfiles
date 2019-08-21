@@ -5,6 +5,7 @@ set text_flowed = no
 
 color status green color0
 
+mailboxes "=stephen/driverdev"
 mailboxes "=stephen/Drafts"
 mailboxes "=stephen/Sent"
 mailboxes "=stephen/Templates"
