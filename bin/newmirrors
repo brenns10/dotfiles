@@ -1,6 +1,7 @@
 #!/bin/sh
 # Pacman Mirrorlist Updater
 # Stephen Brennan <stephen@stephen-brennan.com>
+set -x
 
 # Display help.
 if [ "$1" = "-h" -o "$1" = "--help" ]; then
