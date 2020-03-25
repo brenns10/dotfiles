@@ -1,14 +1,20 @@
 changequote(`<<<',`>>>')
 <<<
-set message_cachedir=~/.cache/mutt/messages
+#set message_cachedir=~/.cache/mutt/messages
 set header_cache=~/.cache/mutt/headers
+set mailcap_path=~/.mutt/mailcap
 set editor="vim"
 set my_name = "Stephen Brennan"
 set sort=reverse-threads
+set sort_browser=reverse-date
+set strict_threads=yes
 set sort_aux=last-date-received
 set edit_headers = yes
 set charset = UTF-8
 set use_from=yes
+auto_view text/html
+# auto collapse mail
+folder-hook . "push _"
 #set display_filter = ~/bin/muttdate
 
 set folder=~/mail
@@ -43,6 +49,8 @@ push <first-entry>
 
 # Use vim keys
 source ~/.mutt/vim-keys.rc
+# Use solarized colors
+source ~/.mutt/mutt-solarized-dark-16.muttrc
 
 # To compensate for lack of message browsing, use h and l to move among
 # messages within the pager
@@ -98,6 +106,9 @@ bind index R group-reply
 bind index r reply
 bind pager R group-reply
 bind pager r reply
+
+bind index - collapse-thread
+bind index _ collapse-all
 
 set uncollapse_jump                        # don't collapse on an unread message
 set date_format = "%a, %b %d %H:%M"
