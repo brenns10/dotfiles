@@ -19,7 +19,6 @@ LINKS=(
 	.tmux.conf
 	.mutt/vim-keys.rc
 	.mutt/account_stephen
-	.mutt/account_yelp
 	.mutt/mutt-solarized-dark-16.muttrc
 	.mutt/mailcap
 	bin/viewchain

@@ -19,22 +19,12 @@ folder-hook . "push _"
 
 set folder=~/mail
 
+## Multi-account support hack (currently not used)
 # load both configs to get mailboxes
 source ~/.mutt/account_stephen
-source ~/.mutt/account_yelp
-
-# but have the correct default
->>>ifelse(OS,mac,<<<
-set spoolfile=+yelp/INBOX
-source ~/.mutt/account_yelp
->>>,<<<
-set spoolfile=+stephen/INBOX
-source ~/.mutt/account_stephen
->>>)<<<
-
 # switch sender and account details on folder change
 folder-hook stephen/* source ~/.mutt/account_stephen
-folder-hook yelp/* source ~/.mutt/account_yelp
+set spoolfile=+stephen/INBOX
 
 # lists
 lists kernelnewbies@kernelnewbies.org
