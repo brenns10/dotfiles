@@ -111,6 +111,8 @@ set cc=+1
 set shm=I
 " mouse scrolling in tmux
 set mouse=a
+" UNCOMMMENT tabstop
+set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
 " Copy to cliboard! Classy & Useful AF
 " https://sunaku.github.io/tmux-yank-osc52.html
@@ -158,5 +160,22 @@ func! RetabIndents()
     execute '%s@^\(\ \{'.&ts.'\}\)\+@\=repeat("\t", len(submatch(0))/'.&ts.')@e'
     call winrestview(saved_view)
 endfunc
+
+" Plugin installation
+call plug#begin('~/.vim-plugged')
+" Everything here for LSP: completion etc
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+call plug#end()
+
+if executable('cquery')
+   au User lsp_setup call lsp#register_server({
+      \ 'name': 'cquery',
+      \ 'cmd': {server_info->['cquery']},
+      \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
+      \ 'initialization_options': { 'cacheDirectory': '/tmp/cquery/cache' },
+      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
+      \ })
+endif
 
 " vim:set ft=vim et sw=2:
