@@ -36,6 +36,8 @@ LINKS=(
 	.config/aerc/aerc.conf
 	.config/aerc/accounts.conf
 	.config/aerc/binds.conf
+	.config/systemd/mbsync.service
+	.config/systemd/mbsync.timer
 )
 
 M4_LINKS=(
