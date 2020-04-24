@@ -112,7 +112,7 @@ set shm=I
 " mouse scrolling in tmux
 set mouse=a
 " UNCOMMMENT tabstop
-set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+"set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
 " Copy to cliboard! Classy & Useful AF
 " https://sunaku.github.io/tmux-yank-osc52.html
