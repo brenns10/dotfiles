@@ -3,4 +3,5 @@ ssh/local
 .mbsyncrc
 .msmtprc
 .mutt/muttrc
+bin/lc
 *.swp

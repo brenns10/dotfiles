@@ -17,6 +17,7 @@ LINKS=(
 	.spacemacs
 	.spacemacs.d/snippets
 	.tmux.conf
+	.lc.json
 	.mutt/vim-keys.rc
 	.mutt/account_stephen
 	.mutt/account_yelp
@@ -41,6 +42,7 @@ M4_LINKS=(
 	.msmtprc
 	.mbsyncrc
 	.mutt/muttrc
+	bin/lc
 )
 
 create_symlink() {
@@ -79,3 +81,5 @@ for item in "${LINKS[@]}"
 do
 	create_symlink $item
 done
+
+chmod u+x ~/bin/lc
