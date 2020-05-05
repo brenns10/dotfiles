@@ -20,7 +20,8 @@ LINKS=(
 	.lc.json
 	.mutt/vim-keys.rc
 	.mutt/account_stephen
-	.mutt/account_yelp
+	.mutt/mutt-solarized-dark-16.muttrc
+	.mutt/mailcap
 	bin/viewchain
 	bin/monitor-internet
 	bin/wait-for-internet
@@ -36,6 +37,8 @@ LINKS=(
 	.config/aerc/aerc.conf
 	.config/aerc/accounts.conf
 	.config/aerc/binds.conf
+	.config/systemd/mbsync.service
+	.config/systemd/mbsync.timer
 )
 
 M4_LINKS=(

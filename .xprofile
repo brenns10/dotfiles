@@ -1,2 +1,2 @@
 source ~/.profile
-xrdb -load .Xresources
+xrdb -load $HOME/.Xresources

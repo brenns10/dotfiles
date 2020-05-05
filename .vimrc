@@ -111,6 +111,8 @@ set cc=+1
 set shm=I
 " mouse scrolling in tmux
 set mouse=a
+" UNCOMMMENT tabstop
+"set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
 " Copy to cliboard! Classy & Useful AF
 " https://sunaku.github.io/tmux-yank-osc52.html
@@ -159,4 +161,57 @@ func! RetabIndents()
     call winrestview(saved_view)
 endfunc
 
+" Plugin installation
+call plug#begin('~/.vim-plugged')
+" Everything here for LSP: completion etc
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+call plug#end()
+
+" C Language Server Registration
+"if executable('cquery')
+"   au User lsp_setup call lsp#register_server({
+"      \ 'name': 'cquery',
+"      \ 'cmd': {server_info->['cquery']},
+"      \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
+"      \ 'initialization_options': { 'cacheDirectory': '/tmp/cquery/cache' },
+"      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
+"      \ })
+"endif
+
+if executable('clangd')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'clangd',
+        \ 'cmd': {server_info->['clangd', '-background-index']},
+        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+        \ })
+endif
+
+" Asyncomplete tab completion
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
+
+" Asyncomplete force refresh
+imap <c-space> <Plug>(asyncomplete_force_refresh)
+
+" Happy keybindings for lsp, reminds me of spacemacs
+noremap <Leader>gd :LspDefinition<CR>
+noremap <Leader>gr :LspReferences<CR>
+noremap <Leader>pd :LspPeekDefinition<CR>
+noremap <Leader>r  :LspRename<CR>
+noremap <Leader>nw :LspNextWarning<CR>
+noremap <Leader>ne :LspNextError<CR>
+noremap <Leader>pw :LspPreviousWarning<CR>
+noremap <Leader>pe :LspPreviousError<CR>
+noremap <Leader>pr :LspNextReference<CR>
+noremap <Leader>wz <C-w><C-z>
+noremap <Leader>wo <C-w><C-o>
+noremap <Leader>wj <C-w><C-j>
+noremap <Leader>wk <C-w><C-k>
+noremap <Leader>wq <C-w>q
+
+set completeopt+=preview
 " vim:set ft=vim et sw=2:

@@ -1,34 +1,30 @@
 changequote(`<<<',`>>>')
 <<<
-set message_cachedir=~/.cache/mutt/messages
+#set message_cachedir=~/.cache/mutt/messages
 set header_cache=~/.cache/mutt/headers
+set mailcap_path=~/.mutt/mailcap
 set editor="vim"
 set my_name = "Stephen Brennan"
 set sort=reverse-threads
+set sort_browser=reverse-date
+set strict_threads=yes
 set sort_aux=last-date-received
 set edit_headers = yes
 set charset = UTF-8
 set use_from=yes
+auto_view text/html
+# auto collapse mail
+folder-hook . "push _"
 #set display_filter = ~/bin/muttdate
 
 set folder=~/mail
 
+## Multi-account support hack (currently not used)
 # load both configs to get mailboxes
 source ~/.mutt/account_stephen
-source ~/.mutt/account_yelp
-
-# but have the correct default
->>>ifelse(OS,mac,<<<
-set spoolfile=+yelp/INBOX
-source ~/.mutt/account_yelp
->>>,<<<
-set spoolfile=+stephen/INBOX
-source ~/.mutt/account_stephen
->>>)<<<
-
 # switch sender and account details on folder change
 folder-hook stephen/* source ~/.mutt/account_stephen
-folder-hook yelp/* source ~/.mutt/account_yelp
+set spoolfile=+stephen/INBOX
 
 # lists
 lists kernelnewbies@kernelnewbies.org
@@ -43,6 +39,8 @@ push <first-entry>
 
 # Use vim keys
 source ~/.mutt/vim-keys.rc
+# Use solarized colors
+source ~/.mutt/mutt-solarized-dark-16.muttrc
 
 # To compensate for lack of message browsing, use h and l to move among
 # messages within the pager
@@ -98,6 +96,9 @@ bind index R group-reply
 bind index r reply
 bind pager R group-reply
 bind pager r reply
+
+bind index - collapse-thread
+bind index _ collapse-all
 
 set uncollapse_jump                        # don't collapse on an unread message
 set date_format = "%a, %b %d %H:%M"

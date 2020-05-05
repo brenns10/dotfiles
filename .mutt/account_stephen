@@ -1,4 +1,4 @@
-set from = "stephen@brennan.io"
+set from = "Stephen Brennan <stephen@brennan.io>"
 set sendmail = "msmtp -a stephen"
 set text_flowed = no
 #set editor = "vim"
