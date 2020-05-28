@@ -18,3 +18,5 @@
 	ui = auto
 [sendemail]
 	smtpserver = /usr/bin/msmtp
+[rebase]
+	autosquash = true
