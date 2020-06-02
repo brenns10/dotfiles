@@ -32,6 +32,7 @@ LINKS=(
 	bin/git-when-merged
 	bin/mutt-notmuch-py
 	bin/widevine-update
+	bin/urls
 	.Xresources
 	.Xresources.d/solarized.dark
 	.Xresources.d/solarized.light
