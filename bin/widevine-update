@@ -1,0 +1,19 @@
+#!/bin/bash
+# Update widevine CDM for chromium
+# Original: https://www.andreafortuna.org/2019/09/24/how-to-install-latest-widevine-plugin-on-chromium/
+
+set -e
+set -x
+
+TMPDIR=`mktemp -d`
+pushd $TMPDIR
+LATEST=`curl https://dl.google.com/widevine-cdm/current.txt`
+wget https://dl.google.com/widevine-cdm/$LATEST-linux-x64.zip
+unzip $LATEST-linux-x64.zip
+sudo mkdir -p /usr/lib/chromium
+sudo mv libwidevinecdm.so /usr/lib/chromium
+sudo chmod 644 /usr/lib/chromium/libwidevinecdm.so
+popd
+rm -rf $TMPDIR
+set +x
+echo Latest widevine is installed. Restart chromium for changes to take effect.

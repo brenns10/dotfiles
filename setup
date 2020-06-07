@@ -31,6 +31,7 @@ LINKS=(
 	bin/imap-pass
 	bin/git-when-merged
 	bin/mutt-notmuch-py
+	bin/widevine-update
 	.Xresources
 	.Xresources.d/solarized.dark
 	.Xresources.d/solarized.light
