@@ -181,11 +181,29 @@ call plug#end()
 "      \ })
 "endif
 
-if executable('clangd')
+"if executable('clangd')
+"    au User lsp_setup call lsp#register_server({
+"        \ 'name': 'clangd',
+"        \ 'cmd': {server_info->['clangd', '-background-index']},
+"        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+"        \ })
+"endif
+if executable('ccls')
+   au User lsp_setup call lsp#register_server({
+      \ 'name': 'ccls',
+      \ 'cmd': {server_info->['ccls']},
+      \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
+      \ 'initialization_options': {},
+      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
+      \ })
+endif
+
+" Python language server registration
+if executable('pyls')
     au User lsp_setup call lsp#register_server({
-        \ 'name': 'clangd',
-        \ 'cmd': {server_info->['clangd', '-background-index']},
-        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'whitelist': ['python'],
         \ })
 endif
 
@@ -212,6 +230,8 @@ noremap <Leader>wo <C-w><C-o>
 noremap <Leader>wj <C-w><C-j>
 noremap <Leader>wk <C-w><C-k>
 noremap <Leader>wq <C-w>q
+let g:lsp_highlight_references_enabled = 1
+
 
 set completeopt+=preview
 " vim:set ft=vim et sw=2:
