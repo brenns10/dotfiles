@@ -33,6 +33,7 @@ LINKS=(
 	bin/mutt-notmuch-py
 	bin/widevine-update
 	bin/urls
+	bin/urlc
 	.Xresources
 	.Xresources.d/solarized.dark
 	.Xresources.d/solarized.light

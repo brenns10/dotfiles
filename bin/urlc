@@ -1,0 +1,19 @@
+#!/bin/bash
+# URL selecter and copier for fuzzy find. Useful for piping email messages
+# into via mutt, or maybe piping calendar event info from khal.
+
+FILE="$1"
+FILESOURCE="user"
+if [ -z "$FILE" ]; then
+	FILE=$(mktemp "${TMPDIR:-/tmp/}$(basename $0).XXXXXXXXXXXX")
+	FILESOURCE="tmp"
+	cat - >$FILE
+fi
+
+grep -Eo 'https?://[^ ]*?\b' $FILE |\
+	fzf --preview="grep -F {} -B4 -A4 --color=always $FILE" --preview-window=up:50% |\
+	xclip -selection c -i
+
+if [ "$FILESOURCE" = "tmp" ]; then
+	rm $FILE
+fi
