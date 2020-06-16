@@ -217,6 +217,9 @@ imap <c-space> <Plug>(asyncomplete_force_refresh)
 " Happy keybindings for lsp, reminds me of spacemacs
 noremap <Leader>gd :LspDefinition<CR>
 noremap <Leader>gr :LspReferences<CR>
+noremap gd :LspDefinition<CR>
+noremap gr :LspReferences<CR>
+nnoremap <silent> K :LspHover<CR>
 noremap <Leader>pd :LspPeekDefinition<CR>
 noremap <Leader>r  :LspRename<CR>
 noremap <Leader>nw :LspNextWarning<CR>
@@ -230,7 +233,6 @@ noremap <Leader>wj <C-w><C-j>
 noremap <Leader>wk <C-w><C-k>
 noremap <Leader>wq <C-w>q
 let g:lsp_highlight_references_enabled = 1
-
 
 set completeopt+=preview
 " vim:set ft=vim et sw=2:
