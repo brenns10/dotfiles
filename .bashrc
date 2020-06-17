@@ -163,6 +163,7 @@ export PS1="\n$FG_GREEN$_PS1_FOR_VENV$RESET$user\\u$RESET at $host\\h$RESET in $
 #
 # END: PS1 Configuration
 #####
+alias vim=nvim
 
 #
 # archey3: Finally, print out a nice pretty distro ascii art with assorted
