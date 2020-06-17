@@ -28,8 +28,13 @@ buf=$( cat "$@" )
 # copy to tmux if possible
 test -n "$TMUX" && tmux set-buffer "$buf"
 
-# copy to X11 if possible...
-test -n "$DISPLAY" && printf %s "$buf" | { xsel -ib || xclip -sel c ;} && exit
+# copy to X11/Wayland if possible...
+SESSION=$(loginctl show-session "$XDG_SESSION_ID" -p Type)
+if [ "$SESSION" = "Type=x11" ]; then
+	printf %s "$buf" | { xsel -ib || xclip -sel c ;} && exit
+elif [ "$SESSION" = "Type=wayland" ]; then
+	printf %s "$buf" | wl-copy && exit
+fi
 
 # ...otherwise copy to terminal
 len=$( printf %s "$buf" | wc -c ) max=74994

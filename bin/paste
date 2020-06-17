@@ -1,0 +1,16 @@
+#!/bin/bash
+unamestr=$(uname)
+if [[ "$unamestr" == "Linux" ]]; then
+	SESSION=$(loginctl show-session "$XDG_SESSION_ID" -p Type)
+	if [[ "$SESSION" = "Type=x11" ]]; then
+		{ xsel || xclip -sel c -o ;}
+	elif [[ "$SESSION" = "Type=wayland" ]]; then
+		wl-paste
+	else
+		echo "Cannot paste from non-display"
+	fi
+elif [[ "$unamestr" == "Darwin" ]]; then
+	pbpaste
+else
+	echo "Cannot paste from unknown OS"
+fi

@@ -116,11 +116,7 @@ set mouse=a
 
 " Copy to cliboard! Classy & Useful AF
 " https://sunaku.github.io/tmux-yank-osc52.html
-if has('gui_running') || has('nvim') && exists('$DISPLAY')
-  noremap <Leader>y "+y
-else
-  noremap <silent> <Leader>y y:call system('yank > /dev/tty', @0)<Return>
-endif
+noremap <silent> <Leader>y y:call system('yank', @0)<Return>
 
 " MAIL OPTIONS
 " Generally speaking, I would like my emails to be wrapped at 75 characters
@@ -241,7 +237,7 @@ set completeopt+=preview
 " <Leader>cf: paste into a 'fenced' code block for markdown
 " <Leader>cb: paste into a 'block' code block (indented by 4 spaces)
 noremap <Leader>cv :read !xclip -selection c -o<CR>
-noremap <Leader>cf a```<CR>```<ESC>k:read !xclip -selection c -o<CR>j
-noremap <Leader>cb my:read !xclip -selection c -o<CR>0<C-v>'yjI    <ESC>kdd<C-o>
-noremap <Leader>cr my:read !xclip -selection c -o<CR>
+noremap <Leader>cf a```<CR>```<ESC>k:paste<CR>j
+noremap <Leader>cb my:read !paste<CR>0<C-v>'yjI    <ESC>kdd<C-o>
+noremap <Leader>cr my:read !paste<CR>
 " vim:set ft=vim et sw=2:

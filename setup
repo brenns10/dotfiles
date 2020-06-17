@@ -27,6 +27,7 @@ LINKS=(
 	bin/monitor-internet
 	bin/wait-for-internet
 	bin/yank
+	bin/paste
 	bin/sbrennan-setup
 	bin/newmirrors
 	bin/imap-pass
