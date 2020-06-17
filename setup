@@ -43,6 +43,7 @@ LINKS=(
 	.config/aerc/binds.conf
 	.config/systemd/mbsync.service
 	.config/systemd/mbsync.timer
+	.config/nvim/init.vim
 )
 
 M4_LINKS=(
