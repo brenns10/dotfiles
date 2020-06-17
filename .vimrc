@@ -235,4 +235,12 @@ noremap <Leader>wq <C-w>q
 let g:lsp_highlight_references_enabled = 1
 
 set completeopt+=preview
+
+" For pasting directly without setting +paste:
+" <Leader>cv: paste
+" <Leader>cf: paste into a 'fenced' code block for markdown
+" <Leader>cb: paste into a 'block' code block (indented by 4 spaces)
+noremap <Leader>cv :read !xclip -selection c -o<CR>
+noremap <Leader>cf a```<CR>```<ESC>k:read !xclip -selection c -o<CR>j
+noremap <Leader>cb my:read !xclip -selection c -o<CR>0<C-v>'yjI    <ESC>kdd<C-o>
 " vim:set ft=vim et sw=2:
