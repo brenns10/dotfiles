@@ -3,6 +3,7 @@
 DIR=$(pwd)
 
 LINKS=(
+	.alacritty.yml
 	.archey3.cfg
 	.bash_profile
 	.bashrc
