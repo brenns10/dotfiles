@@ -243,4 +243,5 @@ set completeopt+=preview
 noremap <Leader>cv :read !xclip -selection c -o<CR>
 noremap <Leader>cf a```<CR>```<ESC>k:read !xclip -selection c -o<CR>j
 noremap <Leader>cb my:read !xclip -selection c -o<CR>0<C-v>'yjI    <ESC>kdd<C-o>
+noremap <Leader>cr my:read !xclip -selection c -o<CR>
 " vim:set ft=vim et sw=2:
