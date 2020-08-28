@@ -7,46 +7,46 @@ LINKS=(
 	.archey3.cfg
 	.bash_profile
 	.bashrc
-	.hgrc
-	.profile
-	.xprofile
-	.ssh/config
-	.ssh/authorized_keys
-	.gitconfig
-	.vimrc
-	.vim
-	.spacemacs
-	.spacemacs.d/snippets
-	.tmux.conf
-	.lc.json
-	.mutt/vim-keys.rc
-	.mutt/account_stephen
-	.mutt/mutt-solarized-dark-16.muttrc
-	.mutt/mailcap
-	bin/viewchain
+	bin/git-when-merged
+	bin/imap-pass
 	bin/monitor-internet
-	bin/wait-for-internet
-	bin/yank
+	bin/mutt-notmuch-py
+	bin/newmirrors
 	bin/paste
 	bin/sbrennan-setup
-	bin/newmirrors
-	bin/imap-pass
-	bin/git-when-merged
-	bin/mutt-notmuch-py
-	bin/widevine-update
-	bin/urls
 	bin/urlc
-	.Xresources
-	.Xresources.d/solarized.dark
-	.Xresources.d/solarized.light
-	.config/aerc/aerc.conf
+	bin/urls
+	bin/viewchain
+	bin/wait-for-internet
+	bin/widevine-update
+	bin/yank
 	.config/aerc/accounts.conf
+	.config/aerc/aerc.conf
 	.config/aerc/binds.conf
 	.config/alot/config
 	.config/alot/themes/solarized_dark
+	.config/nvim/init.vim
 	.config/systemd/mbsync.service
 	.config/systemd/mbsync.timer
-	.config/nvim/init.vim
+	.gitconfig
+	.hgrc
+	.lc.json
+	.mutt/account_stephen
+	.mutt/mailcap
+	.mutt/mutt-solarized-dark-16.muttrc
+	.mutt/vim-keys.rc
+	.profile
+	.spacemacs
+	.spacemacs.d/snippets
+	.ssh/authorized_keys
+	.ssh/config
+	.tmux.conf
+	.vim
+	.vimrc
+	.xprofile
+	.Xresources
+	.Xresources.d/solarized.dark
+	.Xresources.d/solarized.light
 )
 
 M4_LINKS=(
