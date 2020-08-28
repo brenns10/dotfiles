@@ -42,6 +42,8 @@ LINKS=(
 	.config/aerc/aerc.conf
 	.config/aerc/accounts.conf
 	.config/aerc/binds.conf
+	.config/alot/config
+	.config/alot/themes/solarized_dark
 	.config/systemd/mbsync.service
 	.config/systemd/mbsync.timer
 	.config/nvim/init.vim

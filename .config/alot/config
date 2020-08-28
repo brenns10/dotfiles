@@ -1,0 +1,14 @@
+theme = solarized_dark
+#handle_mouse = True
+initial_command = "namedqueries"
+prefer_plaintext = True
+
+[accounts]
+  [[oracle]]
+    realname = Stephen Brennan
+    address = stephen.s.brennan@oracle.com
+    alias_regexp = stephen.s.brennan\+.+@oracle.com
+    gpg_key = 0770069710E46067
+    sendmail_command = msmtp -a oracle -t
+    sent_box = maildir://~/mail/oracle/Sent
+    sign_by_default = true
