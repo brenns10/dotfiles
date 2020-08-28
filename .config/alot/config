@@ -4,11 +4,9 @@ initial_command = "namedqueries"
 prefer_plaintext = True
 
 [accounts]
-  [[oracle]]
+  [[stephen]]
     realname = Stephen Brennan
-    address = stephen.s.brennan@oracle.com
-    alias_regexp = stephen.s.brennan\+.+@oracle.com
-    gpg_key = 0770069710E46067
-    sendmail_command = msmtp -a oracle -t
-    sent_box = maildir://~/mail/oracle/Sent
-    sign_by_default = true
+    address = stephen@brennan.io
+    alias_regexp = stephen\+.+@brennan.io
+    sendmail_command = msmtp -a stephen -t
+    sent_box = maildir://~/mail/stephen/Sent
