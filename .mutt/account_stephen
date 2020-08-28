@@ -6,13 +6,9 @@ set text_flowed = no
 color status green color0
 
 mailboxes "=stephen/INBOX"
-mailboxes "=stephen/driverdev"
+mailboxes "=stephen/lists"
 mailboxes "=stephen/Drafts"
 mailboxes "=stephen/Sent"
 mailboxes "=stephen/Templates"
-mailboxes "=stephen/kernelnewbies"
-mailboxes "=stephen/mptcp-dev"
 mailboxes "=stephen/Spam"
 mailboxes "=stephen/Trash"
-mailboxes "=stephen/mptcp"
-mailboxes "=stephen/multipathtcp
