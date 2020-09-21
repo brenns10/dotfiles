@@ -95,7 +95,7 @@ inoremap <C-U> <C-G>u<C-U>
 
 " --- End sensible.vim ---
 " --- Begin my customization ---
-colorscheme solarized8_dark
+source ~/.vim/vimcolor.vim
 let mapleader=' '
 
 " run commands from the proper directory
@@ -250,4 +250,8 @@ noremap <Leader>cv :read !xclip -selection c -o<CR>
 noremap <Leader>cf a```<CR>```<ESC>k:paste<CR>j
 noremap <Leader>cb my:read !paste<CR>0<C-v>'yjI    <ESC>kdd<C-o>
 noremap <Leader>cr my:read !paste<CR>
+
+" When we receive SIGUSR1, reload the colorscheme portion of things.
+autocmd Signal SIGUSR1 source ~/.vim/vimcolor.vim
+
 " vim:set ft=vim et sw=2:

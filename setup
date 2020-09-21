@@ -7,8 +7,10 @@ LINKS=(
 	.archey3.cfg
 	.bash_profile
 	.bashrc
+	bin/dark
 	bin/git-when-merged
 	bin/imap-pass
+	bin/light
 	bin/monitor-internet
 	bin/mutt-notmuch-py
 	bin/newmirrors
@@ -25,9 +27,12 @@ LINKS=(
 	.config/aerc/binds.conf
 	.config/alot/config
 	.config/alot/themes/solarized_dark
+	.config/alot/themes/solarized_light
 	.config/nvim/init.vim
 	.config/systemd/mbsync.service
 	.config/systemd/mbsync.timer
+	.config/tmux/tmuxcolors-dark.conf
+	.config/tmux/tmuxcolors-light.conf
 	.gitconfig
 	.hgrc
 	.lc.json

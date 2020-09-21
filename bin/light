@@ -1,0 +1,18 @@
+#!/bin/bash
+set -e
+set -x
+SEDI="sed -i --follow-symlinks"
+
+# alacritty (auto reloads)
+$SEDI -e 's/colors: # dark/_solarized_dark: # dark/' -e 's/_solarized_light: # light/colors: # light/' ~/.alacritty.yml
+
+# alot (reload not supported)
+$SEDI s/solarized_dark/solarized_light/ ~/.config/alot/config
+
+# tmux (manually reload)
+$SEDI s/tmuxcolors-dark/tmuxcolors-light/ ~/.tmux.conf
+tmux source-file ~/.config/tmux/tmuxcolors-light.conf
+
+# vim (manually reload)
+echo 'colorscheme solarized8_light' > ~/.vim/vimcolor.vim
+pkill -USR1 -u $USER nvim
