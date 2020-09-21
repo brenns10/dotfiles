@@ -5,7 +5,7 @@
 	name = Stephen Brennan
 [core]
 	autocrlf = input
-	editor = vim
+	editor = nvim
 [alias]
 	st = status
 	ci = commit

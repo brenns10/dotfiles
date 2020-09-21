@@ -28,9 +28,9 @@ if [ "$OS" = "mac" ]; then
     export PATH=/usr/local/sbin:$PATH
 fi
 export PATH=$HOME/bin:$GOPATH/bin:$HOME/.local/bin:$PATH
-export EDITOR="vim"
-export VISUAL="vim"
-export SUDO_EDITOR="vim"
+export EDITOR="nvim"
+export VISUAL="nvim"
+export SUDO_EDITOR="nvim"
 export ALTERNATE_EDITOR=""
 export BROWSER=google-chrome-stable
 export PAGER=less
