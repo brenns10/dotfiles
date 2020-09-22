@@ -7,7 +7,10 @@ LINKS=(
 	.archey3.cfg
 	.bash_profile
 	.bashrc
+	bin/bash-history-sqlite.sh
+	bin/bash-preexec.sh
 	bin/dark
+	bin/dbhist.py
 	bin/git-when-merged
 	bin/imap-pass
 	bin/light

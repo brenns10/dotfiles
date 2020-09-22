@@ -56,6 +56,22 @@ fzfc=$GOPATH/src/github.com/junegunn/fzf/shell/completion.bash
 fzfk=$GOPATH/src/github.com/junegunn/fzf/shell/key-bindings.bash
 [ -r $fzfk ] && . $fzfk
 export FZF_COMPLETION_OPTS='--bind ctrl-k:kill-line'
+# This is my own implementation of the fzf history command. Rather than relying
+# on the builtin bash history, let's use the sqlite3 history database.
+__fzf_history__() {
+  local output
+  output=$(
+    python3 ~/bin/dbhist.py 'select command from command order by command_id desc' |
+      FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS +m --read0" $(__fzfcmd) --query "$READLINE_LINE"
+  ) || return
+  READLINE_LINE=${output}
+  if [ -z "$READLINE_POINT" ]; then
+    echo "$READLINE_LINE"
+  else
+    READLINE_POINT=0x7fffffff
+  fi
+}
+
 
 #
 # cnf: Command Not Found. Where present, this can hook into the "cammand not
@@ -171,3 +187,5 @@ alias vim=nvim
 #          system information.
 #
 hash archey3 >/dev/null && archey3
+HISTDB=$HOME/.bash_db_hist.sqlite
+source ~/bin/bash-history-sqlite.sh
