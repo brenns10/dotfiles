@@ -9,6 +9,7 @@ LINKS=(
 	.bashrc
 	bin/bash-history-sqlite.sh
 	bin/bash-preexec.sh
+	bin/commandstats
 	bin/dark
 	bin/dbhist.py
 	bin/git-when-merged

@@ -1,0 +1,146 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Statistics on my bash history!
+
+Not all of them are terribly interesting but I have them.
+
+CREATE TABLE command (
+    command_id INTEGER PRIMARY KEY,
+    shell TEXT,
+    command TEXT,
+    cwd TEXT,
+    return INTEGER,
+    started INTEGER,
+    ended INTEGER,
+    shellsession TEXT,
+    loginsession TEXT   -- this column does not really work
+);
+
+"""
+import argparse
+import datetime
+import os
+import sqlite3
+import time
+
+
+LOCAL_TIMEZONE = datetime.datetime.now(
+    datetime.timezone.utc).astimezone().tzinfo
+
+
+def ts_days_ago(days):
+    curr_time_ms = int(time.time() * 1000)
+    delta_ms = datetime.timedelta(days=days).total_seconds() * 1000
+    return curr_time_ms - delta_ms
+
+
+def frequent(conn, days, name):
+    cursor = conn.cursor()
+    ts = ts_days_ago(days)
+    cursor.execute("""
+        SELECT
+            C.command,
+            COUNT(*) AS exec_count,
+            MAX(C.started) AS last_run
+        FROM command C
+        WHERE C.started >= ?
+        GROUP BY C.command
+        ORDER BY exec_count DESC
+        LIMIT 10;
+    """, (ts,))
+    print(f'Top 10 most frequent commands {name}:')
+    for i, row in enumerate(cursor.fetchall()):
+        last_run_ts = row[2] / 1000
+        dt = datetime.datetime.fromtimestamp(
+            last_run_ts, tz=LOCAL_TIMEZONE)
+        print(f' {i+1:2d}. [{row[1]}x, last={dt:%Y-%m-%d %H:%M:%S}] {row[0]}')
+    print()
+    cursor.close()
+
+
+def daily_command_counts(conn):
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT
+            DATE(C.started/1000, 'unixepoch', 'localtime'),
+            COUNT(*)
+        FROM command C
+        GROUP BY 1 ORDER BY 1 DESC
+        LIMIT 30;
+    """)
+    print('Number of commands run by day:')
+    for row in cursor.fetchall():
+        date = datetime.datetime.strptime(row[0], '%Y-%m-%d').date()
+        print(f' {date:%a %Y-%m-%d}: {row[1]}')
+    cursor.close()
+    print()
+
+
+def longest_running_commands(conn, days, name):
+    # This turns out to be uninteresting, many commands just sit and display
+    # stuff. I can try to filter it out but in general the true positives
+    # aren't that great.
+    cursor = conn.cursor()
+    ts = ts_days_ago(days)
+    cursor.execute('''
+        SELECT
+            C.command,
+            C.ended - C.started AS duration_ms,
+            C.started
+        FROM command C
+        WHERE C.started >= ?
+            AND C.command NOT LIKE "tmux%"
+            AND C.command NOT LIKE "ssh%"
+            AND C.command NOT LIKE "vim%"
+            AND C.command NOT LIKE "less%"
+            AND C.command NOT LIKE "mutt%"
+            AND C.command NOT LIKE "alot%"
+            AND C.command NOT LIKE "man%"
+            AND C.command NOT LIKE "git%show%"
+        ORDER BY 2 DESC LIMIT 10;
+    ''', (ts,))
+    print(f'Longest running command in {name}')
+    for i, row in enumerate(cursor.fetchall()):
+        duration_secs = row[1] / 1000.
+        print(f' {i+1:2d}. [{duration_secs}s] {row[0]}')
+    print()
+    cursor.close()
+
+
+def favorite_directory(conn, days, name):
+    cursor = conn.cursor()
+    ts = ts_days_ago(days)
+    cursor.execute("""
+        SELECT
+            C.cwd,
+            COUNT(*)
+        FROM command C
+        WHERE C.started >= ?
+        GROUP BY 1 ORDER BY 2 DESC LIMIT 10;
+    """, (ts,))
+    print(f'Favorite working directory in {name}')
+    for i, row in enumerate(cursor.fetchall()):
+        print(f' {i+1:2d}. [{row[1]} executed] {row[0]}')
+    cursor.close()
+
+
+def main(args):
+    histdb = os.path.expanduser(args.histdb)
+    conn = sqlite3.connect(histdb)
+    frequent(conn, 1, 'last 24 hours')
+    frequent(conn, 7, 'last 7 days')
+    frequent(conn, 30, 'last 30 days')
+    daily_command_counts(conn)
+    longest_running_commands(conn, 7, 'last 7 days')
+    favorite_directory(conn, 7, 'last 7 days')
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='show bash history stats')
+    parser.add_argument(
+        '--histdb', type=str, default='~/.bash_db_hist.sqlite',
+        help='location of sqlite3 history database',
+    )
+    args = parser.parse_args()
+    main(args)
