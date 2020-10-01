@@ -21,6 +21,7 @@ LINKS=(
 	bin/paste
 	bin/post-email-hook
 	bin/sbrennan-setup
+	bin/synchronize_namedqueries.py
 	bin/urlc
 	bin/urls
 	bin/viewchain
@@ -34,6 +35,7 @@ LINKS=(
 	.config/alot/config
 	.config/alot/themes/solarized_dark
 	.config/alot/themes/solarized_light
+	.config/notmuchqueries.json
 	.config/nvim/init.vim
 	.config/systemd/mbsync.service
 	.config/systemd/mbsync.timer

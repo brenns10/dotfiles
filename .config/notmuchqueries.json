@@ -1,0 +1,4 @@
+{
+    "00_Personal_Inbox": "tag:stephen AND tag:inbox AND NOT tag:lists",
+    "01_Personal_linux-doc": "tag:stephen AND tag:lists/linux-doc"
+}
