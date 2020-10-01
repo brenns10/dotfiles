@@ -164,6 +164,7 @@ Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'airblade/vim-gitgutter'
 call plug#end()
 
 "" C Language Server Registration
@@ -239,6 +240,9 @@ noremap <Leader>wj <C-w><C-j>
 noremap <Leader>wk <C-w><C-k>
 noremap <Leader>wq <C-w>q
 let g:lsp_highlight_references_enabled = 1
+
+" vim-gitgutter updatetime
+set updatetime=100
 
 set completeopt+=preview
 
