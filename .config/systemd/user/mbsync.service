@@ -4,4 +4,4 @@ Description=Mailbox synchronization service
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/mbsync -V stephen
-ExecStartPost=/usr/bin/notmuch new
+ExecStartPost=%h/bin/post-email-hook

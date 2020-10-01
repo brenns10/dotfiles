@@ -1,0 +1,13 @@
+[FolderNameFilter]
+folder_explicit_list = oracle stephen
+maildir_separator = /
+
+[SpamFilter]
+
+[KillThreadsFilter]
+
+[ListMailsFilter]
+
+[InboxFilter]
+
+[MeFilter]

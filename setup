@@ -19,6 +19,7 @@ LINKS=(
 	bin/mutt-notmuch-py
 	bin/newmirrors
 	bin/paste
+	bin/post-email-hook
 	bin/sbrennan-setup
 	bin/urlc
 	bin/urls
@@ -29,6 +30,7 @@ LINKS=(
 	.config/aerc/accounts.conf
 	.config/aerc/aerc.conf
 	.config/aerc/binds.conf
+	.config/afew/config
 	.config/alot/config
 	.config/alot/themes/solarized_dark
 	.config/alot/themes/solarized_light
