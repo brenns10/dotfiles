@@ -189,3 +189,5 @@ alias vim=nvim
 hash archey3 >/dev/null && archey3
 HISTDB=$HOME/.bash_db_hist.sqlite
 source ~/bin/bash-history-sqlite.sh
+
+source ~/bin/bash-tagsearch.sh

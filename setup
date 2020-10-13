@@ -9,6 +9,7 @@ LINKS=(
 	.bashrc
 	bin/bash-history-sqlite.sh
 	bin/bash-preexec.sh
+	bin/bash-tagsearch.sh
 	bin/commandstats
 	bin/dark
 	bin/dbhist.py
@@ -22,6 +23,7 @@ LINKS=(
 	bin/post-email-hook
 	bin/sbrennan-setup
 	bin/synchronize_namedqueries.py
+	bin/tagsearch-preview.sh
 	bin/urlc
 	bin/urls
 	bin/viewchain
