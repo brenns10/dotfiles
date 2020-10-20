@@ -2,7 +2,7 @@ changequote(`<<<',`>>>')
 <<<
 # https://bloerg.net/2013/10/09/syncing-mails-with-mbsync-instead-of-offlineimap.html
 IMAPAccount stephen
-Host imap.zoho.com
+Host imappro.zoho.com
 User stephen@brennan.io
 PassCmd "~/bin/imap-pass -g stephen@brennan.io"
 SSLType IMAPS
