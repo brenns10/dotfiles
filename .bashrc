@@ -124,7 +124,7 @@ function __lhelper_ps1 {
         echo " [$LHELP_ENV]"
     fi
 }
-if hash l >/dev/null; then
+if hash l >/dev/null 2>&1; then
 	_PS1_FOR_LHELP="\$(__lhelper_ps1)"
 fi
 
@@ -186,7 +186,7 @@ alias vim=nvim
 # archey3: Finally, print out a nice pretty distro ascii art with assorted
 #          system information.
 #
-hash archey3 >/dev/null && archey3
+hash archey3 2>&1 >/dev/null && archey3
 HISTDB=$HOME/.bash_db_hist.sqlite
 source ~/bin/bash-history-sqlite.sh
 
