@@ -223,8 +223,13 @@ imap <c-space> <Plug>(asyncomplete_force_refresh)
 
 " Happy keybindings for lsp, reminds me of spacemacs
 noremap <Leader>gd :LspDefinition<CR>
+noremap <Leader>gD :LspDeclaration<CR>
+noremap <C-]> :LspDefinition<CR>
+noremap <Leader>gt :LspTypeDefinition<CR>
 noremap <Leader>gr :LspReferences<CR>
 noremap gd :LspDefinition<CR>
+noremap gD :LspDeclaration<CR>
+noremap gt :LspTypeDefinition<CR>
 noremap gr :LspReferences<CR>
 nnoremap <silent> K :LspHover<CR>
 noremap <Leader>pd :LspPeekDefinition<CR>
