@@ -16,3 +16,6 @@ tmux source-file ~/.config/tmux/tmuxcolors-light.conf
 # vim (manually reload)
 echo 'colorscheme solarized8_light' > ~/.vim/vimcolor.vim
 pkill -USR1 -u $USER nvim
+
+# konsole + yakuake
+konsoleprofile colors=SolarizedLight
