@@ -43,6 +43,7 @@ LINKS=(
 	.config/systemd/mbsync.timer
 	.config/tmux/tmuxcolors-dark.conf
 	.config/tmux/tmuxcolors-light.conf
+	.doom.d
 	.gitconfig
 	.hgrc
 	.lc.json
