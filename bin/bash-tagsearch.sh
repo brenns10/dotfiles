@@ -29,7 +29,7 @@ fi
 
 # Configure where tags are indexed to (a global location rather than a local
 # one). This should match up with settings in ~/.vimrc.
-__tagsearch_ccls_base=/tmp/ccls/cache
+__tagsearch_ccls_base=~/ccls
 
 # Utility function which searches for a compile_commands.json to find the root
 # of a "project".
