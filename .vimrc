@@ -189,7 +189,7 @@ if executable('ccls')
       \ 'name': 'ccls',
       \ 'cmd': {server_info->['ccls', '--log-file=/tmp/cc.log', '--log-file-append']},
       \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
-      \ 'initialization_options': {'cache': {'directory': '/tmp/ccls/cache' }},
+      \ 'initialization_options': {'cache': {'directory': expand('~/ccls') }},
       \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
       \ })
 endif
@@ -260,7 +260,9 @@ noremap <Leader>cf a```<CR>```<ESC>k:paste<CR>j
 noremap <Leader>cb my:read !paste<CR>0<C-v>'yjI    <ESC>kdd<C-o>
 noremap <Leader>cr my:read !paste<CR>
 
-" When we receive SIGUSR1, reload the colorscheme portion of things.
-autocmd Signal SIGUSR1 source ~/.vim/vimcolor.vim
+if has('nvim-0.4.3')
+  " When we receive SIGUSR1, reload the colorscheme portion of things.
+  autocmd Signal SIGUSR1 source ~/.vim/vimcolor.vim
+endif
 
 " vim:set ft=vim et sw=2:

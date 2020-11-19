@@ -1,4 +1,7 @@
 #!/bin/bash
+if ! hash sqlite3 >/dev/null 2>&1; then
+	return
+fi
 
 HISTSESSION=`dd if=/dev/urandom bs=32 count=1 2>/dev/null | base64`
 
