@@ -170,7 +170,7 @@
 
        :email
        ;;(mu4e +gmail)
-       ;;notmuch
+       notmuch
        ;;(wanderlust +gmail)
 
        :app
@@ -181,4 +181,9 @@
 
        :config
        ;;literate
-       (default +bindings +smartparens))
+       (default +bindings +smartparens)
+
+       :custom
+       org-notmuch
+       org-man
+       )

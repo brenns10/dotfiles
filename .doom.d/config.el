@@ -70,4 +70,122 @@
 (global-whitespace-mode 1)
 
 ;; The Linux Standard Tab WIIIIIDTH
-(setq tab-width 8)
+(setq-default tab-width 8)
+
+;; Org-mode / Vimwiki root
+;; -> This mirrors the vimwiki command "SPC m m" which opens the vimwiki root
+;;    at any place.
+(defun org-visit-root-file ()
+  "Visit the root of my org \"wiki\""
+  (interactive)
+  (find-file "~/org/index.org")
+)
+(map! :desc "Open the root of the org tree" :leader "w w" #'org-visit-root-file)
+
+;; Email Customizations
+;;  -> see also ~/.doom.d/modules/email/notmuch, which copies out and does some
+;;     changes to the (less than maintained) doom notmuch layer
+
+;; Basic vars
+
+;; Emacs notmuch has "savedsearches" but they seem to not be the same as the
+;; notmuch saved searches built-in to the actual application. Since I already
+;; have a way to synchronize notmuch queries via a declarative JSON config,
+;; just parse and load that into notmuch-saved-searches.
+(defun load-savedsearches-from-json ()
+  "Load notmuch savedsearches from json config"
+  (require 'json)
+  (let* ((json-object-type 'hash-table)
+         (json-key-type 'string)
+         (my-nm-ss-cfg (json-read-file (expand-file-name "~/.config/notmuchqueries.json")))
+         (ss-val (mapcar (lambda (k) `(:name ,k :query ,(gethash k my-nm-ss-cfg))) (hash-table-keys my-nm-ss-cfg)))
+         )
+    (pp ss-val)
+    (setq notmuch-saved-searches ss-val)))
+
+(after! notmuch
+  ;; The "good pgp signature" face looks gross. Don't really know how to lookup a generic
+  ;; "success" style from the color scheme, but that seems like the best way to fix.
+  (set-face-attribute 'notmuch-crypto-signature-good nil :foreground "DarkOliveGreen" :background nil)
+  (set-face-attribute 'widget-field nil :background (face-attribute 'region :background))
+  (set-face-attribute 'widget-single-line-field nil :background (face-attribute 'region :background))
+  (load-savedsearches-from-json)
+  (setq
+   notmuch-fcc-dirs '((".*" . "stephen/Sent"))
+   notmuch-send-mail-function 'message-send-mail-with-sendmail
+   send-mail-function 'sendmail-send-it
+   sendmail-program "/usr/bin/msmtp"
+   +notmuch-sync-backend 'custom
+   +notmuch-sync-command "bash -c 'journalctl --user -u mbsync -f & systemctl --user start mbsync.service; kill %1'"
+)
+  )
+
+;; I like auto-fill in a variety of text modes. But not all. So just have a
+;; whitelist here which I can update as necessary.
+(add-hook!
+   '(org-mode-hook markdown-mode-hook)
+   '(auto-fill-mode)
+ )
+
+(setq org-publish-project-alist
+      '(
+          ("work" :base-directory "~/org"
+                  :publishing-directory "~/orghtml"
+                  :publishing-function org-html-publish-to-html
+                  :recursive t
+          )
+       ))
+
+(defun notmuch-show-any-message-visible ()
+  "Return true if any message in this thread is visible, false otherwise"
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (let ((messages-visible (cl-loop do '() until (not (notmuch-show-goto-message-next))
+             collect (plist-get (notmuch-show-get-message-properties) :message-visible))))
+      (eval `(or ,@messages-visible))
+      )
+    ))
+
+(defun notmuch-show-toggle-all-messages ()
+  "Toggle all message visibilities in this thread.
+
+If any message in the thread is visible, hide all messages. Otherwise,
+show all messages."
+  (interactive)
+    (let ((visible (not (notmuch-show-any-message-visible))))
+      (save-excursion
+      (goto-char (point-min))
+      (cl-loop do (notmuch-show-message-visible
+                      (notmuch-show-get-message-properties)
+                      visible)
+              until (not (notmuch-show-goto-message-next))))
+      (force-window-update)
+      )
+    )
+
+(map! :desc "Open the root of the org tree"
+      :mode notmuch-show-mode "M-RET" #'notmuch-show-toggle-all-messages)
+
+(setq
+      org-latex-listings 'minted
+      org-latex-packages-alist '(("" "minted"))
+      org-latex-pdf-process '(
+                              "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                              "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f")
+)
+
+(defun org-paste-codeblock ()
+  "Paste a code block into org document"
+  (interactive)
+  (insert "#begin_src\n")
+  (yank)
+  (unless (looking-at "\n")
+    (insert "\n"))
+  (insert "#end_src")
+  )
+(map! :desc "Paste a code block into org document"
+      :mode org-mode :leader "m v" #'org-paste-codeblock)
+
+(setq mml-secure-openpgp-sign-with-sender t)
+;;(add-hook 'notmuch-show-mode-hook #'notmuch-show-toggle-all-messages)
