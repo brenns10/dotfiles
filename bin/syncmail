@@ -1,0 +1,3 @@
+#!/bin/bash
+journalctl --user -u mbsync -f & systemctl --user start mbsync.service
+kill %1

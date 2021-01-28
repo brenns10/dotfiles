@@ -23,6 +23,7 @@ LINKS=(
 	bin/post-email-hook
 	bin/sbrennan-setup
 	bin/synchronize_namedqueries.py
+	bin/syncmail
 	bin/tagsearch-preview.sh
 	bin/urlc
 	bin/urls
