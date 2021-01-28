@@ -44,6 +44,7 @@ alias se=sudoedit
 alias g=git
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
+alias uctl='systemctl --user'
 export LESS=-R
 alias vim=nvim
 
