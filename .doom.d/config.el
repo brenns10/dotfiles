@@ -115,6 +115,8 @@
    notmuch-send-mail-function 'message-send-mail-with-sendmail
    send-mail-function 'sendmail-send-it
    sendmail-program "/usr/bin/msmtp"
+   message-sendmail-extra-arguments '("--read-envelope-from")
+   message-sendmail-f-is-evil t
    +notmuch-sync-backend 'custom
    +notmuch-sync-command "bash -c 'journalctl --user -u mbsync -f & systemctl --user start mbsync.service; kill %1'"
 )
