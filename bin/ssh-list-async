@@ -1,0 +1,114 @@
+#!/bin/bash
+#
+# ssh-list-async machine ... -- command arg arg ...
+#
+# connect to each machine in parallel and run command, then wait for everything
+# to finish
+
+sshopts="-A -T -o KbdInteractiveAuthentication=no -o PasswordAuthentication=no -o StrictHostKeyChecking=no -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR"
+
+function usage() {
+    echo "Usage: $0 [-n NUM_CONCURRENT] <node> ... -- <cmd>"
+    exit 0
+}
+
+if [ $# -eq 0 ]; then
+    usage
+fi
+
+SELECTED_HOSTS=""
+ACTIVE_HOSTS=""
+MAX_CONCURRENT=0
+
+while [ $# -gt 0 ]; do
+    case $1 in
+        -n)
+            shift
+            if ! [[ "$1" =~ ^[0-9]+$ ]]; then
+                usage
+            fi
+            MAX_CONCURRENT=$1
+            shift
+            ;;
+        --)
+            shift
+            break
+            ;;
+        -*|--*)
+            usage
+            ;;
+        *)
+            SELECTED_HOSTS="$SELECTED_HOSTS $1"
+            ## ping doesn't work well on Oracle VPN, don't do this test
+            #is_host_pingable "$1"
+            #if [ $? -eq 0 ]; then
+                ACTIVE_HOSTS="$ACTIVE_HOSTS $1"
+            #fi
+            shift
+            ;;
+    esac
+done
+
+# originally from ssh-lib.sh
+# woah. not sure what the point is.
+function reasonable_sort() {
+    echo "$*" | tr -s ' ' '\n' | sort | uniq | perl -ne '($h,$x)=$_=~m/^(\D+)(\d+)/; printf "$h%06d\t$_", $x;' | sort | cut -f2 | xargs
+}
+# remove dupes
+SELECTED_HOSTS=$(reasonable_sort "$SELECTED_HOSTS" | xargs)
+ACTIVE_HOSTS=$(reasonable_sort "$ACTIVE_HOSTS" | xargs)
+
+# find missing hosts
+UNAVAILABLE_HOSTS=$(comm -13 <(tr ' ' '\n' <<< "$ACTIVE_HOSTS") <(tr ' ' '\n' <<< "$SELECTED_HOSTS") 2>/dev/null | xargs)
+
+echo "Available Hosts: $ACTIVE_HOSTS"
+echo "Unavailable Hosts: $UNAVAILABLE_HOSTS"
+
+if [ $# -eq 0 ]; then
+    echo "No command specified, skipping ssh"
+    exit 0
+fi
+
+ACTIVE_HOST_ARR=($ACTIVE_HOSTS)
+
+if [ ${#ACTIVE_HOST_ARR[@]} -eq 0 ]; then
+    echo 'No reachable hosts, exiting'
+    exit 1
+fi
+
+if [ $MAX_CONCURRENT -eq 0 ];then
+    echo "Running Command: $@"
+elif [ $MAX_CONCURRENT -eq 1 ]; then
+    echo "Running Command: $@, $MAX_CONCURRENT host at a time"
+else
+    echo "Running Command: $@, $MAX_CONCURRENT hosts at a time"
+fi
+
+# originally from ssh-lib.sh
+function longest_string () {
+    echo "$*" | tr -s ' ' '\n' | awk '{ print length }' | sort -n | tail -1
+}
+LONGESTNAME=`longest_string "$ACTIVE_HOSTS"`
+format="%- ${LONGESTNAME}s| %s\n"
+
+if [ $MAX_CONCURRENT -eq 0 ]; then
+    MAX_CONCURRENT=${#ACTIVE_HOST_ARR[@]}
+fi
+
+groupnum=1
+numgroups=$(( $((${#ACTIVE_HOST_ARR[@]} + $(($MAX_CONCURRENT - 1)))) / $MAX_CONCURRENT))
+
+while [ ${#ACTIVE_HOST_ARR[@]} -gt 0 ]; do
+    hosts=(${ACTIVE_HOST_ARR[@]:0:$MAX_CONCURRENT})
+    ACTIVE_HOST_ARR=(${ACTIVE_HOST_ARR[@]:$MAX_CONCURRENT})
+    for host in ${hosts[@]}; do
+        ssh $sshopts $host "$@ 2>&1" | while read line ; do
+            printf "$format" "$host" "$line" ;
+        done &
+    done
+    echo "waiting (group $groupnum of $numgroups)"
+    ((groupnum++))
+    wait
+done
+
+echo "done"
