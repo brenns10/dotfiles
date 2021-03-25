@@ -171,7 +171,7 @@ font:
 #draw_bold_text_with_bright_colors: false
 
 # solarized dark - name to "colors" to activate
-_solarized_dark: # dark
+colors: # dark
   # Default colors
   primary:
     background: '0x002b36'
@@ -200,7 +200,7 @@ _solarized_dark: # dark
     white:   '0xfdf6e3'
 
 # solarized light - rename to colors to activate
-colors: # light
+_solarized_light: # light
   # Default colors
   primary:
     background: '0xfdf6e3'

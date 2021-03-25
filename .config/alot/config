@@ -1,4 +1,4 @@
-theme = solarized_light
+theme = solarized_dark
 #handle_mouse = True
 initial_command = "namedqueries"
 prefer_plaintext = True
