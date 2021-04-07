@@ -14,9 +14,11 @@
 	df = diff
 	co = checkout
 	cb = checkout -b
+	desc = "describe --abbrev=0 --exclude='*bug*' --exclude='*#dev*' --exclude='*#rc*'"
 [color]
 	ui = auto
 [sendemail]
 	smtpserver = /usr/bin/msmtp
+	suppresscc = all
 [rebase]
 	autosquash = true
