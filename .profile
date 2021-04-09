@@ -34,6 +34,7 @@ export SUDO_EDITOR="nvim"
 export ALTERNATE_EDITOR=""
 export BROWSER=google-chrome-stable
 export PAGER=less
+export LESS="-FRq --mouse"
 export _JAVA_OPTIONS='-Dawn.useSystemAAFontSettings=setting'
 export SSH_ASKPASS=/usr/bin/ksshaskpass
 
