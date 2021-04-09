@@ -1,1 +1,1 @@
-colorscheme solarized8_light
+colorscheme solarized8_dark
