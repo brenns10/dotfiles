@@ -137,6 +137,8 @@
                   :recursive t
           )
        ))
+(add-to-list 'org-structure-template-alist
+             '("r" . "src bash :results output verbatim"))
 
 (defun notmuch-show-any-message-visible ()
   "Return true if any message in this thread is visible, false otherwise"
