@@ -41,8 +41,8 @@ LINKS=(
 	.config/alot/themes/solarized_light
 	.config/notmuchqueries.json
 	.config/nvim/init.vim
-	.config/systemd/mbsync.service
-	.config/systemd/mbsync.timer
+	.config/systemd/user/mbsync.service
+	.config/systemd/user/mbsync.timer
 	.config/tmux/tmuxcolors-dark.conf
 	.config/tmux/tmuxcolors-light.conf
 	.doom.d
