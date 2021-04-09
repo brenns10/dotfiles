@@ -43,6 +43,9 @@ if [ -d "$HOME/.rbenv" ]; then
     export PATH="$HOME/.rbenv/bin:$PATH"
     eval "$(rbenv init -)"
 fi
+if [ -d "$HOME/.local/share/gem/ruby/2.7.0/bin" ]; then
+   export PATH="$PATH:$HOME/.local/share/gem/ruby/2.7.0/bin"
+fi
 
 if [ "$OS" != "mac" ]; then
     export SSH_AUTH_SOCK=$HOME/ssh-agent.sock
