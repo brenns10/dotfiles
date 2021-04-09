@@ -45,6 +45,7 @@ alias g=git
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias uctl='systemctl --user'
+alias mailsync='bash -c "journalctl --user -u mbsync -f & systemctl --user start mbsync.service; kill %1"'
 export LESS=-R
 alias vim=nvim
 
