@@ -19,6 +19,5 @@
 	ui = auto
 [sendemail]
 	smtpserver = /usr/bin/msmtp
-	suppresscc = all
 [rebase]
 	autosquash = true
