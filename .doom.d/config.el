@@ -129,6 +129,8 @@
    '(auto-fill-mode)
  )
 
+(add-hook! 'message-mode-hook #'turn-off-smartparens-mode)
+
 (setq org-publish-project-alist
       '(
           ("work" :base-directory "~/org"
