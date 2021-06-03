@@ -71,6 +71,7 @@
 
 ;; The Linux Standard Tab WIIIIIDTH
 (setq-default tab-width 8)
+(setq-default c-basic-offset 8)
 
 ;; Org-mode / Vimwiki root
 ;; -> This mirrors the vimwiki command "SPC m m" which opens the vimwiki root
@@ -195,3 +196,6 @@ show all messages."
 
 (setq mml-secure-openpgp-sign-with-sender t)
 ;;(add-hook 'notmuch-show-mode-hook #'notmuch-show-toggle-all-messages)
+
+(after! smart-tabs-mode
+  (smart-tabs-insinuate 'c))
