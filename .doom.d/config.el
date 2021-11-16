@@ -69,6 +69,11 @@
  ))
 (global-whitespace-mode 1)
 
+(add-hook!
+   '(c-mode-hook)
+   '(whitespace-mode)
+ )
+
 ;; The Linux Standard Tab WIIIIIDTH
 (setq-default tab-width 8)
 (setq-default c-basic-offset 8)
