@@ -11,11 +11,11 @@ $SEDI s/solarized_light/solarized_dark/ ~/.config/alot/config
 
 # tmux (manually reload)
 $SEDI s/tmuxcolors-light/tmuxcolors-dark/ ~/.tmux.conf
-tmux source-file ~/.config/tmux/tmuxcolors-dark.conf
+tmux source-file ~/.config/tmux/tmuxcolors-dark.conf || true
 
 # vim (manually reload)
 echo 'colorscheme solarized8_dark' > ~/.vim/vimcolor.vim
-pkill -USR1 -u $USER nvim
+pkill -USR1 -u $USER nvim || true
 
 # konsole + yakuake
 konsoleprofile colors=Solarized
