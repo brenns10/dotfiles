@@ -71,7 +71,7 @@
 
 (add-hook!
    '(c-mode-hook)
-   '(whitespace-mode)
+   'whitespace-mode
  )
 
 ;; The Linux Standard Tab WIIIIIDTH
