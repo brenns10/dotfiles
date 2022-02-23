@@ -73,6 +73,8 @@
    '(c-mode-hook)
    'whitespace-mode
  )
+(add-hook 'c-mode-hook
+   '(lambda () (setq indent-tabs-mode 't)))
 
 ;; The Linux Standard Tab WIIIIIDTH
 (setq-default tab-width 8)
@@ -119,20 +121,23 @@
   (setq
    notmuch-fcc-dirs '((".*" . "stephen/Sent"))
    notmuch-send-mail-function 'message-send-mail-with-sendmail
-   send-mail-function 'sendmail-send-it
+)
+  )
+(setq
+   +notmuch-sync-backend 'mbsync
    sendmail-program "/usr/bin/msmtp"
    message-sendmail-extra-arguments '("--read-envelope-from")
    message-sendmail-f-is-evil t
-   +notmuch-sync-backend 'custom
-   +notmuch-sync-command "bash -c 'journalctl --user -u mbsync -f & systemctl --user start mbsync.service; kill %1'"
+   send-mail-function 'sendmail-send-it
 )
-  )
+(set-popup-rule! "^\\*notmuch-hello" :ignore t)
+(set-popup-rule! "^\\*subject:.*\\*" :ignore t)
 
 ;; I like auto-fill in a variety of text modes. But not all. So just have a
 ;; whitelist here which I can update as necessary.
 (add-hook!
    '(org-mode-hook markdown-mode-hook)
-   '(auto-fill-mode)
+   'auto-fill-mode
  )
 
 (add-hook! 'message-mode-hook #'turn-off-smartparens-mode)
