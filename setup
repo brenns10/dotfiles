@@ -39,8 +39,10 @@ LINKS=(
 	.config/alot/config
 	.config/alot/themes/solarized_dark
 	.config/alot/themes/solarized_light
+	.config/autostart/ssh-add.desktop
 	.config/notmuchqueries.json
 	.config/nvim/init.vim
+	.config/plasma-workspace/env/askpass.sh
 	.config/systemd/user/mbsync.service
 	.config/systemd/user/mbsync.timer
 	.config/tmux/tmuxcolors-dark.conf
