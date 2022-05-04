@@ -1,5 +1,6 @@
 {
     "00_Personal_Inbox": "tag:stephen AND tag:inbox AND NOT tag:lists",
     "01_Personal_linux-doc": "tag:stephen AND tag:lists/linux-doc",
+    "02_Kernel_lei": "tag:lei",
     "10_Sent": "tag:stephen AND from:stephen@brennan.io"
 }
