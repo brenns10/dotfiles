@@ -1,0 +1,94 @@
+#!/usr/bin/env python3
+"""
+Suspend setting tweaker.
+"""
+import argparse
+import itertools
+import os.path
+import subprocess
+
+DEFAULT_FILENAME = os.path.expanduser("~/.config/powermanagementprofilesrc")
+SECTION = "[AC][SuspendSession]"
+DATA = """[AC][SuspendSession]
+idleTime=600000
+suspendThenHibernate=false
+suspendType=1"""
+
+
+def read_config(filename):
+    with open(filename, "r") as f:
+        lines = [l.rstrip() for l in f]
+
+    sections = {}
+    current = []
+    for line in lines:
+        if not line and current:
+            sections[current[0]] = current
+            current = []
+        else:
+            current.append(line)
+    if current:
+        sections[current[0]] = current
+    return sections
+
+
+def write_config(sections, filename):
+    data = "\n\n".join(["\n".join(l) for l in sections.values()])
+    with open(filename, "w") as f:
+        f.write(data)
+
+
+def check_ssh():
+    return subprocess.run(
+        ["pgrep", "-alf", "ssh.*pts"],
+        stdout=subprocess.DEVNULL,
+    ).returncode == 0
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="suspend setting checker",
+    )
+    grp = parser.add_mutually_exclusive_group()
+    grp.add_argument(
+        "--check", action="store_true",
+        help="just output whether it is set",
+    )
+    grp.add_argument(
+        "--disable-sleep", action="store_true",
+        help="disable sleep",
+    )
+    grp.add_argument(
+        "--enable-sleep", action="store_true",
+        help="enable sleep",
+    )
+    grp.add_argument(
+        "--ssh-auto-tune", action="store_true",
+        help="do the right thing based on whether ssh session is active",
+    )
+    parser.add_argument(
+        "--filename", "-f", type=str, default=DEFAULT_FILENAME,
+        help="use this file for it",
+    )
+    args = parser.parse_args()
+    sections = read_config(args.filename)
+    if args.check:
+        print("enabled" if SECTION in sections else "disabled")
+    elif args.disable_sleep:
+        del sections[SECTION]
+        write_config(sections, args.filename)
+    elif args.enable_sleep:
+        sections[SECTION] = [DATA]
+        write_config(sections, args.filename)
+    elif args.ssh_auto_tune:
+        if check_ssh():
+            del sections[SECTION]
+        else:
+            sections[SECTION] = [DATA]
+        write_config(sections, args.filename)
+    else:
+        parser.print_usage()
+
+
+if __name__ == '__main__':
+    main()
