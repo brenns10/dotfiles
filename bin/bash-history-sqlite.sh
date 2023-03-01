@@ -76,7 +76,7 @@ preexec() {
 			'bash',
 			$(__quote_str "$cmd"),
 			$(__quote_str "$PWD"),
-			"$(date +%s%3N)",
+			'$(date +%s%3N)',
 			$(__quote_str "$HISTSESSION"),
 			$quotedloginsession
 		);
@@ -93,7 +93,7 @@ precmd() {
 		__create_histdb
 		sqlite3 "$HISTDB" <<- EOD
 			UPDATE command SET
-				ended="$(date +%s%3N)",
+				ended='$(date +%s%3N)',
 				return=$ret_value
 			WHERE
 				command_id=$LASTHISTID ;
