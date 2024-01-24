@@ -1,7 +1,11 @@
 .vim/.netrwhist
 ssh/local
+.alacritty.toml
+.config/alot/config
 .mbsyncrc
 .msmtprc
 .mutt/muttrc
+.tmux.conf
 bin/lc
+.vim/vimcolor.vim
 *.swp

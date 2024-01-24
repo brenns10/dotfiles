@@ -2,11 +2,10 @@
 # Arrays and functions necessary for doing the setup symlinking.
 # These live in a separate shell script so I can source them when I
 # reload configs for dark / light mode.
-#
-# NB: the $DIR variable must be set to the dotfiles root.
+
+DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 LINKS=(
-	.alacritty.toml
 	.archey3.cfg
 	.bash_profile
 	.bashrc
@@ -42,7 +41,6 @@ LINKS=(
 	.config/aerc/aerc.conf
 	.config/aerc/binds.conf
 	.config/afew/config
-	.config/alot/config
 	.config/alot/themes/solarized_dark
 	.config/alot/themes/solarized_light
 	.config/autostart/ssh-add.desktop
@@ -66,20 +64,25 @@ LINKS=(
 	.spacemacs.d/snippets
 	.ssh/authorized_keys
 	.ssh/config
-	.tmux.conf
 	.vim
-	.vimrc
 	.xprofile
 	.Xresources
 	.Xresources.d/solarized.dark
 	.Xresources.d/solarized.light
 )
 
+M4_ONLY=(
+	.vim/vimcolor.vim
+)
+
 M4_LINKS=(
+	.alacritty.toml
+	bin/lc
+	.config/alot/config
 	.msmtprc
 	.mbsyncrc
 	.mutt/muttrc
-	bin/lc
+	.tmux.conf
 )
 
 create_symlink() {
@@ -101,8 +104,19 @@ else
 	M4_CONTEXT+=( -DOS=unknown )
 fi
 
-create_m4_symlink() {
+THEMELOC=$HOME/.config/stephen-colortheme
+if ! [ -f "$THEMELOC" ]; then
+	echo -n light >"$THEMELOC"
+fi
+THEME="$(cat "$THEMELOC")"
+
+M4_CONTEXT+=( -DTHEME="$THEME" )
+
+do_m4() {
 	echo -e "M4\t$1"
 	m4 "${M4_CONTEXT[@]}" "$DIR/$1.m4" > $DIR/$1
+}
+create_m4_symlink() {
+	do_m4 "$1"
 	create_symlink "$1"
 }

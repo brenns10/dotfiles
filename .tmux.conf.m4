@@ -1,3 +1,5 @@
+changequote(`<<<',`>>>')
+<<<
 # Stop using C-b and start using C-i
 unbind C-b
 set -g prefix C-j
@@ -62,4 +64,5 @@ bind-key -n M-y run-shell 'tmux2 save-buffer - | yank > #{pane_tty}'
 # Keybinding to choose a buffer and then invoke yank.
 bind-key -n M-Y choose-buffer 'run-shell "tmux2 save-buffer -b \"%%\" - | yank > #{pane_tty}"'
 
-source-file ~/.config/tmux/tmuxcolors-dark.conf
+source-file ~/.config/tmux/tmuxcolors->>>THEME<<<.conf
+>>>

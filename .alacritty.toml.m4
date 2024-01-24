@@ -1,5 +1,7 @@
+changequote(`<<<',`>>>')
+<<<
 import = [
-    "~/.config/alacritty/solarized_dark.toml"
+    "~/.config/alacritty/solarized_>>>THEME<<<.toml"
 ]
 live_config_reload = true
 
@@ -28,3 +30,4 @@ mods = "None"
 [[keyboard.bindings]]
 action = "ToggleFullscreen"
 key = "F11"
+>>>

@@ -1,20 +1,29 @@
 #!/bin/bash
 set -e
 set -x
-SEDI="sed -i --follow-symlinks"
+
+THEMELOC=$HOME/.config/stephen-colortheme
+echo -n dark >"$THEMELOC"
+
+MYDIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+source "$MYDIR/../libsetup.sh"
+
+for item in "${M4_LINKS[@]}"
+do
+	create_m4_symlink "$item"
+done
+
+for item in "${M4_ONLY[@]}"
+do
+	do_m4 "$item"
+done
 
 # alacritty (auto reloads)
-$SEDI s/solarized_light/solarized_dark/ ~/.alacritty.toml
-
 # alot (reload not supported)
-$SEDI s/solarized_light/solarized_dark/ ~/.config/alot/config
-
 # tmux (manually reload)
-$SEDI s/tmuxcolors-light/tmuxcolors-dark/ ~/.tmux.conf
 tmux source-file ~/.config/tmux/tmuxcolors-dark.conf || true
 
 # vim (manually reload)
-echo 'colorscheme solarized8_dark' > ~/.vim/vimcolor.vim
 pkill -USR1 -u $USER nvim || true
 
 # konsole + yakuake
