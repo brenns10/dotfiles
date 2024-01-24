@@ -83,22 +83,26 @@ M4_LINKS=(
 )
 
 create_symlink() {
-	full_home=$HOME/$1
-	full_local=$DIR/$1
-	mkdir -p $(dirname $full_home)
-	rm -f $full_home
+	mkdir -p "$(dirname "$HOME/$1")"
+	rm -f "$HOME/$1"
 	echo -e "LINK\t$1"
-	ln -s $full_local $full_home
+	ln -s "$DIR/$1" "$HOME/$1"
 }
 
-M4_CONTEXT=""
+M4_CONTEXT=()
 
 # Add OS to M4 Context
 unamestr=$(uname)
 if [[ "$unamestr" == 'Linux' ]] ; then
-	M4_CONTEXT="$M4_CONTEXT -DOS=linux"
+	M4_CONTEXT+=( -DOS=linux )
 elif [[ "$unamestr" == 'Darwin' ]]; then
-	M4_CONTEXT="$M4_CONTEXT -DOS=mac"
+	M4_CONTEXT+=( -DOS=mac )
 else
-	M4_CONTEXT="$M4_CONTEXT -DOS=unknown"
+	M4_CONTEXT+=( -DOS=unknown )
 fi
+
+create_m4_symlink() {
+	echo -e "M4\t$1"
+	m4 "${M4_CONTEXT[@]}" "$DIR/$1.m4" > $DIR/$1
+	create_symlink "$1"
+}

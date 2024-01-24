@@ -4,19 +4,15 @@ DIR=$(pwd)
 
 source libsetup.sh
 
-echo "M4 Context:$M4_CONTEXT"
+echo "M4 Context: ${M4_CONTEXT[@]}"
 echo
 
 for item in "${M4_LINKS[@]}"
 do
-	echo -e "M4\t$item"
-	m4 $M4_CONTEXT "$item.m4" > $item
-	create_symlink $item
+	create_m4_symlink "$item"
 done
 
 for item in "${LINKS[@]}"
 do
-	create_symlink $item
+	create_symlink "$item"
 done
-
-chmod u+x ~/bin/lc
