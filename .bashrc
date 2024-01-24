@@ -48,6 +48,7 @@ alias uctl='systemctl --user'
 alias mailsync='bash -c "journalctl --user -u mbsync -f & systemctl --user start mbsync.service; kill %1"'
 export LESS=-R
 alias vim=nvim
+function cde() { mkdir -p "$1" && cd "$1"; }
 
 #
 # fzf: fzf is a wonderful tool for quickly finding filenames and command
