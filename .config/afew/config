@@ -1,5 +1,5 @@
 [FolderNameFilter]
-folder_explicit_list = oracle stephen
+folder_explicit_list = oracle stephen lei
 maildir_separator = /
 
 [SpamFilter]
