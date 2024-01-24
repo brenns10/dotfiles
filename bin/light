@@ -4,7 +4,7 @@ set -x
 SEDI="sed -i --follow-symlinks"
 
 # alacritty (auto reloads)
-$SEDI -e 's/colors: # dark/_solarized_dark: # dark/' -e 's/_solarized_light: # light/colors: # light/' ~/.alacritty.yml
+$SEDI s/solarized_dark/solarized_light/ ~/.alacritty.toml
 
 # alot (reload not supported)
 $SEDI s/solarized_dark/solarized_light/ ~/.config/alot/config

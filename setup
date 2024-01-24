@@ -3,7 +3,7 @@
 DIR=$(pwd)
 
 LINKS=(
-	.alacritty.yml
+	.alacritty.toml
 	.archey3.cfg
 	.bash_profile
 	.bashrc
@@ -33,6 +33,8 @@ LINKS=(
 	bin/wait-for-internet
 	bin/widevine-update
 	bin/yank
+	.config/alacritty/solarized_dark.toml
+	.config/alacritty/solarized_light.toml
 	.config/aerc/accounts.conf
 	.config/aerc/aerc.conf
 	.config/aerc/binds.conf
