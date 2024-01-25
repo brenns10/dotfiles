@@ -8,6 +8,14 @@ bind C-j send-prefix
 # Make sure to use 256 colors
 set -g default-terminal "screen-256color"
 
+# Environment variables to update at each connect:
+# https://www.babushk.in/posts/renew-environment-tmux.html
+# And see the .bashrc for tmux-refresh-env command.
+#set-option -g update-environment "SSH_AUTH_SOCK \
+#                                  SSH_CONNECTION \
+#                                  DISPLAY \
+#                                  XDG_SESSION_ID"
+
 # SSH socket.
 setenv -g SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
 set -g update-environment -r
@@ -54,15 +62,8 @@ bind C-p previous-window
 bind C-n next-window
 
 ## CLIPBOARD INTEGRATION
-# On copy, invokes the yank script (which ends up sending to mac)
-bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel 'yank > #{pane_tty}'
-bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel 'yank > #{pane_tty}'
-# Keybinding to take the contents of the tmux buffer and invoke yank (e.g. in
-# case you've copied something on the mac and want your tmux selection in your
-# clipboard again).
-bind-key -n M-y run-shell 'tmux2 save-buffer - | yank > #{pane_tty}'
-# Keybinding to choose a buffer and then invoke yank.
-bind-key -n M-Y choose-buffer 'run-shell "tmux2 save-buffer -b \"%%\" - | yank > #{pane_tty}"'
+set -s set-clipboard external
+set -as terminal-features ',alacritty:clipboard'
 
 source-file ~/.config/tmux/tmuxcolors->>>THEME<<<.conf
 >>>
