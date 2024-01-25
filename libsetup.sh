@@ -12,6 +12,7 @@ LINKS=(
 	.bash_profile
 	.bashrc
 	bin/autosuspend
+	bin/bash-cdt.sh
 	bin/bash-history-sqlite.sh
 	bin/bash-preexec.sh
 	bin/bash-tagsearch.sh

@@ -66,6 +66,9 @@ bind -m vi-insert -x '"\C-x\C-r": __fzf_cwd_history__'
 HISTDB=$HOME/.bash_db_hist.sqlite
 source ~/bin/bash-history-sqlite.sh
 
+# cdt = enter temporary directory
+source ~/bin/bash-cdt.sh
+
 # Source customizations in ~/.bashrc.ext
 __cond_source ~/.bashrc.ext
 
