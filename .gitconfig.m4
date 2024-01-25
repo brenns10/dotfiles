@@ -1,7 +1,7 @@
 [push]
 	default = simple
 [user]
-	email = stephen@brennan.io
+	email = MY_EMAIL
 	name = Stephen Brennan
 [core]
 	autocrlf = input

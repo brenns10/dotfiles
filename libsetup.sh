@@ -54,7 +54,6 @@ LINKS=(
 	.config/tmux/tmuxcolors-dark.conf
 	.config/tmux/tmuxcolors-light.conf
 	.doom.d
-	.gitconfig
 	.hgrc
 	.lc.json
 	.mutt/account_stephen
@@ -78,13 +77,12 @@ M4_LINKS=(
 	.alacritty.toml
 	bin/lc
 	.config/alot/config
+	.gitconfig
 	.msmtprc
 	.mbsyncrc
 	.mutt/muttrc
 	.tmux.conf
 )
-
-[ -f "$EXT/libsetup.sh" ] && source "$EXT/libsetup.sh"
 
 create_symlink() {
 	src="$DIR/$1"
@@ -122,6 +120,9 @@ fi
 THEME="$(cat "$THEMELOC")"
 
 M4_CONTEXT+=( -DTHEME="$THEME" )
+M4_CONTEXT+=( -DMY_EMAIL=stephen@brennan.io )
+
+[ -f "$EXT/libsetup.sh" ] && source "$EXT/libsetup.sh"
 
 do_m4() {
 	src="$DIR/$1.m4"
