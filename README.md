@@ -5,8 +5,6 @@ This repository contains my dotfiles. I usually keep the repository in
 `setup` should do everything necessary to symlink dotfiles into place.  It will
 not ask permission, so be careful.
 
-![terminal preview](term.png)
-
 Some highlights, in no particular order:
 
 - Receiving email to a maildir via mbsync, notmuch, afew. Read the mail using
