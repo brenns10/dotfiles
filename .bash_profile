@@ -16,6 +16,3 @@
 
 # When interactive, run bashrc.
 [[ $- = *i* ]] && [[ -r ~/.bashrc ]] && . ~/.bashrc
-if hash aactivator 2&>/dev/null; then
-	eval "$(aactivator init)"
-fi

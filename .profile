@@ -1,59 +1,22 @@
-# -*- mode: sh -*-
-#-------------------------------------------------------------------------------
-#
-# File:         ~/.profile
-#
-# Author:       Stephen Brennan
-#
-# Date Created: Tuesday, 29 July 2014
-#
-# Description:  Run by bash or DE when logging in.
-#
-#-------------------------------------------------------------------------------
-
-# Determine OS for later configuration.
-# http://stackoverflow.com/a/394247
-OS='unknown'
-unamestr=$(uname)
-if [[ "$unamestr" == 'Linux' ]]; then
-    OS='linux'
-elif [[ "$unamestr" == 'Darwin' ]]; then
-    OS='mac'
-fi
+# ~/.profile - sets session environment variables
+# sourced by ~/.bash_profile and ~/.xprofile
 
 # Variables
 export GOPATH=$HOME/go
-if [ "$OS" = "mac" ]; then
-    # put homebrew items before system but after local
-    export PATH=/usr/local/sbin:$PATH
-fi
 export PATH=$HOME/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/.cargo/bin:$PATH
 export EDITOR="nvim"
 export VISUAL="nvim"
 export SUDO_EDITOR="nvim"
 export ALTERNATE_EDITOR=""
-export BROWSER=google-chrome-stable
+export BROWSER=firefox
 export PAGER=less
 export LESS="-FRq --mouse"
-export _JAVA_OPTIONS='-Dawn.useSystemAAFontSettings=setting'
+export SSH_AUTH_SOCK=$HOME/ssh-agent.sock
 
-# RBenv, if it exists
-if [ -d "$HOME/.rbenv" ]; then
-    export PATH="$HOME/.rbenv/bin:$PATH"
-    eval "$(rbenv init -)"
+# Start SSH agent if not running.
+ssh-add -l &> /dev/null
+RESULT=$?
+if [ "$RESULT" -eq 2 ]; then
+    rm "$SSH_AUTH_SOCK"
+    ssh-agent -a "$SSH_AUTH_SOCK"
 fi
-if [ -d "$HOME/.local/share/gem/ruby/2.7.0/bin" ]; then
-   export PATH="$PATH:$HOME/.local/share/gem/ruby/2.7.0/bin"
-fi
-
-if [ "$OS" != "mac" ]; then
-    export SSH_AUTH_SOCK=$HOME/ssh-agent.sock
-    # Start SSH agent if not running.
-    ssh-add -l &> /dev/null
-    RESULT=$?
-    if [ "$RESULT" -eq 2 ]; then
-        rm "$SSH_AUTH_SOCK"
-        ssh-agent -a "$SSH_AUTH_SOCK"
-    fi
-fi
-

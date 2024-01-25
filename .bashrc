@@ -1,69 +1,31 @@
 # ~/.bashrc - loaded for interactive bash sessions
-# Stephen Brennan
 
-#
-# Determine OS for later configuration.
-# http://stackoverflow.com/a/394247
-#
-OS='unknown'
-unamestr=$(uname)
-if [[ "$unamestr" == 'Linux' ]]; then
-    OS='linux'
-elif [[ "$unamestr" == 'Darwin' ]]; then
-    OS='mac'
-    # mac has python3 installed
-    PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
-    export PATH
-fi
-
-#
-# Alias definitions
-#
-if [[ $OS == "mac" ]]; then
-    # Mac versions of ls
-    alias ls='ls -G'
-    alias la='ls -Ga'
-    alias ll='ls -Gl'
-    alias lla='ls -Gla'
-    # pbcopy versions of clipboard stuff
-    alias c='pbcopy'
-    alias v='pbpaste'
-else
-    # GNU coreutils ls
-    alias ls='ls --color=auto'
-    alias la='ls -a'
-    alias ll='ls -l'
-    alias lla='ls -la'
-    # xclip versions of clipboard stuff
-    alias c='xclip -selection c -i'
-    alias v='xclip -selection c -o'
-fi
-alias cls='clear'
-alias xbox='sudo xboxdrv -d -s'
-alias se=sudoedit
-alias g=git
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
+alias ls='ls --color=auto'
+alias la='ls -a'
+alias ll='ls -l'
+alias lla='ls -la'
+alias c='wl-copy'
+alias v='wl-paste'
+alias cls='clear'
+alias g=git
+alias vim=nvim
 alias uctl='systemctl --user'
 alias mailsync='bash -c "journalctl --user -u mbsync -f & systemctl --user start mbsync.service; kill %1"'
-export LESS=-R
-alias vim=nvim
 function cde() { mkdir -p "$1" && cd "$1"; }
 
-#
+export LESS=-R
+
 # fzf: fzf is a wonderful tool for quickly finding filenames and command
 #      history, and probably more too. Configure it when available.
-
-fzfd_go=$GOPATH/src/github.com/junegunn/fzf/shell
-fzfd_sys=/usr/share/fzf
-if [ -d "$fzfd_go" ]; then
-  source "$fzfd_go/completion.bash"
-  source "$fzfd_go/key-bindings.bash"
-elif [ -r "$fzfd_sys/completion.bash" ]; then
-  source "$fzfd_sys/completion.bash"
-  source "$fzfd_sys/key-bindings.bash"
+fzfd="$GOPATH/src/github.com/junegunn/fzf/shell"
+[ -d "$fzfd" ] || fzfd=/usr/share/fzf
+export FZF_DEFAULT_OPTS='--bind ctrl-k:kill-line'
+if [ -d "$fzfd" ]; then
+  source "$fzfd/completion.bash"
+  source "$fzfd/key-bindings.bash"
 fi
-export FZF_COMPLETION_OPTS='--bind ctrl-k:kill-line'
 # This is my own implementation of the fzf history command. Rather than relying
 # on the builtin bash history, let's use the sqlite3 history database.
 __fzf_history__() {
@@ -80,42 +42,28 @@ __fzf_history__() {
   fi
 }
 
-
-#
-# cnf: Command Not Found. Where present, this can hook into the "cammand not
-#      found message and suggest a package you could install which contains it.
-#
+# Source command-not-found tools if available
 [ -r /etc/profile.d/cnf.sh ] && . /etc/profile.d/cnf.sh
+
+# Bash history with sqlite
+HISTDB=$HOME/.bash_db_hist.sqlite
+source ~/bin/bash-history-sqlite.sh
 
 #####
 # BEGIN: PS1 Configuration
+# My PS1 is multiple lines, e.g.:
 #
-# It's difficult but the result looks nice and can help me focus, and show
-# important information in an easily scannable location. Each section below
-# (until END) deals with
+#   stephen at host in ~/repos/linux (master)
+#   $
 #
+# For each element, set a _PS1_FOR_FOO, and then we combine them at the end.
 
-#
-# Git PS1
-#
-
-# Find the location of Git scripts.
-GIT_SCRIPTS="$HOME"
-if [[ "$OS" == 'linux' ]]; then
-    GIT_SCRIPTS='/usr/share/git/completion'
-elif [[ "$OS" == 'mac' ]]; then
-    GIT_SCRIPTS='/Applications/Xcode.app/Contents/Developer/usr/share/git-core'
-fi
-
-# Configure variables for Git PS1
-export GIT_PS1_SHOWDIRTYSTATE=0
-export GIT_PS1_SHOWUNTRACKEDFILES=0
-# Explicitly unset color (default anyhow). Use 1 to set it.
-export GIT_PS1_SHOWCOLORHINTS=1
-export GIT_PS1_DESCRIBE_STYLE="branch"
-#export GIT_PS1_SHOWUPSTREAM="auto git"
-
-# Set _PS1_FOR_GIT when it is available, and enable completion similarly.
+# GIT
+GIT_SCRIPTS='/usr/share/git/completion'
+GIT_PS1_SHOWDIRTYSTATE=0
+GIT_PS1_SHOWUNTRACKEDFILES=0
+GIT_PS1_SHOWCOLORHINTS=1
+GIT_PS1_DESCRIBE_STYLE="branch"
 _PS1_FOR_GIT=''
 if [ -r "$GIT_SCRIPTS/git-prompt.sh" ]; then
     source $GIT_SCRIPTS/git-prompt.sh
@@ -123,9 +71,7 @@ if [ -r "$GIT_SCRIPTS/git-prompt.sh" ]; then
     _PS1_FOR_GIT='$(__git_ps1 " (%s)")'
 fi
 
-#
-# l PS1: when the "l" helper (a personal tool for building, configuring, and
-#        running Linux kernel builds) is installed, display its status.
+# l (my linux build helper script)
 _PS1_FOR_LHELP=''
 function __lhelper_ps1 {
     if [ ! -z "$LHELP_ENV" ]; then
@@ -136,22 +82,16 @@ if hash l >/dev/null 2>&1; then
 	_PS1_FOR_LHELP="\$(__lhelper_ps1)"
 fi
 
-#
-# Virtualenv: Since I'm configuring my PS1 with multiple lines, the default
-#             virtualenv PS1 is wonky. Fix it up here.
-#
+# virtualenv: since the PS1 is multiple lines, we need to do it manually
+VIRTUAL_ENV_DISABLE_PROMPT=1
 function __virtualenv_ps1 {
 	if [[ -n "$VIRTUAL_ENV" ]]; then
 		echo "(${VIRTUAL_ENV##*/}) "
 	fi
 }
 _PS1_FOR_VENV="\$(__virtualenv_ps1)"
-# disable the default virtualenv prompt change
-export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-#
-# Color definitions, because I don't like trying to read them.
-#
+# Color variables for readability
 FG_RED="\[\033[0;31m\]"
 FG_ORANGE="\[\033[1;31m\]"
 FG_GREEN="\[\033[0;32m\]"
@@ -160,7 +100,6 @@ FG_BLUE="\[\033[0;34m\]"
 FG_MAGENTA="\[\033[0;35m\]"
 FG_PURPLE="\[\033[1;35m\]"
 FG_CYAN="\[\033[0;36m\]"
-# Background colors
 BG_LIGHT="\[\033[40m\]"
 BG_RED="\[\033[41m\]"
 BG_GREEN="\[\033[42m\]"
@@ -169,13 +108,9 @@ BG_BLUE="\[\033[44m\]"
 BG_MAGENTA="\[\033[45m\]"
 BG_CYAN="\[\033[46m\]"
 BG_WHITE="\[\033[47m\]"
-# Reset
 RESET="\[\033[0m\]"
 
-#
-# Set the final PS1
-#
-
+# Set the PS1
 user="$FG_MAGENTA"
 # Use a different color for hosts we SSH to
 if [ -n "$SSH_CLIENT" ]; then
@@ -188,14 +123,3 @@ export PS1="\n$FG_GREEN$_PS1_FOR_VENV$RESET$user\\u$RESET at $host\\h$RESET in $
 #
 # END: PS1 Configuration
 #####
-alias vim=nvim
-
-#
-# archey3: Finally, print out a nice pretty distro ascii art with assorted
-#          system information.
-#
-#hash archey3 2>&1 >/dev/null && archey3
-HISTDB=$HOME/.bash_db_hist.sqlite
-source ~/bin/bash-history-sqlite.sh
-
-source ~/bin/bash-tagsearch.sh
