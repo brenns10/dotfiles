@@ -66,9 +66,6 @@ LINKS=(
 	.ssh/config
 	.vim
 	.xprofile
-	.Xresources
-	.Xresources.d/solarized.dark
-	.Xresources.d/solarized.light
 )
 
 M4_ONLY=(
