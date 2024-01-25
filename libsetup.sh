@@ -54,6 +54,7 @@ LINKS=(
 	.config/tmux/tmuxcolors-dark.conf
 	.config/tmux/tmuxcolors-light.conf
 	.doom.d
+	.gitconfig.ext
 	.hgrc
 	.lc.json
 	.mutt/account_stephen
