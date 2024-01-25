@@ -71,6 +71,7 @@ LINKS=(
 	.mutt/mailcap
 	.mutt/mutt-solarized-dark-16.muttrc
 	.mutt/vim-keys.rc
+	.notmuch-config
 	.profile
 	.spacemacs
 	.spacemacs.d/snippets
