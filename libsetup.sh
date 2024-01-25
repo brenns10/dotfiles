@@ -20,6 +20,7 @@ LINKS=(
 	bin/dark
 	bin/dbhist.py
 	bin/dotfiles-add
+	bin/extract-vmlinux
 	bin/git-when-merged
 	bin/imap-pass
 	bin/light
@@ -39,12 +40,12 @@ LINKS=(
 	bin/wait-for-internet
 	bin/widevine-update
 	bin/yank
-	.config/alacritty/solarized_dark.toml
-	.config/alacritty/solarized_light.toml
 	.config/aerc/accounts.conf
 	.config/aerc/aerc.conf
 	.config/aerc/binds.conf
 	.config/afew/config
+	.config/alacritty/solarized_dark.toml
+	.config/alacritty/solarized_light.toml
 	.config/alot/themes/solarized_dark
 	.config/alot/themes/solarized_light
 	.config/autostart/ssh-add.desktop
