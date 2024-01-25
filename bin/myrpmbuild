@@ -1,0 +1,86 @@
+#!/bin/bash
+# Script to invoke rpmbuild(8) to build an RPM SRPM source tree.
+# Author unknown.
+#
+# To execute the %prep stage on the current directory with --nodeps and an
+# x86_64 target using the .spec file in the current directory, and re-direct
+# the output to ../bp.out1:
+#   myrpmbuild -bp --nodeps --target=x86_64 *.spec > ../bp.out1 2>&1
+# By default, the patched source will be put into ./BUILD.
+
+function usage() {
+    echo $0 [-s SOURCES] [-S SRPMS] [-r RPMS] [-b BUILD] [-t tmp] ...
+    echo "   overrides rpmbuild defaults with optional directories"
+    exit 1
+}
+
+sourcedir="$PWD"
+specdir="$PWD"
+srpmdir="$PWD/SRPMS"
+rpmdir="$PWD/RPMS"
+builddir="$PWD/BUILD"
+tmppath="$PWD/tmp"
+buildrootdir="$PWD/BUILDROOT"
+while true; do
+    arg="$1"
+    if [ "x$arg" == "x-s" ]; then
+        shift
+        arg="$1"
+        if [ "x$arg" == "x" ]; then usage; fi
+        sourcedir="$arg"
+    elif [ "x$arg" == "x-S" ]; then
+        shift
+        arg="$1"
+        if [ "x$arg" == "x" ]; then usage; fi
+        srpmdir="$arg"
+    elif [ "x$arg" == "x-r" ]; then
+        shift
+        arg="$1"
+        if [ "x$arg" == "x" ]; then usage; fi
+        rpmdir="$arg"
+    elif [ "x$arg" == "x-b" ]; then
+        shift
+        arg="$1"
+        if [ "x$arg" == "x" ]; then usage; fi
+        builddir="$arg"
+    elif [ "x$arg" == "x-t" ]; then
+        shift
+        arg="$1"
+        if [ "x$arg" == "x" ]; then usage; fi
+        tmppath="$arg"
+    elif [ "x$arg" == "x" ]; then usage;
+    else
+        break
+    fi
+    shift
+done
+ARGS=()
+if [ "x$sourcedir" != "x" ]; then 
+    ARGS+=( "--define=_sourcedir ${sourcedir}" )
+    if [ ! -d ${sourcedir} ]; then mkdir -p ${sourcedir}; fi
+fi
+if [ "x$specdir" != "x" ]; then 
+    ARGS+=( "--define=_specdir ${specdir}" )
+    if [ ! -d ${specdir} ]; then mkdir -p ${specdir}; fi
+fi
+if [ "x$srpmdir" != "x" ]; then 
+    ARGS+=( "--define=_srcrpmdir ${srpmdir}" )
+    if [ ! -d ${srpmdir} ]; then mkdir -p ${srpmdir}; fi
+fi
+if [ "x$rpmdir" != "x" ]; then 
+    ARGS+=( "--define=_rpmdir ${rpmdir}" )
+    if [ ! -d ${rpmdir} ]; then mkdir -p ${rpmdir}; fi
+fi
+if [ "x$builddir" != "x" ]; then 
+    ARGS+=( "--define=_builddir ${builddir}" )
+    if [ ! -d ${builddir} ]; then mkdir -p ${builddir}; fi
+fi
+if [ "x$tmppath" != "x" ]; then 
+    ARGS+=( "--define=_tmppath ${tmppath}" )
+    if [ ! -d ${tmppath} ]; then mkdir -p ${tmppath}; fi
+fi
+ARGS+=( "--define=_buildrootdir ${buildrootdir}" )
+if [ ! -d ${buildrootdir} ]; then mkdir -p ${buildrootdir}; fi
+
+echo rpmbuild "${ARGS[@]}" "$@"
+rpmbuild "${ARGS[@]}" "$@"

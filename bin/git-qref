@@ -1,0 +1,5 @@
+#!/bin/bash
+# Quote a git commit
+qref=$(git show --pretty="%h (\"%s\")" "$@" | head -n 1 | tr -d '\n')
+echo $qref
+echo -n "$qref" | yank

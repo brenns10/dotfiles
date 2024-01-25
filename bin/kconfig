@@ -1,0 +1,8 @@
+#!/bin/bash
+match="$(rg -n -g Kconfig "^config $1$" | fzf -1 -0)"
+if [ -z "$match" ]; then
+    echo no match
+else
+    # no quote around $(  ) so separate args FILENAME +LINE
+    $EDITOR $(echo -n "$match" | cut -d: -f1,2 | sed 's/:/ +/')
+fi

@@ -21,11 +21,14 @@ LINKS=(
 	bin/dbhist.py
 	bin/dotfiles-add
 	bin/extract-vmlinux
+	bin/git-qref
 	bin/git-when-merged
 	bin/imap-pass
+	bin/kconfig
 	bin/light
 	bin/monitor-internet
 	bin/mutt-notmuch-py
+	bin/myrpmbuild
 	bin/newmirrors
 	bin/paste
 	bin/post-email-hook
