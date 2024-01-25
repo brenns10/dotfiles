@@ -53,11 +53,16 @@ function cde() { mkdir -p "$1" && cd "$1"; }
 #
 # fzf: fzf is a wonderful tool for quickly finding filenames and command
 #      history, and probably more too. Configure it when available.
-#
-fzfc=$GOPATH/src/github.com/junegunn/fzf/shell/completion.bash
-[ -r $fzfc ] && . $fzfc
-fzfk=$GOPATH/src/github.com/junegunn/fzf/shell/key-bindings.bash
-[ -r $fzfk ] && . $fzfk
+
+fzfd_go=$GOPATH/src/github.com/junegunn/fzf/shell
+fzfd_sys=/usr/share/fzf
+if [ -d "$fzfd_go" ]; then
+  source "$fzfd_go/completion.bash"
+  source "$fzfd_go/key-bindings.bash"
+elif [ -r "$fzfd_sys/completion.bash" ]; then
+  source "$fzfd_sys/completion.bash"
+  source "$fzfd_sys/key-bindings.bash"
+fi
 export FZF_COMPLETION_OPTS='--bind ctrl-k:kill-line'
 # This is my own implementation of the fzf history command. Rather than relying
 # on the builtin bash history, let's use the sqlite3 history database.
@@ -189,7 +194,7 @@ alias vim=nvim
 # archey3: Finally, print out a nice pretty distro ascii art with assorted
 #          system information.
 #
-hash archey3 2>&1 >/dev/null && archey3
+#hash archey3 2>&1 >/dev/null && archey3
 HISTDB=$HOME/.bash_db_hist.sqlite
 source ~/bin/bash-history-sqlite.sh
 
