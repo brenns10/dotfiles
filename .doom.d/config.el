@@ -257,4 +257,5 @@ show all messages."
   (put 'magit-log-select-mode 'magit-log-default-arguments
        '("-n256" "--decorate")))
 
-(load "~/.doom.d/oracle.el")
+(if (file-exists-p "~/.doom.d/oracle.el")
+    (load "~/.doom.d/oracle.el"))
