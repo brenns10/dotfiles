@@ -17,15 +17,22 @@ function cde() { mkdir -p "$1" && cd "$1"; }
 
 export LESS=-R
 
+# Try to source one of potentially many scripts
+__cond_source() {
+  for f in "$@"; do
+    if [ -r "$f" ]; then
+      source "$f"
+      return 0
+    fi
+  done
+}
+
+
 # fzf: fzf is a wonderful tool for quickly finding filenames and command
 #      history, and probably more too. Configure it when available.
-fzfd="$GOPATH/src/github.com/junegunn/fzf/shell"
-[ -d "$fzfd" ] || fzfd=/usr/share/fzf
 export FZF_DEFAULT_OPTS='--bind ctrl-k:kill-line'
-if [ -d "$fzfd" ]; then
-  source "$fzfd/completion.bash"
-  source "$fzfd/key-bindings.bash"
-fi
+__cond_source "/usr/share/fzf/completion.bash" "$GOPATH/src/github.com/junegunn/fzf/shell/completion.bash"
+__cond_source "/usr/share/fzf/key-bindings.bash" "$GOPATH/src/github.com/junegunn/fzf/shell/key-bindings.bash"
 # This is my own implementation of the fzf history command. Rather than relying
 # on the builtin bash history, let's use the sqlite3 history database.
 __fzf_history_query__() {
@@ -60,7 +67,7 @@ HISTDB=$HOME/.bash_db_hist.sqlite
 source ~/bin/bash-history-sqlite.sh
 
 # Source customizations in ~/.bashrc.ext
-[ -f ~/.bashrc.ext ] && . ~/.bashrc.ext
+__cond_source ~/.bashrc.ext
 
 #####
 # BEGIN: PS1 Configuration
@@ -72,17 +79,11 @@ source ~/bin/bash-history-sqlite.sh
 # For each element, set a _PS1_FOR_FOO, and then we combine them at the end.
 
 # GIT
-GIT_SCRIPTS='/usr/share/git/completion'
-GIT_PS1_SHOWDIRTYSTATE=0
-GIT_PS1_SHOWUNTRACKEDFILES=0
-GIT_PS1_SHOWCOLORHINTS=1
-GIT_PS1_DESCRIBE_STYLE="branch"
-_PS1_FOR_GIT=''
-if [ -r "$GIT_SCRIPTS/git-prompt.sh" ]; then
-    source $GIT_SCRIPTS/git-prompt.sh
-    source $GIT_SCRIPTS/git-completion.bash
-    _PS1_FOR_GIT='$(__git_ps1 " (%s)")'
-fi
+__cond_source "/usr/share/git/completion/git-completion.sh" \
+              "/usr/share/bash-completion/completions/git"
+__cond_source "/usr/share/git/completion/git-prompt.sh" \
+              "/usr/share/git-core/contrib/completion/git-prompt.sh"
+_PS1_FOR_GIT='$(__git_ps1 " (%s)")'
 
 # l (my linux build helper script)
 _PS1_FOR_LHELP=''
