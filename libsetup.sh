@@ -15,7 +15,6 @@ LINKS=(
 	bin/bash-cdt.sh
 	bin/bash-history-sqlite.sh
 	bin/bash-preexec.sh
-	bin/bash-tagsearch.sh
 	bin/commandstats
 	bin/dark
 	bin/dbhist.py
@@ -36,7 +35,6 @@ LINKS=(
 	bin/ssh-list-async
 	bin/synchronize_namedqueries.py
 	bin/syncmail
-	bin/tagsearch-preview.sh
 	bin/urlc
 	bin/urls
 	bin/viewchain
@@ -103,7 +101,7 @@ create_symlink() {
 	dst="$DST/$1"
 
 	rm -f "$dst"
-	if [ -f "$ovr" ]; then
+	if [ -e "$ovr" ]; then
 		src="$ovr"
 		echo -e "*LINK\t$1"
 	else
