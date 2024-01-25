@@ -27,7 +27,7 @@ if [ "$OS" = "mac" ]; then
     # put homebrew items before system but after local
     export PATH=/usr/local/sbin:$PATH
 fi
-export PATH=$HOME/bin:$GOPATH/bin:$HOME/.local/bin:$PATH
+export PATH=$HOME/bin:$GOPATH/bin:$HOME/.local/bin:$HOME/.cargo/bin:$PATH
 export EDITOR="nvim"
 export VISUAL="nvim"
 export SUDO_EDITOR="nvim"
