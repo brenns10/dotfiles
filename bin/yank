@@ -29,9 +29,9 @@ buf=$( cat "$@" )
 test -n "$TMUX" && tmux set-buffer "$buf"
 
 # copy to X11/Wayland if possible...
-SESSION=$(loginctl show-session "$XDG_SESSION_ID" -p Type)
+SESSION=$(loginctl show-session "$XDG_SESSION_ID" -p Type 2>/dev/null)
 if [ "$SESSION" = "Type=x11" ]; then
-	printf %s "$buf" | xclip -sel c && exit
+	printf %s "$buf" | { xsel -ib || xclip -sel c ;} && exit
 elif [ "$SESSION" = "Type=wayland" ]; then
 	printf %s "$buf" | wl-copy && exit
 fi
