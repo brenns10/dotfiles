@@ -19,6 +19,7 @@ LINKS=(
 	bin/commandstats
 	bin/dark
 	bin/dbhist.py
+	bin/dotfiles-add
 	bin/git-when-merged
 	bin/imap-pass
 	bin/light
@@ -69,7 +70,7 @@ LINKS=(
 	.ssh/config
 	.vim
 	.xprofile
-)
+) # END LINKS
 
 M4_ONLY=(
 	.vim/vimcolor.vim

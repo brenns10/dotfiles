@@ -1,0 +1,82 @@
+#!/usr/bin/env python3
+"""
+Track a file in dotfiles
+"""
+import argparse
+import os
+import sys
+from pathlib import Path
+from subprocess import run
+
+DFDIR = Path(__file__).resolve().parent.parent
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="automagically add and symlink a new dotfile",
+    )
+    parser.add_argument(
+        "files",
+        nargs="+",
+        type=Path,
+        help="files to add",
+    )
+    parser.add_argument(
+        "--commit",
+        "-c",
+        action="store_true",
+        help="commit to repo immediately (working directory must be clean)",
+    )
+    parser.add_argument(
+        "--extension",
+        "-e",
+        action="store_true",
+        help="add to the extension repo instead",
+    )
+    args = parser.parse_args()
+
+    dest = DFDIR
+    if args.extension:
+        dest = DFDIR / "ext"
+
+    if args.commit:
+        r = run(
+            ["git", "-C", dest, "status", "--porcelain"],
+            check=True,
+            capture_output=True,
+        )
+        if r.stdout.strip():
+            sys.exit("error: dotfiles are unclean")
+
+    paths_to_add = []
+    for p in args.files:
+        p = p.absolute()
+        prel = p.relative_to(Path.home())
+        dfpath = dest / prel
+        dfpath.parent.mkdir(parents=True, exist_ok=True)
+        os.rename(p, dfpath)
+        os.symlink(dfpath, p)
+        paths_to_add.append(str(prel))
+
+    setup_script = dest / "libsetup.sh"
+    with setup_script.open("r+") as f:
+        lines = list(f)
+        start = lines.index("LINKS=(\n") + 1
+        end = lines.index(") # END LINKS\n") - 1
+        all_paths = set(p.strip() for p in lines[start:end])
+        all_paths.update(paths_to_add)
+        new_lines = [f"\t{p}\n" for p in sorted(all_paths, key=lambda s: s.lstrip("."))]
+        lines[start:end] = new_lines
+        f.seek(0)
+        f.truncate()
+        f.write(''.join(lines))
+
+    if args.commit:
+        r = run(["git", "-C", dest, "add", "libsetup.sh"] + paths_to_add, check=True)
+        plural = "s" if len(paths_to_add) > 1 else ""
+        msg = "Track file{plural} " + ", ".join(paths_to_add)
+        r = run(["git", "-C", dest, "commit", "-sm", msg], check=True)
+
+
+if __name__ == "__main__":
+    main()
