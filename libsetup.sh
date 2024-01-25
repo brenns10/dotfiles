@@ -4,6 +4,8 @@
 # reload configs for dark / light mode.
 
 DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+EXT="$DIR/ext"
+DST="$HOME"
 
 LINKS=(
 	.archey3.cfg
@@ -82,11 +84,22 @@ M4_LINKS=(
 	.tmux.conf
 )
 
+[ -f "$EXT/libsetup.sh" ] && source "$EXT/libsetup.sh"
+
 create_symlink() {
-	mkdir -p "$(dirname "$HOME/$1")"
-	rm -f "$HOME/$1"
-	echo -e "LINK\t$1"
-	ln -s "$DIR/$1" "$HOME/$1"
+	src="$DIR/$1"
+	ovr="$EXT/$1"
+	dst="$DST/$1"
+
+	rm -f "$dst"
+	if [ -f "$ovr" ]; then
+		src="$ovr"
+		echo -e "*LINK\t$1"
+	else
+		echo -e "LINK\t$1"
+	fi
+	mkdir -p "$(dirname "$dst")"
+	ln -s "$src" "$dst"
 }
 
 M4_CONTEXT=()
@@ -101,8 +114,9 @@ else
 	M4_CONTEXT+=( -DOS=unknown )
 fi
 
-THEMELOC=$HOME/.config/stephen-colortheme
+THEMELOC=$DST/.config/stephen-colortheme
 if ! [ -f "$THEMELOC" ]; then
+	mkdir -p "$(dirname "$THEMELOC")"
 	echo -n light >"$THEMELOC"
 fi
 THEME="$(cat "$THEMELOC")"
@@ -110,8 +124,17 @@ THEME="$(cat "$THEMELOC")"
 M4_CONTEXT+=( -DTHEME="$THEME" )
 
 do_m4() {
-	echo -e "M4\t$1"
-	m4 "${M4_CONTEXT[@]}" "$DIR/$1.m4" > $DIR/$1
+	src="$DIR/$1.m4"
+	dst="$DIR/$1"
+	ovr="$EXT/$1.m4"
+	if [ -f "$ovr" ]; then
+		src="$ovr"
+		dst="$EXT/$1"
+		echo -e "*M4\t$1"
+	else
+		echo -e "M4\t$1"
+	fi
+	m4 "${M4_CONTEXT[@]}" "$src" > "$dst"
 }
 create_m4_symlink() {
 	do_m4 "$1"

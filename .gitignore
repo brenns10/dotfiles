@@ -9,3 +9,4 @@ ssh/local
 bin/lc
 .vim/vimcolor.vim
 *.swp
+ext
