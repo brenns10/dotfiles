@@ -61,7 +61,10 @@ def main():
     setup_script = dest / "libsetup.sh"
     with setup_script.open("r+") as f:
         lines = list(f)
-        start = lines.index("LINKS=(\n") + 1
+        if args.extension:
+            start = lines.index("LINKS+=(\n") + 1
+        else:
+            start = lines.index("LINKS=(\n") + 1
         end = lines.index(") # END LINKS\n") - 1
         all_paths = set(p.strip() for p in lines[start:end])
         all_paths.update(paths_to_add)
