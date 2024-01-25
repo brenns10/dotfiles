@@ -77,7 +77,7 @@ def main():
     if args.commit:
         r = run(["git", "-C", dest, "add", "libsetup.sh"] + paths_to_add, check=True)
         plural = "s" if len(paths_to_add) > 1 else ""
-        msg = "Track file{plural} " + ", ".join(paths_to_add)
+        msg = f"Track file{plural} " + ", ".join(paths_to_add)
         r = run(["git", "-C", dest, "commit", "-sm", msg], check=True)
 
 
