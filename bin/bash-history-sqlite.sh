@@ -28,6 +28,9 @@ dbexec() {
     bash -c "$(sqlite3 ${HISTDB} "select command from command where command_id="\""${1}"\"";")"
 }
 
+dirh() {
+    sqlite3 -separator '#' "${HISTDB}" "select command_id, command from command where cwd = "\""$PWD"\"";" | awk -F '#' '{printf "%8s    %s\n", $1, $2}'
+}
 
 # The magic follows
 
