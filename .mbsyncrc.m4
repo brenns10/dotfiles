@@ -6,7 +6,7 @@ Host imappro.zoho.com
 User stephen@brennan.io
 PassCmd "~/bin/imap-pass -g stephen@brennan.io"
 SSLType IMAPS
->>>CertificateFile ifelse(OS,mac,/usr/local/etc/openssl/cert.pem,/etc/ssl/certs/ca-certificates.crt)<<<
+>>>CertificateFile ifelse(DISTRO,Oracle Linux Server,/etc/ssl/certs/ca-bundle.crt,/etc/ssl/certs/ca-certificates.crt)<<<
 
 IMAPStore stephen-remote
 Account stephen

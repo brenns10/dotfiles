@@ -129,6 +129,11 @@ THEME="$(cat "$THEMELOC")"
 M4_CONTEXT+=( -DTHEME="$THEME" )
 M4_CONTEXT+=( -DMY_EMAIL=stephen@brennan.io )
 
+# Add Distro name to M4 Context
+DISTRO=""
+[ -f /etc/os-release ] && DISTRO=$(sh -c "source /etc/os-release && echo \$NAME")
+M4_CONTEXT+=( -DDISTRO="$DISTRO" )
+
 [ -f "$EXT/libsetup.sh" ] && source "$EXT/libsetup.sh"
 
 do_m4() {
