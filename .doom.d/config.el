@@ -19,9 +19,8 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-(setq doom-font (font-spec :family "Source Code Pro" :size 13))
+(setq doom-font (font-spec :family "Source Code Pro" :size 13)
+      doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -54,12 +53,7 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;; Initialize CCLS, specifying that the cache directory be ~/ccls. The after!
-;; is important here.
-(after! ccls
-  (setq ccls-initialization-options `(:cache (:directory ,(expand-file-name "~/ccls"))))
-  (setq ccls-args '("--log-file=/tmp/cc.log" "--log-file-append"))
-  (set-lsp-priority! 'ccls 2)) ; optional as ccls is the default in Doom
+(setq lsp-clangd-binary-path "/usr/bin/clangd")
 
 ;; "highlight" tabs, and include a "mark" (>) for them.
 ;; highlight trailing whitespace as well
@@ -68,13 +62,6 @@
    treemacs-mode magit-status-mode magit-revision-mode vterm-mode
  ))
 (global-whitespace-mode 1)
-
-(add-hook!
-   '(c-mode-hook)
-   'whitespace-mode
- )
-(add-hook 'c-mode-hook
-   '(lambda () (setq indent-tabs-mode 't)))
 
 ;; The Linux Standard Tab WIIIIIDTH
 (setq-default tab-width 8)
@@ -119,19 +106,18 @@
   (set-face-attribute 'widget-single-line-field nil :background (face-attribute 'region :background))
   (load-savedsearches-from-json)
   (setq
-   notmuch-fcc-dirs '((".*" . "stephen/Sent"))
+   notmuch-fcc-dirs '(("stephen.s.brennan@oracle.com" . "oracle/Sent")
+                      ("stephen@brennan.io" . "stephen/Sent")
+                      (".*" . "oracle/Sent"))
    notmuch-send-mail-function 'message-send-mail-with-sendmail
-)
-  )
-(setq
-   +notmuch-sync-backend 'mbsync
+   send-mail-function 'sendmail-send-it
    sendmail-program "/usr/bin/msmtp"
    message-sendmail-extra-arguments '("--read-envelope-from")
    message-sendmail-f-is-evil t
-   send-mail-function 'sendmail-send-it
+   +notmuch-sync-backend 'custom
+   +notmuch-sync-command "bash -c 'journalctl --user -u mbsync -f & systemctl --user start mbsync.service; kill %1'"
+  )
 )
-(set-popup-rule! "^\\*notmuch-hello" :ignore t)
-(set-popup-rule! "^\\*subject:.*\\*" :ignore t)
 
 ;; I like auto-fill in a variety of text modes. But not all. So just have a
 ;; whitelist here which I can update as necessary.
@@ -141,6 +127,8 @@
  )
 
 (add-hook! 'message-mode-hook #'turn-off-smartparens-mode)
+
+(add-hook! 'c-mode-hook 'whitespace-mode)
 
 (setq org-publish-project-alist
       '(
@@ -181,15 +169,16 @@ show all messages."
       )
     )
 
-(map! :desc "Open the root of the org tree"
+(map! :desc "Toggle all messages visible or not"
       :mode notmuch-show-mode "M-RET" #'notmuch-show-toggle-all-messages)
 
 (setq
-      org-latex-listings 'minted
+      org-latex-compiler "lualatex"
+      org-latex-src-block-backend 'minted
       org-latex-packages-alist '(("" "minted"))
       org-latex-pdf-process '(
-                              "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-                              "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f")
+                              "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                              "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f")
 )
 
 (defun org-paste-codeblock ()
@@ -207,5 +196,65 @@ show all messages."
 (setq mml-secure-openpgp-sign-with-sender t)
 ;;(add-hook 'notmuch-show-mode-hook #'notmuch-show-toggle-all-messages)
 
+(after! lsp-mode
+  (setq lsp-enable-file-watchers t
+        lsp-pyls-configuration-sources ["flake8"]
+        lsp-pyls-plugins-pyflakes-enabled nil
+        ;;lsp-pylsp-plugins-black-enabled t
+        ;;lsp-pylsp-plugins-rope-autoimport-enabled t
+        )
+  (lsp-register-custom-settings '(("pyls.plugins.pyls_mypy.enabled" t t)))
+  )
+
 (after! smart-tabs-mode
   (smart-tabs-insinuate 'c))
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (setq indent-tabs-mode t)
+            (setq tab-width 8)
+            (setq c-basic-offset 8)))
+
+(add-to-list 'auto-mode-alist '("\\.mbox\\'" . rmail-mode))
+
+(defun copy-numbered-lines ()
+  "Copy line numbers"
+  (interactive)
+  (let ((startline (line-number-at-pos (region-beginning))))
+    (copy-region-as-kill (region-beginning) (region-end))
+    (with-temp-buffer ;-current-buffer (get-buffer-create "*stephen*")
+      (yank)
+      (rectangle-number-lines (point-min) (point-max)  startline)
+      (kill-new (buffer-substring (point-min) (point-max)))
+    )
+  )
+)
+
+(defun my-notmuch-show-view-as-patch ()
+  "View the the current message as a patch."
+  (interactive)
+  (let* ((id (notmuch-show-get-message-id))
+         (msg (notmuch-show-get-message-properties))
+         (part (notmuch-show-get-part-properties))
+         (subject (concat "Subject: " (notmuch-show-get-subject) "\n"))
+         (diff-default-read-only t)
+         (buf (get-buffer-create (concat "*notmuch-patch-" id "*")))
+         (map (make-sparse-keymap)))
+    (define-key map "q" 'notmuch-bury-or-kill-this-buffer)
+    (switch-to-buffer buf)
+    (let ((inhibit-read-only t))
+      (erase-buffer)
+      (insert subject)
+      (insert (notmuch-get-bodypart-text msg part nil)))
+    (set-buffer-modified-p nil)
+    (diff-mode)
+    (lexical-let ((new-ro-bind (cons 'buffer-read-only map)))
+                 (add-to-list 'minor-mode-overriding-map-alist new-ro-bind))
+    (goto-char (point-min))))
+(define-key 'notmuch-show-part-map "d" 'my-notmuch-show-view-as-patch)
+
+;; Speed up git log args in magit, for fixups
+(with-eval-after-load 'magit-log
+  (put 'magit-log-select-mode 'magit-log-default-arguments
+       '("-n256" "--decorate")))
+
+(load "~/.doom.d/oracle.el")

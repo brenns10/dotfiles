@@ -5,7 +5,6 @@
 ;; on the command line, then restart Emacs for the changes to take effect -- or
 ;; use 'M-x doom/reload'.
 
-(package! ccls)
 (package! smart-tabs-mode)
 (package! meson-mode)
 

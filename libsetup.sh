@@ -59,7 +59,13 @@ LINKS=(
 	.config/systemd/user/mbsync.timer
 	.config/tmux/tmuxcolors-dark.conf
 	.config/tmux/tmuxcolors-light.conf
-	.doom.d
+	.doom.d/config.el
+	.doom.d/custom.el
+	.doom.d/init.el
+	.doom.d/modules/custom/org-man
+	.doom.d/modules/custom/org-notmuch
+	.doom.d/modules/email/notmuch
+	.doom.d/packages.el
 	.gitconfig.ext
 	.hgrc
 	.lc.json
