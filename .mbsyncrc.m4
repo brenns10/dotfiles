@@ -16,8 +16,8 @@ Path ~/mail/stephen/
 Inbox ~/mail/stephen/INBOX
 
 Channel stephen
-Master :stephen-remote:
-Slave :stephen-local:
+Far :stephen-remote:
+Near :stephen-local:
 Patterns *
 Create Both
 Expunge Both
