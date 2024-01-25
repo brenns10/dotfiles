@@ -31,8 +31,12 @@ __cond_source() {
 # fzf: fzf is a wonderful tool for quickly finding filenames and command
 #      history, and probably more too. Configure it when available.
 export FZF_DEFAULT_OPTS='--bind ctrl-k:kill-line'
-__cond_source "/usr/share/fzf/completion.bash" "$GOPATH/src/github.com/junegunn/fzf/shell/completion.bash"
-__cond_source "/usr/share/fzf/key-bindings.bash" "$GOPATH/src/github.com/junegunn/fzf/shell/key-bindings.bash"
+__cond_source "/usr/share/fzf/completion.bash" \
+              "/etc/bash_completion.d/fzf" \
+              "$GOPATH/src/github.com/junegunn/fzf/shell/completion.bash"
+__cond_source "/usr/share/fzf/key-bindings.bash" \
+              "/usr/share/fzf/shell/key-bindings.bash" \
+              "$GOPATH/src/github.com/junegunn/fzf/shell/key-bindings.bash"
 # This is my own implementation of the fzf history command. Rather than relying
 # on the builtin bash history, let's use the sqlite3 history database.
 __fzf_history_query__() {
