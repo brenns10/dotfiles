@@ -49,6 +49,9 @@ __fzf_history__() {
 HISTDB=$HOME/.bash_db_hist.sqlite
 source ~/bin/bash-history-sqlite.sh
 
+# Source customizations in ~/.bashrc.ext
+[ -f ~/.bashrc.ext ] && . ~/.bashrc.ext
+
 #####
 # BEGIN: PS1 Configuration
 # My PS1 is multiple lines, e.g.:
