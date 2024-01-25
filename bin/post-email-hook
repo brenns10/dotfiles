@@ -1,3 +1,3 @@
 #!/bin/bash
-lei up ~/mail/lei
+hash lei && lei up ~/mail/lei
 notmuch new && afew --tag --new
