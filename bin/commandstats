@@ -19,8 +19,10 @@ CREATE TABLE command (
 
 """
 import argparse
+import collections
 import datetime
 import os
+import shlex
 import sqlite3
 import time
 
@@ -57,6 +59,34 @@ def frequent(conn, days, name):
         print(f' {i+1:2d}. [{row[1]}x, last={dt:%Y-%m-%d %H:%M:%S}] {row[0]}')
     print()
     cursor.close()
+
+
+def frequent_subc(conn, days, name, main_cmd):
+    cursor = conn.cursor()
+    ts = ts_days_ago(days)
+    cursor.execute("""
+        SELECT
+            C.command
+        FROM command C
+        WHERE C.started >= ?
+        AND C.command LIKE ? || " %";
+    """, (ts, main_cmd))
+    subcs = collections.Counter()
+    for row in cursor.fetchall():
+        try:
+            args = shlex.split(row[0])
+        except ValueError:
+            # invalid shell syntax still will split on spaces and probably be
+            # fine for stats
+            args = row[0].split()
+            pass
+        if len(args) >= 2:
+            subcs[args[1]] += 1
+    cursor.close()
+    print(f'Top 10 most frequent {main_cmd} commands {name}:')
+    for i, (cmd, count) in enumerate(subcs.most_common(10)):
+        print(f' {i+1:2d}. [{count}x] {main_cmd} {cmd}')
+    print()
 
 
 def daily_command_counts(conn):
@@ -134,6 +164,8 @@ def main(args):
     daily_command_counts(conn)
     longest_running_commands(conn, 7, 'last 7 days')
     favorite_directory(conn, 7, 'last 7 days')
+    frequent_subc(conn, 30, 'last 30 days', 'yo')
+    frequent_subc(conn, 30, 'last 30 days', 'git')
 
 
 if __name__ == '__main__':
