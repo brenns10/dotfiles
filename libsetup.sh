@@ -62,7 +62,6 @@ LINKS=(
 	.doom.d/init.el
 	.doom.d/modules/custom/org-man
 	.doom.d/modules/custom/org-notmuch
-	.doom.d/modules/email/notmuch
 	.doom.d/packages.el
 	.gitconfig.ext
 	.hgrc
@@ -78,6 +77,7 @@ LINKS=(
 	.ssh/authorized_keys
 	.ssh/config
 	.vim
+	.vimrc
 	.xprofile
 ) # END LINKS
 

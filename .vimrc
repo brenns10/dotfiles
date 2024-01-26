@@ -145,120 +145,14 @@ autocmd FileType text setlocal formatoptions+=t
 " w: whitespace @ end of line
 autocmd FileType mail setlocal formatoptions+=aw
 
-nnoremap <Leader>gs :!echo --- LATEST OUTPUT ---; git status<Enter>
-nnoremap <Leader>gd :!git diff %
-
-"autocmd BufWritePre * :RetabIndents
-command! RetabIndents call RetabIndents()
-
-func! RetabIndents()
-    let saved_view = winsaveview()
-    execute '%s@^\(\ \{'.&ts.'\}\)\+@\=repeat("\t", len(submatch(0))/'.&ts.')@e'
-    call winrestview(saved_view)
-endfunc
-
-" Plugin installation
-call plug#begin('~/.vim-plugged')
-" Everything here for LSP: completion etc
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'airblade/vim-gitgutter'
-call plug#end()
-
-"" C Language Server Registration
-"if executable('cquery')
-"   au User lsp_setup call lsp#register_server({
-"      \ 'name': 'cquery',
-"      \ 'cmd': {server_info->['cquery']},
-"      \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
-"      \ 'initialization_options': { 'cacheDirectory': '/tmp/cquery/cache' },
-"      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
-"      \ })
-"endif
-"if executable('clangd')
-"    au User lsp_setup call lsp#register_server({
-"        \ 'name': 'clangd',
-"        \ 'cmd': {server_info->['clangd', '-background-index']},
-"        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-"        \ })
-"endif
-if executable('ccls')
-   au User lsp_setup call lsp#register_server({
-      \ 'name': 'ccls',
-      \ 'cmd': {server_info->['ccls', '--log-file=/tmp/cc.log', '--log-file-append']},
-      \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
-      \ 'initialization_options': {'cache': {'directory': expand('~/ccls') }},
-      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
-      \ })
-endif
-
-"" Python language server registration
-if executable('pyls')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'pyls',
-        \ 'cmd': {server_info->['pyls']},
-        \ 'whitelist': ['python'],
-        \ })
-endif
-
-"" Rust
-if executable('rls')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'rls',
-        \ 'cmd': {server_info->['rustup', 'run', 'stable', 'rls']},
-        \ 'workspace_config': {'rust': {'clippy_preference': 'on'}},
-        \ 'whitelist': ['rust'],
-        \ })
-endif
-
-" Asyncomplete tab completion
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
-
-" Asyncomplete force refresh
-imap <c-space> <Plug>(asyncomplete_force_refresh)
-
-" Happy keybindings for lsp, reminds me of spacemacs
-noremap <Leader>gd :LspDefinition<CR>
-noremap <Leader>gD :LspDeclaration<CR>
-noremap <C-]> :LspDefinition<CR>
-noremap <Leader>gt :LspTypeDefinition<CR>
-noremap <Leader>gr :LspReferences<CR>
-noremap gd :LspDefinition<CR>
-noremap gD :LspDeclaration<CR>
-noremap gt :LspTypeDefinition<CR>
-noremap gr :LspReferences<CR>
-nnoremap <silent> K :LspHover<CR>
-noremap <Leader>pd :LspPeekDefinition<CR>
-noremap <Leader>r  :LspRename<CR>
-noremap <Leader>nw :LspNextWarning<CR>
-noremap <Leader>ne :LspNextError<CR>
-noremap <Leader>pw :LspPreviousWarning<CR>
-noremap <Leader>pe :LspPreviousError<CR>
-noremap <Leader>pr :LspNextReference<CR>
-noremap <Leader>wz <C-w><C-z>
-noremap <Leader>wo <C-w><C-o>
-noremap <Leader>wj <C-w><C-j>
-noremap <Leader>wk <C-w><C-k>
-noremap <Leader>wq <C-w>q
-let g:lsp_highlight_references_enabled = 1
-
-" vim-gitgutter updatetime
-set updatetime=100
-
-set completeopt+=preview
-
 " For pasting directly without setting +paste:
 " <Leader>cv: paste
 " <Leader>cf: paste into a 'fenced' code block for markdown
 " <Leader>cb: paste into a 'block' code block (indented by 4 spaces)
-noremap <Leader>cv :read !xclip -selection c -o<CR>
-noremap <Leader>cf a```<CR>```<ESC>k:paste<CR>j
-noremap <Leader>cb my:read !paste<CR>0<C-v>'yjI    <ESC>kdd<C-o>
-noremap <Leader>cr my:read !paste<CR>
+noremap <Leader>cv :read !wl-paste<CR>
+noremap <Leader>cf a```<CR>```<ESC>k:wlpaste<CR>j
+noremap <Leader>cb my:read !wl-paste<CR>0<C-v>'yjI    <ESC>kdd<C-o>
+noremap <Leader>cr my:read !wl-paste<CR>
 
 if has('nvim-0.4.3')
   " When we receive SIGUSR1, reload the colorscheme portion of things.

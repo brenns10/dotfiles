@@ -1,87 +1,135 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
-(setq user-full-name "Stephen Brennan"
-      user-mail-address "stephen@brennan.io")
-
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
-;;
-;; + `doom-font'
-;; + `doom-variable-pitch-font'
-;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;;
-;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "Source Code Pro" :size 13)
-      doom-variable-pitch-font (font-spec :family "sans" :size 13))
-
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-solarized-light)
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
-
-
-;; Here are some additional functions/macros that could help you configure Doom:
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package!' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
-
-(setq lsp-clangd-binary-path "/usr/bin/clangd")
-
-;; "highlight" tabs, and include a "mark" (>) for them.
-;; highlight trailing whitespace as well
-(setq whitespace-style '(face tabs tab-mark trailing))
-(setq whitespace-global-modes '(not
-   treemacs-mode magit-status-mode magit-revision-mode vterm-mode
- ))
-(global-whitespace-mode 1)
-
-;; The Linux Standard Tab WIIIIIDTH
-(setq-default tab-width 8)
-(setq-default c-basic-offset 8)
-
-;; Org-mode / Vimwiki root
-;; -> This mirrors the vimwiki command "SPC m m" which opens the vimwiki root
-;;    at any place.
-(defun org-visit-root-file ()
-  "Visit the root of my org \"wiki\""
-  (interactive)
-  (find-file "~/org/index.org")
+;; Basic user info
+(setq
+  user-full-name "Stephen Brennan"
+  user-mail-address "stephen@brennan.io"
 )
-(map! :desc "Open the root of the org tree" :leader "w w" #'org-visit-root-file)
 
-;; Email Customizations
-;;  -> see also ~/.doom.d/modules/email/notmuch, which copies out and does some
-;;     changes to the (less than maintained) doom notmuch layer
+;; Doom basic configs from template
+(setq
+  doom-font (font-spec :family "Source Code Pro" :size 13)
+  doom-variable-pitch-font (font-spec :family "sans" :size 13)
+  doom-theme 'doom-solarized-light
+  display-line-numbers-type t
+)
 
-;; Basic vars
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; General Editor Settings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq
+  whitespace-style '(face tabs tab-mark trailing)
+  whitespace-global-modes '(not
+                            treemacs-mode
+                            magit-status-mode
+                            magit-revision-mode
+                            vterm-mode)
+ )
+(global-whitespace-mode 1)
+(setq-default tab-width 8)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Language Specific Settings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; I like auto-fill in a variety of text modes. But not all. So just have a
+;; whitelist here which I can update as necessary.
+(add-hook!
+   '(org-mode-hook markdown-mode-hook)
+   'auto-fill-mode
+ )
+
+;; The C programming language. Linux kernel style, mostly.
+(after! smart-tabs-mode
+  (smart-tabs-insinuate 'c))
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (whitespace-mode)
+            (setq indent-tabs-mode t)
+            (setq tab-width 8)
+            (setq c-basic-offset 8)))
+
+
+;; Language server configuration
+(setq
+  lsp-clangd-binary-path "/usr/bin/clangd"
+  lsp-enable-file-watchers t
+  lsp-pyls-configuration-sources ["flake8"]
+  lsp-pyls-plugins-pyflakes-enabled nil
+)
+
+(after! lsp-mode
+  (lsp-register-custom-settings '(("pyls.plugins.pyls_mypy.enabled" t t)))
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Org Mode
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq
+  org-directory "~/org/"
+  org-publish-project-alist
+      '(
+          ("work" :base-directory "~/org"
+                  :publishing-directory "~/orghtml"
+                  :publishing-function org-html-publish-to-html
+                  :recursive t
+          )
+       )
+  org-latex-compiler "lualatex"
+  org-latex-src-block-backend 'minted
+  org-latex-packages-alist '(("" "minted"))
+  org-latex-pdf-process '(
+                          "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                          "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f")
+)
+(add-to-list 'org-structure-template-alist
+             '("r" . "src bash :results output verbatim"))
+
+(defun org-paste-codeblock ()
+  "Paste a code block into org document"
+  (interactive)
+  (insert "#begin_src\n")
+  (yank)
+  (unless (looking-at "\n")
+    (insert "\n"))
+  (insert "#end_src")
+  )
+(map! :desc "Paste a code block into org document"
+      :mode org-mode :leader "m v" #'org-paste-codeblock)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Email
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq
+   notmuch-fcc-dirs '(("stephen.s.brennan@oracle.com" . "oracle/Sent")
+                      ("stephen@brennan.io" . "stephen/Sent")
+                      (".*" . "oracle/Sent"))
+   notmuch-send-mail-function 'message-send-mail-with-sendmail
+   send-mail-function 'sendmail-send-it
+   sendmail-program "/usr/bin/msmtp"
+   message-sendmail-extra-arguments '("--read-envelope-from")
+   message-sendmail-f-is-evil t
+   +notmuch-sync-backend "bash -c 'journalctl --user-unit mbsync -f & systemctl --user start mbsync.service; kill %1'"
+   mml-secure-openpgp-sign-with-sender t
+)
+;; The current notmuch UI uses some popups that are a bit unintuitive. I should
+;; really come back to this and try to make it behave nicely, but right now I
+;; don't like it and haven't had time to make it better.
+(set-popup-rule! "^\\*notmuch-hello" :ignore 't)
+(set-popup-rule! "^\\*subject:" :ignore 't)
+
+;; The "good pgp signature" face looks gross. Don't really know how to lookup a generic
+;; "success" style from the color scheme, but that seems like the best way to fix.
+(set-face-attribute 'notmuch-crypto-signature-good nil :foreground "DarkOliveGreen" :background nil)
+(set-face-attribute 'widget-field nil :background (face-attribute 'region :background))
+(set-face-attribute 'widget-single-line-field nil :background (face-attribute 'region :background))
+
+;; smartparents-mode gets super angry about all the unmatched '>' signs from
+;; quotes in emails
+(add-hook! 'message-mode-hook #'turn-off-smartparens-mode)
 
 ;; Emacs notmuch has "savedsearches" but they seem to not be the same as the
 ;; notmuch saved searches built-in to the actual application. Since I already
@@ -97,49 +145,7 @@
          )
     (pp ss-val)
     (setq notmuch-saved-searches ss-val)))
-
-(after! notmuch
-  ;; The "good pgp signature" face looks gross. Don't really know how to lookup a generic
-  ;; "success" style from the color scheme, but that seems like the best way to fix.
-  (set-face-attribute 'notmuch-crypto-signature-good nil :foreground "DarkOliveGreen" :background nil)
-  (set-face-attribute 'widget-field nil :background (face-attribute 'region :background))
-  (set-face-attribute 'widget-single-line-field nil :background (face-attribute 'region :background))
-  (load-savedsearches-from-json)
-  (setq
-   notmuch-fcc-dirs '(("stephen.s.brennan@oracle.com" . "oracle/Sent")
-                      ("stephen@brennan.io" . "stephen/Sent")
-                      (".*" . "oracle/Sent"))
-   notmuch-send-mail-function 'message-send-mail-with-sendmail
-   send-mail-function 'sendmail-send-it
-   sendmail-program "/usr/bin/msmtp"
-   message-sendmail-extra-arguments '("--read-envelope-from")
-   message-sendmail-f-is-evil t
-   +notmuch-sync-backend 'custom
-   +notmuch-sync-command "bash -c 'journalctl --user -u mbsync -f & systemctl --user start mbsync.service; kill %1'"
-  )
-)
-
-;; I like auto-fill in a variety of text modes. But not all. So just have a
-;; whitelist here which I can update as necessary.
-(add-hook!
-   '(org-mode-hook markdown-mode-hook)
-   'auto-fill-mode
- )
-
-(add-hook! 'message-mode-hook #'turn-off-smartparens-mode)
-
-(add-hook! 'c-mode-hook 'whitespace-mode)
-
-(setq org-publish-project-alist
-      '(
-          ("work" :base-directory "~/org"
-                  :publishing-directory "~/orghtml"
-                  :publishing-function org-html-publish-to-html
-                  :recursive t
-          )
-       ))
-(add-to-list 'org-structure-template-alist
-             '("r" . "src bash :results output verbatim"))
+(load-savedsearches-from-json)
 
 (defun notmuch-show-any-message-visible ()
   "Return true if any message in this thread is visible, false otherwise"
@@ -171,50 +177,6 @@ show all messages."
 
 (map! :desc "Toggle all messages visible or not"
       :mode notmuch-show-mode "M-RET" #'notmuch-show-toggle-all-messages)
-
-(setq
-      org-latex-compiler "lualatex"
-      org-latex-src-block-backend 'minted
-      org-latex-packages-alist '(("" "minted"))
-      org-latex-pdf-process '(
-                              "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-                              "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f")
-)
-
-(defun org-paste-codeblock ()
-  "Paste a code block into org document"
-  (interactive)
-  (insert "#begin_src\n")
-  (yank)
-  (unless (looking-at "\n")
-    (insert "\n"))
-  (insert "#end_src")
-  )
-(map! :desc "Paste a code block into org document"
-      :mode org-mode :leader "m v" #'org-paste-codeblock)
-
-(setq mml-secure-openpgp-sign-with-sender t)
-;;(add-hook 'notmuch-show-mode-hook #'notmuch-show-toggle-all-messages)
-
-(after! lsp-mode
-  (setq lsp-enable-file-watchers t
-        lsp-pyls-configuration-sources ["flake8"]
-        lsp-pyls-plugins-pyflakes-enabled nil
-        ;;lsp-pylsp-plugins-black-enabled t
-        ;;lsp-pylsp-plugins-rope-autoimport-enabled t
-        )
-  (lsp-register-custom-settings '(("pyls.plugins.pyls_mypy.enabled" t t)))
-  )
-
-(after! smart-tabs-mode
-  (smart-tabs-insinuate 'c))
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (setq indent-tabs-mode t)
-            (setq tab-width 8)
-            (setq c-basic-offset 8)))
-
-(add-to-list 'auto-mode-alist '("\\.mbox\\'" . rmail-mode))
 
 (defun copy-numbered-lines ()
   "Copy line numbers"
@@ -252,10 +214,18 @@ show all messages."
     (goto-char (point-min))))
 (define-key 'notmuch-show-part-map "d" 'my-notmuch-show-view-as-patch)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Miscellaneous
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; Speed up git log args in magit, for fixups
 (with-eval-after-load 'magit-log
   (put 'magit-log-select-mode 'magit-log-default-arguments
        '("-n256" "--decorate")))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Work overrides
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (if (file-exists-p "~/.doom.d/oracle.el")
     (load "~/.doom.d/oracle.el"))

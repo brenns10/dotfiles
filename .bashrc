@@ -12,7 +12,7 @@ alias cls='clear'
 alias g=git
 alias vim=nvim
 alias uctl='systemctl --user'
-alias mailsync='bash -c "journalctl --user -u mbsync -f & systemctl --user start mbsync.service; kill %1"'
+alias mailsync='bash -c "journalctl --user-unit mbsync -f & systemctl --user start mbsync.service; kill %1"'
 function cde() { mkdir -p "$1" && cd "$1"; }
 
 export LESS=-R
