@@ -42,10 +42,10 @@ LINKS=(
 	bin/widevine-update
 	bin/yank
 	.config/afew/config
-	.config/alacritty/solarized_dark.toml
-	.config/alacritty/solarized_light.toml
-	.config/alot/themes/solarized_dark
-	.config/alot/themes/solarized_light
+	.config/alacritty/solarized-dark.toml
+	.config/alacritty/solarized-light.toml
+	.config/alot/themes/solarized-dark
+	.config/alot/themes/solarized-light
 	.config/autostart/ssh-add.desktop
 	.config/notmuchqueries.json
 	.config/nvim/init.vim
@@ -66,6 +66,7 @@ LINKS=(
 	.mutt/account_stephen
 	.mutt/mailcap
 	.mutt/mutt-solarized-dark-16.muttrc
+	.mutt/muttrc
 	.mutt/vim-keys.rc
 	.notmuch-config
 	.profile
@@ -87,7 +88,6 @@ M4_LINKS=(
 	.gitconfig
 	.msmtprc
 	.mbsyncrc
-	.mutt/muttrc
 	.tmux.conf
 )
 
@@ -99,6 +99,10 @@ DELETE=(
 	.config/aerc/accounts.conf
 	.config/aerc/aerc.conf
 	.config/aerc/binds.conf
+	.config/alacritty/solarized_dark.toml
+	.config/alacritty/solarized_light.toml
+	.config/alot/themes/solarized_dark
+	.config/alot/themes/solarized_light
 	.spacemacs
 	.spacemacs.d/snippets
 )
@@ -139,11 +143,11 @@ M4_CONTEXT=()
 # Add OS to M4 Context
 unamestr=$(uname)
 if [[ "$unamestr" == 'Linux' ]] ; then
-	M4_CONTEXT+=( -DOS=linux )
+	M4_CONTEXT+=( -DR_OS_R=linux )
 elif [[ "$unamestr" == 'Darwin' ]]; then
-	M4_CONTEXT+=( -DOS=mac )
+	M4_CONTEXT+=( -DX_OS_X=mac )
 else
-	M4_CONTEXT+=( -DOS=unknown )
+	M4_CONTEXT+=( -DX_OS_X=unknown )
 fi
 
 THEMELOC=$DST/.config/stephen-colortheme
@@ -153,13 +157,13 @@ if ! [ -f "$THEMELOC" ]; then
 fi
 THEME="$(cat "$THEMELOC")"
 
-M4_CONTEXT+=( -DTHEME="$THEME" )
-M4_CONTEXT+=( -DMY_EMAIL=stephen@brennan.io )
+M4_CONTEXT+=( -DX_THEME_X="$THEME" )
+M4_CONTEXT+=( -DX_MY_EMAIL_X=stephen@brennan.io )
 
 # Add Distro name to M4 Context
 DISTRO=""
 [ -f /etc/os-release ] && DISTRO=$(sh -c "source /etc/os-release && echo \$NAME")
-M4_CONTEXT+=( -DDISTRO="$DISTRO" )
+M4_CONTEXT+=( -DX_DISTRO_X="$DISTRO" )
 
 [ -f "$EXT/libsetup.sh" ] && source "$EXT/libsetup.sh"
 
@@ -174,7 +178,21 @@ do_m4() {
 	else
 		echo -e "M4\t$1"
 	fi
-	m4 "${M4_CONTEXT[@]}" "$src" > "$dst"
+	cat "$DIR/preamble.m4" "$src" | m4 -P "${M4_CONTEXT[@]}" > "$dst"
+}
+do_m4_diff() {
+	pre="$DIR/$1.m4"
+	post="$DIR/$1"
+	if [ -f "$EXT/$1.m4" ]; then
+		pre="$EXT/$1.m4"
+		post="$EXT/$1"
+	fi
+	if cmp -s "$pre" "$post"; then
+		echo "ERROR: IDENTICAL $pre AND $post"
+		return
+	fi
+	echo diff -u "$pre" "$post"
+	diff --color=auto -u "$pre" "$post"
 }
 create_m4_symlink() {
 	do_m4 "$1"

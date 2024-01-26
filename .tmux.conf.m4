@@ -1,5 +1,3 @@
-changequote(`<<<',`>>>')
-<<<
 # Stop using C-b and start using C-i
 unbind C-b
 set -g prefix C-j
@@ -65,5 +63,4 @@ bind C-n next-window
 set -s set-clipboard external
 set -as terminal-features ',alacritty:clipboard'
 
-source-file ~/.config/tmux/tmuxcolors->>>THEME<<<.conf
->>>
+source-file ~/.config/tmux/tmuxcolors-X_THEME_X.conf

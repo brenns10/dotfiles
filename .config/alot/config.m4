@@ -1,6 +1,4 @@
-changequote(`<<<',`>>>')
-<<<
-theme = solarized_>>>THEME<<<
+theme = solarized-X_THEME_X
 #handle_mouse = True
 initial_command = "namedqueries"
 prefer_plaintext = True
@@ -12,4 +10,3 @@ prefer_plaintext = True
     alias_regexp = stephen\+.+@brennan.io
     sendmail_command = msmtp -a stephen -t
     sent_box = maildir://~/mail/stephen/Sent
->>>

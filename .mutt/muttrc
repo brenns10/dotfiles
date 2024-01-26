@@ -1,5 +1,3 @@
-changequote(`<<<',`>>>')
-<<<
 #set message_cachedir=~/.cache/mutt/messages
 set header_cache=~/.cache/mutt/headers
 set mailcap_path=~/.mutt/mailcap
@@ -114,4 +112,3 @@ macro index S "<enter-command>unset wait_key<enter><shell-escape>~/bin/mutt-notm
 macro index,pager ,f "<save-message>=yelp/Finished<enter>y"
 
 mailboxes =temporary/search
->>>

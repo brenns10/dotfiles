@@ -1,2 +1,1 @@
-changequote(`<<<',`>>>')
-<<<colorscheme solarized8_>>>THEME
+colorscheme solarized8-X_THEME_X

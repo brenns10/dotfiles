@@ -1,0 +1,20 @@
+#!/bin/bash
+
+source libsetup.sh
+
+if [ "$#" -ge 1 ]; then
+    for item in "$@"; do
+        do_m4_diff "$item"
+    done
+    exit
+fi
+
+for item in "${M4_ONLY[@]}"
+do
+    do_m4_diff "$item"
+done
+
+for item in "${M4_LINKS[@]}"
+do
+    do_m4_diff "$item"
+done

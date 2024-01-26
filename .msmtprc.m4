@@ -1,11 +1,7 @@
-changequote(`<<<',`>>>')
-<<<
 defaults
 auth on
 tls on
->>>
-tls_trust_file ifelse(DISTRO,Oracle Linux Server,/etc/ssl/certs/ca-bundle.crt,/etc/ssl/certs/ca-certificates.crt)
-<<<
+tls_trust_file m4_ifelse(X_DISTRO_X,Oracle Linux Server,/etc/ssl/certs/ca-bundle.crt,/etc/ssl/certs/ca-certificates.crt)
 logfile ~/.msmtp.log
 
 # stephen
@@ -17,4 +13,3 @@ user stephen@brennan.io
 passwordeval "imap-pass -g stephen@brennan.io"
 
 account default : stephen
->>>

@@ -1,8 +1,7 @@
-changequote(<<<,>>>)undefine(format, include)
 [push]
 	default = simple
 [user]
-	email = MY_EMAIL
+	email = X_MY_EMAIL_X
 	name = Stephen Brennan
 [core]
 	autocrlf = input
