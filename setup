@@ -20,4 +20,9 @@ do
 	create_symlink "$item"
 done
 
+for item in "${DELETE[@]}"
+do
+	maybe_delete "$item"
+done
+
 chmod u+x ~/bin/lc

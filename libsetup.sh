@@ -72,8 +72,6 @@ LINKS=(
 	.mutt/vim-keys.rc
 	.notmuch-config
 	.profile
-	.spacemacs
-	.spacemacs.d/snippets
 	.ssh/authorized_keys
 	.ssh/config
 	.vim
@@ -96,6 +94,15 @@ M4_LINKS=(
 	.tmux.conf
 )
 
+# Place files which have been removed from my dotfiles here. If we encounter
+# them, and they are actually links to the corresponding paths in $DIR (or
+# $EXT), then we delete the link. We are careful not to delete any file which
+# isn't the expected link, that would be bad.
+DELETE=(
+	.spacemacs
+	.spacemacs.d/snippets
+)
+
 create_symlink() {
 	src="$DIR/$1"
 	ovr="$EXT/$1"
@@ -110,6 +117,21 @@ create_symlink() {
 	fi
 	mkdir -p "$(dirname "$dst")"
 	ln -s "$src" "$dst"
+}
+
+maybe_delete() {
+	src="$DIR/$1"
+	ovr="$EXT/$1"
+	dst="$DST/$1"
+
+	if ! [ -h "$dst" ]; then
+		return
+	fi
+	tgt="$(readlink "$dst")"
+	if [ "$tgt" = "$src" ] || [ "$tgt" = "$ovr" ]; then
+		echo -e "CLEAN\t$1"
+		rm "$dst"
+	fi
 }
 
 M4_CONTEXT=()
