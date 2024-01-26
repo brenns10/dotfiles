@@ -8,7 +8,6 @@ EXT="$DIR/ext"
 DST="$HOME"
 
 LINKS=(
-	.archey3.cfg
 	.bash_profile
 	.bashrc
 	bin/autosuspend
@@ -30,7 +29,6 @@ LINKS=(
 	bin/newmirrors
 	bin/paste
 	bin/post-email-hook
-	bin/sbrennan-setup
 	bin/ssh-list-async
 	bin/synchronize_namedqueries.py
 	bin/syncmail
@@ -60,7 +58,6 @@ LINKS=(
 	.doom.d/modules/custom/org-notmuch
 	.doom.d/packages.el
 	.gitconfig.ext
-	.hgrc
 	.lc.json
 	.profile
 	.ssh/authorized_keys
@@ -90,7 +87,9 @@ M4_LINKS=(
 # $EXT), then we delete the link. We are careful not to delete any file which
 # isn't the expected link, that would be bad.
 DELETE=(
+	.archey3.cfg
 	bin/mutt-notmuch-py
+	bin/sbrennan-setup
 	.config/aerc/accounts.conf
 	.config/aerc/aerc.conf
 	.config/aerc/binds.conf
@@ -98,6 +97,7 @@ DELETE=(
 	.config/alacritty/solarized_light.toml
 	.config/alot/themes/solarized_dark
 	.config/alot/themes/solarized_light
+	.hgrc
 	.mutt/account_stephen
 	.mutt/mailcap
 	.mutt/mutt-solarized-dark-16.muttrc
