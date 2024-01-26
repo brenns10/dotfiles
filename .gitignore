@@ -4,6 +4,7 @@ ssh/local
 .config/alot/config
 .mbsyncrc
 .msmtprc
+.notmuch-config
 .gitconfig
 .mutt/muttrc
 .tmux.conf

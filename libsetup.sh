@@ -68,7 +68,6 @@ LINKS=(
 	.mutt/mutt-solarized-dark-16.muttrc
 	.mutt/muttrc
 	.mutt/vim-keys.rc
-	.notmuch-config
 	.profile
 	.ssh/authorized_keys
 	.ssh/config
@@ -88,6 +87,7 @@ M4_LINKS=(
 	.gitconfig
 	.msmtprc
 	.mbsyncrc
+	.notmuch-config
 	.tmux.conf
 )
 
@@ -164,6 +164,8 @@ M4_CONTEXT+=( -DX_MY_EMAIL_X=stephen@brennan.io )
 DISTRO=""
 [ -f /etc/os-release ] && DISTRO=$(sh -c "source /etc/os-release && echo \$NAME")
 M4_CONTEXT+=( -DX_DISTRO_X="$DISTRO" )
+
+M4_CONTEXT+=( -DX_USER_X="$USER" )
 
 [ -f "$EXT/libsetup.sh" ] && source "$EXT/libsetup.sh"
 
