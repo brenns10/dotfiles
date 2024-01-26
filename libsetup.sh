@@ -41,9 +41,6 @@ LINKS=(
 	bin/wait-for-internet
 	bin/widevine-update
 	bin/yank
-	.config/aerc/accounts.conf
-	.config/aerc/aerc.conf
-	.config/aerc/binds.conf
 	.config/afew/config
 	.config/alacritty/solarized_dark.toml
 	.config/alacritty/solarized_light.toml
@@ -99,6 +96,9 @@ M4_LINKS=(
 # $EXT), then we delete the link. We are careful not to delete any file which
 # isn't the expected link, that would be bad.
 DELETE=(
+	.config/aerc/accounts.conf
+	.config/aerc/aerc.conf
+	.config/aerc/binds.conf
 	.spacemacs
 	.spacemacs.d/snippets
 )
