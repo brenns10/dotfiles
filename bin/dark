@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
-set -x
 
 THEMELOC=$HOME/.config/stephen-colortheme
 echo -n dark >"$THEMELOC"
