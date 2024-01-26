@@ -26,7 +26,6 @@ LINKS=(
 	bin/kconfig
 	bin/light
 	bin/monitor-internet
-	bin/mutt-notmuch-py
 	bin/myrpmbuild
 	bin/newmirrors
 	bin/paste
@@ -63,11 +62,6 @@ LINKS=(
 	.gitconfig.ext
 	.hgrc
 	.lc.json
-	.mutt/account_stephen
-	.mutt/mailcap
-	.mutt/mutt-solarized-dark-16.muttrc
-	.mutt/muttrc
-	.mutt/vim-keys.rc
 	.profile
 	.ssh/authorized_keys
 	.ssh/config
@@ -96,6 +90,7 @@ M4_LINKS=(
 # $EXT), then we delete the link. We are careful not to delete any file which
 # isn't the expected link, that would be bad.
 DELETE=(
+	bin/mutt-notmuch-py
 	.config/aerc/accounts.conf
 	.config/aerc/aerc.conf
 	.config/aerc/binds.conf
@@ -103,6 +98,11 @@ DELETE=(
 	.config/alacritty/solarized_light.toml
 	.config/alot/themes/solarized_dark
 	.config/alot/themes/solarized_light
+	.mutt/account_stephen
+	.mutt/mailcap
+	.mutt/mutt-solarized-dark-16.muttrc
+	.mutt/muttrc
+	.mutt/vim-keys.rc
 	.spacemacs
 	.spacemacs.d/snippets
 )
