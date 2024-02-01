@@ -9,14 +9,8 @@ set -g default-terminal "screen-256color"
 # Environment variables to update at each connect:
 # https://www.babushk.in/posts/renew-environment-tmux.html
 # And see the .bashrc for tmux-refresh-env command.
-#set-option -g update-environment "SSH_AUTH_SOCK \
-#                                  SSH_CONNECTION \
-#                                  DISPLAY \
-#                                  XDG_SESSION_ID"
-
-# SSH socket.
-setenv -g SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
-set -g update-environment -r
+set -g update-environment "SSH_AUTH_SOCK SSH_CONNECTION \
+                           DISPLAY XDG_SESSION_ID"
 
 # Tmux scroll copy mode!
 set-option -g mouse on

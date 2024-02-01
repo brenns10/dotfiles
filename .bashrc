@@ -14,6 +14,9 @@ alias vim=nvim
 alias uctl='systemctl --user'
 alias mailsync='bash -c "journalctl --user-unit mbsync -f & systemctl --user start mbsync.service; kill %1"'
 function cde() { mkdir -p "$1" && cd "$1"; }
+function tmuxenv() {
+  eval "$(tmux show-env -s)"
+}
 
 export LESS=-R
 
