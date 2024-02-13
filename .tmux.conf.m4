@@ -4,7 +4,7 @@ set -g prefix C-j
 bind C-j send-prefix
 
 # Make sure to use 256 colors
-set -g default-terminal "screen-256color"
+set -g default-terminal "tmux-direct"
 
 # Environment variables to update at each connect:
 # https://www.babushk.in/posts/renew-environment-tmux.html

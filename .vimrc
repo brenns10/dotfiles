@@ -111,6 +111,8 @@ set cc=+1
 set shm=I
 " mouse scrolling in tmux
 set mouse=a
+" true colors
+set termguicolors
 " UNCOMMMENT tabstop
 "set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 

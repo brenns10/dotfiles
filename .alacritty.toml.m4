@@ -9,6 +9,10 @@ unfocused_hollow = true
 [font]
 size = 11.0
 
+[env]
+TERM = "alacritty-direct"
+COLORTERM = "true"
+
 [font.normal]
 family = "Source Code Pro"
 
