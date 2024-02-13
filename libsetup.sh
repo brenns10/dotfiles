@@ -75,6 +75,7 @@ M4_LINKS=(
 	.alacritty.toml
 	bin/lc
 	.config/alot/config
+	.doom.d/theme.el
 	.gitconfig
 	.msmtprc
 	.mbsyncrc

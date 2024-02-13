@@ -22,8 +22,9 @@ done
 # tmux (manually reload)
 tmux source-file ~/.config/tmux/tmuxcolors-dark.conf || true
 
-# vim (manually reload)
+# vim & emacs (manually reload)
 pkill -USR1 -u $USER nvim || true
+pkill -USR1 -u $USER emacs || true
 
 # konsole + yakuake
 konsoleprofile colors=Solarized

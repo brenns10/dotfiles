@@ -2,6 +2,7 @@
 ssh/local
 .alacritty.toml
 .config/alot/config
+.doom.d/theme.el
 .mbsyncrc
 .msmtprc
 .notmuch-config

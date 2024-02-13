@@ -10,9 +10,23 @@
 (setq
   doom-font (font-spec :family "Source Code Pro" :size 13)
   doom-variable-pitch-font (font-spec :family "sans" :size 13)
-  doom-theme 'doom-solarized-light
   display-line-numbers-type t
 )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Color Theme Settings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Load theme from file
+(load "~/.doom.d/theme.el")
+
+;; Reload theme when we get SIGUSR1
+(defun reload-theme-sigusr1 ()
+  (interactive)
+  (load "~/.doom.d/theme.el")
+  (load-theme doom-theme)
+  (message "Reload theme due to %S" last-input-event))
+(define-key special-event-map [sigusr1] 'reload-theme-sigusr1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; General Editor Settings
