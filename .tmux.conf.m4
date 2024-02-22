@@ -3,8 +3,12 @@ unbind C-b
 set -g prefix C-j
 bind C-j send-prefix
 
-# Make sure to use 256 colors
+# Make sure set $TERM to advertise 256 colors support
+# All terminals I use support it, so just set tmux-direct, but
+# be sure to set the "terminal-features" properly anyway.
+# Can't detect COLORTERM here
 set -g default-terminal "tmux-direct"
+set -as terminal-features ',*-direct:RGB'
 
 # Environment variables to update at each connect:
 # https://www.babushk.in/posts/renew-environment-tmux.html
@@ -55,6 +59,6 @@ bind C-n next-window
 
 ## CLIPBOARD INTEGRATION
 set -s set-clipboard external
-set -as terminal-features ',alacritty:clipboard'
+set -as terminal-features ',alacritty*:clipboard'
 
 source-file ~/.config/tmux/tmuxcolors-X_THEME_X.conf
