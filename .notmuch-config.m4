@@ -49,7 +49,7 @@ other_email=stephen@brennan.io;
 #
 [new]
 tags=new
-ignore=
+ignore=.mbsyncstate;.uidvalidity
 
 # Search configuration
 #
