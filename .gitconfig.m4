@@ -73,7 +73,7 @@
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
-[tar.bz2]
-	command = bzip2
+[tar "tar.bz2"]
+	command = bzip2 -c
 [include]
 	path = ~/.gitconfig.ext
