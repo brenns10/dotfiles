@@ -22,6 +22,7 @@ LINKS=(
 	bin/git-qref
 	bin/git-when-merged
 	bin/ifdef-helper.py
+	bin/ifdef-report
 	bin/imap-pass
 	bin/kconfig
 	bin/light

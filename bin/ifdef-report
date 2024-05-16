@@ -1,0 +1,122 @@
+#!/usr/bin/python
+"""
+Print lines with their corresponding ifdef context
+
+Inspired by Vegard's ifdef-helper.py. It is great for visualizing, but
+condensing the file down to exactly the ifdefs you care about is great for
+sharing on mailing lists, etc.
+"""
+import argparse
+import dataclasses
+import re
+from typing import Sequence
+
+# thanks Vegard
+PP_RE = re.compile(r'^\s*#\s*(?P<directive>if|ifdef|ifndef|elif|else|endif)(?:\s+(?P<expr>.*))?\s*$')
+
+
+@dataclasses.dataclass
+class IfDef:
+
+    printed: bool
+    lines: list[tuple[int, str]]
+
+
+def print_lines(lines: Sequence[tuple[int, str]], indent: int):
+    pfx = indent * 4 * ' '
+    for line_num, line in lines:
+        print(f"{line_num:4d}:{pfx}{line}", end="")
+
+
+def print_context(ifdefs: Sequence[IfDef]):
+    for i, ifdef in enumerate(ifdefs):
+        if not ifdef.printed:
+            print_lines(ifdef.lines, i)
+            ifdef.printed = True
+
+
+def update_stack(
+    ifdef_stack: list[IfDef], directive: str, full_stmt: list[tuple[int, str]]
+) -> None:
+    if directive in ('if', 'ifdef', 'ifndef'):
+        # push a new ifdef to the stack
+        ifdef = IfDef(False, full_stmt)
+        ifdef_stack.append(ifdef)
+    elif directive in ('elif', 'else'):
+        if not ifdef_stack:
+            raise SyntaxError(f"unmatched {directive}")
+        # we need to print this if the context should be printed
+        if ifdef_stack[-1].printed:
+            print_lines(full_stmt, len(ifdef_stack) - 1)
+        # add lines in case we later find out we should print
+        ifdef_stack[-1].lines.append(full_stmt)
+    elif directive in ('endif',):
+        if not ifdef_stack:
+            raise SyntaxError("unmatched endif")
+        if ifdef_stack[-1].printed:
+            print_lines(full_stmt, len(ifdef_stack) - 1)
+        ifdef_stack.pop()
+
+
+def should_print(
+    line_num: int, line: str, to_print: set[int], exprs: list[re.Pattern]
+) -> bool:
+    if line_num in to_print:
+        return True
+    for pattern in exprs:
+        if pattern.search(line) is not None:
+            return True
+    return False
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="summarize a subset of lines and surrounding ifdefs"
+    )
+    parser.add_argument(
+        "file",
+        help="C header file to analyze",
+    )
+    parser.add_argument(
+        "line_or_pattern",
+        nargs="+",
+        help="line number (+NN) or regex to search for in lines",
+    )
+    args = parser.parse_args()
+
+    line_numbers_to_print: set[int] = set()
+    expressions: list[re.Pattern] = []
+    for line in args.line_or_pattern:
+        if line.startswith("+"):
+            try:
+                line_numbers_to_print.add(int(line[1:]))
+                continue
+            except ValueError:
+                pass
+        expressions.append(re.compile(line))
+
+    ifdef_stack: list[IfDef] = []
+    with open(args.file) as f:
+        print(args.file)
+        lines_iter = enumerate(f.readlines(), 1)
+        for line_num, line in lines_iter:
+
+            # Do maintenance on the ifdef stack
+            m = PP_RE.match(line)
+            if m:
+                # Get continuation lines ending with backslash
+                full_stmt = [(line_num, line)]
+                while line.endswith("\\\n"):
+                    line_num, line = next(lines_iter)
+                    full_stmt.append((line_num, line))
+                # update the ifdef stack (push / pop / etc)
+                update_stack(ifdef_stack, m.group('directive'), full_stmt)
+                continue
+
+            if should_print(line_num, line, line_numbers_to_print, expressions):
+                print_context(ifdef_stack)
+                print_lines([(line_num, line)], len(ifdef_stack))
+
+
+if __name__ == '__main__':
+    main()
