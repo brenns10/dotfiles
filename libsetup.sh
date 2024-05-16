@@ -21,6 +21,7 @@ LINKS=(
 	bin/extract-vmlinux
 	bin/git-qref
 	bin/git-when-merged
+	bin/ifdef-helper.py
 	bin/imap-pass
 	bin/kconfig
 	bin/light
