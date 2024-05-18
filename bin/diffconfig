@@ -1,0 +1,59 @@
+#!/usr/bin/python3
+"""
+Diff kernel configurations
+"""
+import argparse
+import sys
+
+
+def read_config(fn):
+    d = {}
+    for line in open(fn):
+        line = line.rstrip("\n")
+        if line.startswith("#"):
+            continue
+        if not line.strip():
+            continue
+        key, value = line.split("=", 1)
+        assert key not in d
+        d[key] = value
+    return d
+
+
+def main():
+    parser = argparse.ArgumentParser(description="diff kernel configs")
+    parser.add_argument("base")
+    parser.add_argument("new")
+    parser.add_argument(
+        "--added", "-a", action="store_true", help="show added configs"
+    )
+    args = parser.parse_args()
+    base = read_config(args.base)
+    new = read_config(args.new)
+
+    shared = base.keys() & new.keys()
+    removed = base.keys() - new.keys()
+    added = new.keys() - base.keys()
+    changed = {key for key in shared if base[key] != new[key]}
+
+    if added and args.added:
+        print("#### ADDED CONFIGS")
+        for key in added:
+            print(f"{key}={new[key]}")
+
+    if removed:
+        print("#### REMOVED CONFIGS")
+    for key in removed:
+        print(f"{key}={base[key]}")
+
+    if changed:
+        print("#### CHANGED CONFIGS")
+    for key in changed:
+        print(f"{key}={base[key]} => {new[key]}")
+
+    print(f"Summary: {len(removed)} removed, {len(changed)} changed, and {len(added)} added")
+    sys.exit(len(removed) + len(changed))
+
+
+if __name__ == "__main__":
+    main()

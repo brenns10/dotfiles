@@ -17,6 +17,7 @@ LINKS=(
 	bin/commandstats
 	bin/dark
 	bin/dbhist.py
+	bin/diffconfig
 	bin/dotfiles-add
 	bin/extract-vmlinux
 	bin/git-qref
