@@ -1,2 +1,4 @@
-usegeoclue: true
+usegeoclue: false
 portal: true
+lat: 38
+lng: -122
