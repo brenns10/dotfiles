@@ -2,10 +2,10 @@
 set -e
 
 THEMELOC=$HOME/.config/stephen-colortheme
-echo -n light >"$THEMELOC"
+echo -n dark >"$THEMELOC"
 
 MYDIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
-source "$MYDIR/../libsetup.sh"
+source "$MYDIR/../../../libsetup.sh"
 
 for item in "${M4_LINKS[@]}"
 do
@@ -20,11 +20,8 @@ done
 # alacritty (auto reloads)
 # alot (reload not supported)
 # tmux (manually reload)
-tmux source-file ~/.config/tmux/tmuxcolors-light.conf || true
+tmux source-file ~/.config/tmux/tmuxcolors-dark.conf || true
 
 # vim & emacs (manually reload)
 pkill -USR1 -u $USER nvim || true
 pkill -USR1 -u $USER emacs || true
-
-# konsole + yakuake
-konsoleprofile colors=SolarizedLight

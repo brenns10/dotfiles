@@ -15,7 +15,6 @@ LINKS=(
 	bin/bash-history-sqlite.sh
 	bin/bash-preexec.sh
 	bin/commandstats
-	bin/dark
 	bin/dbhist.py
 	bin/diffconfig
 	bin/dotfiles-add
@@ -26,7 +25,6 @@ LINKS=(
 	bin/ifdef-report
 	bin/imap-pass
 	bin/kconfig
-	bin/light
 	bin/monitor-internet
 	bin/myrpmbuild
 	bin/newmirrors
@@ -47,6 +45,7 @@ LINKS=(
 	.config/alot/themes/solarized-dark
 	.config/alot/themes/solarized-light
 	.config/autostart/ssh-add.desktop
+	.config/darkman/config.yaml
 	.config/notmuchqueries.json
 	.config/nvim/init.vim
 	.config/plasma-workspace/env/askpass.sh
@@ -54,6 +53,7 @@ LINKS=(
 	.config/systemd/user/mbsync.timer
 	.config/tmux/tmuxcolors-dark.conf
 	.config/tmux/tmuxcolors-light.conf
+	.config/xdg-desktop-portal/kde-portals.conf
 	.doom.d/config.el
 	.doom.d/custom.el
 	.doom.d/init.el
@@ -62,6 +62,10 @@ LINKS=(
 	.doom.d/packages.el
 	.gitconfig.ext
 	.lc.json
+	.local/share/dark-mode.d/custom.sh
+	.local/share/dark-mode.d/kde-all.sh
+	.local/share/light-mode.d/custom.sh
+	.local/share/light-mode.d/kde-all.sh
 	.profile
 	.ssh/authorized_keys
 	.ssh/config
