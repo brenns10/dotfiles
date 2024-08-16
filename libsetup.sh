@@ -10,6 +10,7 @@ DST="$HOME"
 LINKS=(
 	.bash_profile
 	.bashrc
+	bin/apply_reviewers.py
 	bin/autosuspend
 	bin/bash-cdt.sh
 	bin/bash-history-sqlite.sh
