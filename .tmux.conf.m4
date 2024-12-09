@@ -7,7 +7,7 @@ bind C-j send-prefix
 # All terminals I use support it, so just set tmux-direct, but
 # be sure to set the "terminal-features" properly anyway.
 # Can't detect COLORTERM here
-set -g default-terminal "tmux-direct"
+set -g default-terminal "tmux-256color"
 set -as terminal-features ',*-direct:RGB'
 
 # Environment variables to update at each connect:

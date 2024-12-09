@@ -11,7 +11,7 @@ unfocused_hollow = true
 size = 11.0
 
 [env]
-TERM = "alacritty-direct"
+TERM = "alacritty"
 COLORTERM = "true"
 
 [font.normal]
