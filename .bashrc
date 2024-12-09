@@ -30,6 +30,16 @@ __cond_source() {
   done
 }
 
+# _simplecfg:
+# I use the same .bashrc in small VMs and docker images that share my host
+# filesystem. Frequently they are read-only and there is some extra penalty
+# for accessing many files. Skip some of the more custom, exciting features
+# of my config in those cases.
+_hostname=$(hostname)
+_simplecfg=false
+if [[ "$_hostname" =~ ^DOCKER_.*$ ]] || [ "$_hostname" = "virtme-ng" ]; then
+	_simplecfg=true
+fi
 
 # fzf: fzf is a wonderful tool for quickly finding filenames and command
 #      history, and probably more too. Configure it when available.
@@ -67,11 +77,13 @@ bind -m vi-command -x '"\C-x\C-r": __fzf_cwd_history__'
 bind -m vi-insert -x '"\C-x\C-r": __fzf_cwd_history__'
 
 # Source command-not-found tools if available
-[ -r /etc/profile.d/cnf.sh ] && . /etc/profile.d/cnf.sh
+if [ "$_simplecfg" = "false" ]; then
+    [ -r /etc/profile.d/cnf.sh ] && . /etc/profile.d/cnf.sh
+fi
 
 # Bash history with sqlite
 HISTDB=$HOME/.bash_db_hist.sqlite
-source ~/bin/bash-history-sqlite.sh
+[ "$_simplecfg" = "false" ] && source ~/bin/bash-history-sqlite.sh
 
 # cdt = enter temporary directory
 source ~/bin/bash-cdt.sh
@@ -89,31 +101,33 @@ __cond_source ~/.bashrc.ext
 # For each element, set a _PS1_FOR_FOO, and then we combine them at the end.
 
 # GIT
-__cond_source "/usr/share/git/completion/git-completion.sh" \
-              "/usr/share/bash-completion/completions/git"
-__cond_source "/usr/share/git/completion/git-prompt.sh" \
-              "/usr/share/git-core/contrib/completion/git-prompt.sh"
-_PS1_FOR_GIT='$(__git_ps1 " (%s)")'
-
-# l (my linux build helper script)
-_PS1_FOR_LHELP=''
-function __lhelper_ps1 {
-    if [ ! -z "$LHELP_ENV" ]; then
-        echo " [$LHELP_ENV]"
-    fi
-}
-if hash l >/dev/null 2>&1; then
-	_PS1_FOR_LHELP="\$(__lhelper_ps1)"
-fi
-
-# virtualenv: since the PS1 is multiple lines, we need to do it manually
-VIRTUAL_ENV_DISABLE_PROMPT=1
-function __virtualenv_ps1 {
-	if [[ -n "$VIRTUAL_ENV" ]]; then
-		echo "(${VIRTUAL_ENV##*/}) "
+if [ "$_simplecfg" = "false" ]; then
+	__cond_source "/usr/share/git/completion/git-completion.sh" \
+	              "/usr/share/bash-completion/completions/git"
+	__cond_source "/usr/share/git/completion/git-prompt.sh" \
+	              "/usr/share/git-core/contrib/completion/git-prompt.sh"
+	_PS1_FOR_GIT='$(__git_ps1 " (%s)")'
+	
+	# l (my linux build helper script)
+	_PS1_FOR_LHELP=''
+	function __lhelper_ps1 {
+	    if [ ! -z "$LHELP_ENV" ]; then
+	        echo " [$LHELP_ENV]"
+	    fi
+	}
+	if hash l >/dev/null 2>&1; then
+		_PS1_FOR_LHELP="\$(__lhelper_ps1)"
 	fi
-}
-_PS1_FOR_VENV="\$(__virtualenv_ps1)"
+	
+	# virtualenv: since the PS1 is multiple lines, we need to do it manually
+	VIRTUAL_ENV_DISABLE_PROMPT=1
+	function __virtualenv_ps1 {
+		if [[ -n "$VIRTUAL_ENV" ]]; then
+			echo "(${VIRTUAL_ENV##*/}) "
+		fi
+	}
+	_PS1_FOR_VENV="\$(__virtualenv_ps1)"
+fi
 
 # Color variables for readability
 FG_RED="\[\033[0;31m\]"
