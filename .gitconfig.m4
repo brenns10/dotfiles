@@ -11,7 +11,7 @@
 	diffFilter = delta --color-only
 [delta]
 	navigate = true
-	light = true
+	light = m4_ifelse(X_THEME_X,light,true,false)
 [alias]
 	st = status
 	ci = commit
