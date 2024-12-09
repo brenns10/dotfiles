@@ -1,5 +1,5 @@
 #!/bin/bash
-match="$(rg -n -g "Kconfig*" "^config $1$" | fzf -1 -0)"
+match="$(rg -n -g "Kconfig*" "^(menu)?config $1$" | fzf -1 -0)"
 if [ -z "$match" ]; then
     echo no match
 else
