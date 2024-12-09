@@ -237,6 +237,8 @@ show all messages."
   (put 'magit-log-select-mode 'magit-log-default-arguments
        '("-n256" "--decorate")))
 
+(setq fancy-splash-image (concat doom-user-dir "doom-emacs-dark.svg"))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Work overrides
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
