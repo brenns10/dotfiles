@@ -53,7 +53,7 @@ LINKS=(
 	.config/systemd/user/mbsync.timer
 	.config/tmux/tmuxcolors-dark.conf
 	.config/tmux/tmuxcolors-light.conf
-	.config/xdg-desktop-portal/kde-portals.conf
+	.config/xdg-desktop-portal/portals.conf
 	.doom.d/config.el
 	.doom.d/custom.el
 	.doom.d/init.el
@@ -62,8 +62,10 @@ LINKS=(
 	.doom.d/packages.el
 	.gitconfig.ext
 	.lc.json
+	.local/share/dark-mode.d/backlight.sh
 	.local/share/dark-mode.d/custom.sh
 	.local/share/dark-mode.d/kde-all.sh
+	.local/share/light-mode.d/backlight.sh
 	.local/share/light-mode.d/custom.sh
 	.local/share/light-mode.d/kde-all.sh
 	.profile
