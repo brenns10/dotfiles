@@ -1,3 +1,4 @@
+[general]
 import = [
     "~/.config/alacritty/solarized-X_THEME_X.toml"
 ]
