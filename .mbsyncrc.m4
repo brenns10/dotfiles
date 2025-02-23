@@ -1,6 +1,6 @@
 # https://bloerg.net/2013/10/09/syncing-mails-with-mbsync-instead-of-offlineimap.html
 IMAPAccount stephen
-Host imappro.zoho.com
+Host imap.zoho.com
 User stephen@brennan.io
 PassCmd "~/bin/imap-pass -g stephen@brennan.io"
 SSLType IMAPS
