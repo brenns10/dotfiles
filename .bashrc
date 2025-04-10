@@ -1,4 +1,5 @@
-# ~/.bashrc - loaded for interactive bash sessions
+# ~/.bashrc - for interactive shells
+#echo sourcing ~/.bashrc
 
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
@@ -17,8 +18,6 @@ function cde() { mkdir -p "$1" && cd "$1"; }
 function tmuxenv() {
   eval "$(tmux show-env -s)"
 }
-
-export LESS=-R
 
 # Try to source one of potentially many scripts
 __cond_source() {
@@ -43,43 +42,43 @@ fi
 
 # fzf: fzf is a wonderful tool for quickly finding filenames and command
 #      history, and probably more too. Configure it when available.
-export FZF_DEFAULT_OPTS='--bind ctrl-k:kill-line'
-__cond_source "/usr/share/fzf/completion.bash" \
-              "/etc/bash_completion.d/fzf" \
-              "$GOPATH/src/github.com/junegunn/fzf/shell/completion.bash"
-__cond_source "/usr/share/fzf/key-bindings.bash" \
-              "/usr/share/fzf/shell/key-bindings.bash" \
-              "$GOPATH/src/github.com/junegunn/fzf/shell/key-bindings.bash"
-# This is my own implementation of the fzf history command. Rather than relying
-# on the builtin bash history, let's use the sqlite3 history database.
-__fzf_history_query__() {
-  local output
-  output=$(
-    python3 ~/bin/dbhist.py "$1" |
-      FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS +m --read0" $(__fzfcmd) --query "$READLINE_LINE"
-  ) || return
-  READLINE_LINE=${output}
-  if [ -z "$READLINE_POINT" ]; then
-    echo "$READLINE_LINE"
-  else
-    READLINE_POINT=0x7fffffff
-  fi
-}
-__fzf_history__() {
-    __fzf_history_query__ 'select command from command order by command_id desc'
-}
-__fzf_cwd_history__() {
-    __fzf_history_query__ "select command from command where cwd = "\""$PWD"\"" order by command_id desc"
-}
-# C-x C-r - Like CTRL-R but with just commands from the current directory
-bind -m emacs-standard -x '"\C-x\C-r": __fzf_cwd_history__'
-bind -m vi-command -x '"\C-x\C-r": __fzf_cwd_history__'
-bind -m vi-insert -x '"\C-x\C-r": __fzf_cwd_history__'
+if [[ "$_simplecfg" = "false" ]] && hash fzf 2>/dev/null; then
+    export FZF_DEFAULT_OPTS='--bind ctrl-k:kill-line'
+    __cond_source "/usr/share/fzf/completion.bash" \
+                  "/etc/bash_completion.d/fzf" \
+                  "$GOPATH/src/github.com/junegunn/fzf/shell/completion.bash"
+    __cond_source "/usr/share/fzf/key-bindings.bash" \
+                  "/usr/share/fzf/shell/key-bindings.bash" \
+                  "$GOPATH/src/github.com/junegunn/fzf/shell/key-bindings.bash"
+    # This is my own implementation of the fzf history command. Rather than relying
+    # on the builtin bash history, let's use the sqlite3 history database.
+    __fzf_history_query__() {
+      local output
+      output=$(
+        python3 ~/bin/dbhist.py "$1" |
+          FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS +m --read0" $(__fzfcmd) --query "$READLINE_LINE"
+      ) || return
+      READLINE_LINE=${output}
+      if [ -z "$READLINE_POINT" ]; then
+        echo "$READLINE_LINE"
+      else
+        READLINE_POINT=0x7fffffff
+      fi
+    }
+    __fzf_history__() {
+        __fzf_history_query__ 'select command from command order by command_id desc'
+    }
+    __fzf_cwd_history__() {
+        __fzf_history_query__ "select command from command where cwd = "\""$PWD"\"" order by command_id desc"
+    }
+    # C-x C-r - Like CTRL-R but with just commands from the current directory
+    bind -m emacs-standard -x '"\C-x\C-r": __fzf_cwd_history__'
+    bind -m vi-command -x '"\C-x\C-r": __fzf_cwd_history__'
+    bind -m vi-insert -x '"\C-x\C-r": __fzf_cwd_history__'
+fi
 
 # Source command-not-found tools if available
-if [ "$_simplecfg" = "false" ]; then
-    [ -r /etc/profile.d/cnf.sh ] && . /etc/profile.d/cnf.sh
-fi
+__cond_source /etc/profile.d/cnf.sh
 
 # Bash history with sqlite
 HISTDB=$HOME/.bash_db_hist.sqlite
@@ -157,7 +156,7 @@ else
     host="$FG_YELLOW"
 fi
 dir="$FG_GREEN"
-export PS1="\n$FG_GREEN$_PS1_FOR_VENV$RESET$user\\u$RESET at $host\\h$RESET in $dir\\w$RESET$_PS1_FOR_LHELP$_PS1_FOR_GIT\n\$ "
+PS1="\n$FG_GREEN$_PS1_FOR_VENV$RESET$user\\u$RESET at $host\\h$RESET in $dir\\w$RESET$_PS1_FOR_LHELP$_PS1_FOR_GIT\n\$ "
 #
 # END: PS1 Configuration
 #####

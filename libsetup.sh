@@ -47,9 +47,9 @@ LINKS=(
 	.config/alot/themes/solarized-light
 	.config/autostart/ssh-add.desktop
 	.config/darkman/config.yaml
+	.config/environment.d
 	.config/notmuchqueries.json
 	.config/nvim/init.vim
-	.config/plasma-workspace/env/askpass.sh
 	.config/ptpython/config.py
 	.config/systemd/user/mbsync.service
 	.config/systemd/user/mbsync.timer
@@ -75,7 +75,6 @@ LINKS=(
 	.ssh/config
 	.vim
 	.vimrc
-	.xprofile
 ) # END LINKS
 
 M4_ONLY=(

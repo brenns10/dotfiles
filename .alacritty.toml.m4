@@ -14,6 +14,10 @@ size = 11.0
 TERM = "alacritty"
 COLORTERM = "true"
 
+[terminal.shell]
+program = "/bin/bash"
+args = ["--login"]
+
 [font.normal]
 family = "Source Code Pro"
 
