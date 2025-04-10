@@ -37,7 +37,7 @@ __cond_source() {
 # of my config in those cases.
 _hostname=$(hostname)
 _simplecfg=false
-if [[ "$_hostname" =~ ^DOCKER_.*$ ]] || [ "$_hostname" = "virtme-ng" ]; then
+if [[ "$_hostname" =~ ^(DOCKER_|masa-).*$ ]] || [ "$_hostname" = "virtme-ng" ]; then
 	_simplecfg=true
 fi
 
