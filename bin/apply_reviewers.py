@@ -82,7 +82,7 @@ def get_reviewers(
         line = line.strip()
         match = re.fullmatch(r"(.*?) \((.*)\)", line)
         assert match
-        if "maintainer" in match.group(2):
+        if "maintainer" in match.group(2) or "supporter" in match.group(2):
             to_addrs.add(match.group(1))
             print(f"MAINTAINER: {match.group(1)}")
         else:
