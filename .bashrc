@@ -18,6 +18,15 @@ function cde() { mkdir -p "$1" && cd "$1"; }
 function tmuxenv() {
   eval "$(tmux show-env -s)"
 }
+function diff-func() {
+  if [ "$#" -eq 0 ]; then
+     echo "usage: diff-func FILENAME FUNCNAME REV1 REV2"
+     return 1
+  fi
+  diff -u <(git show "$3:$1" | extract-fn "$2") \
+          <(git show "$4:$1" | extract-fn "$2") \
+          --label "$3" --label "$4"
+}
 
 # Try to source one of potentially many scripts
 __cond_source() {
