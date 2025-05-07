@@ -50,6 +50,7 @@ LINKS=(
 	.config/notmuchqueries.json
 	.config/nvim/init.vim
 	.config/plasma-workspace/env/askpass.sh
+	.config/ptpython/config.py
 	.config/systemd/user/mbsync.service
 	.config/systemd/user/mbsync.timer
 	.config/tmux/tmuxcolors-dark.conf
