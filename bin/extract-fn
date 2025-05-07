@@ -1,0 +1,51 @@
+#!/usr/bin/env -S uv run -q --script
+# /// script
+# dependencies = [
+#   "tree-sitter>=0.24.0",
+#   "tree-sitter-c<0.23.5",
+# ]
+# ///
+"""
+Uses the tree-sitter parser to extract function definitions and output them to
+stdout.
+"""
+import argparse
+import sys
+
+import tree_sitter_c
+from tree_sitter import Language
+from tree_sitter import Parser
+
+
+def main():
+    parser = argparse.ArgumentParser(description="extract C function def")
+    parser.add_argument("function_name", help="function to find")
+    parser.add_argument(
+        "input",
+        help="C file to read",
+        type=argparse.FileType('rb'),
+        default=sys.stdin.buffer,
+        nargs="?",
+    )
+    args = parser.parse_args()
+
+    C_LANGUAGE = Language(tree_sitter_c.language())
+    parser = Parser(C_LANGUAGE)
+    tree = parser.parse(args.input.read(), encoding="utf-8")
+    query = C_LANGUAGE.query(
+        f'(function_definition (function_declarator (identifier) @name (#eq? @name "{args.function_name}"))) @function'
+    )
+    matches = query.matches(tree.root_node)
+    if len(matches) > 1:
+        sys.exit("error: multiple definitions; ifdefs not yet supported")
+    func_node = matches[0][1]["function"][0]
+    print(func_node.text.decode("utf-8"))
+
+
+if __name__ == "__main__":
+    main()
+
+# Local variables:
+# mode: python
+# End:
+# vi: ft=python

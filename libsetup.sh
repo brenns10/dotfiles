@@ -20,6 +20,7 @@ LINKS=(
 	bin/diffconfig
 	bin/dotfiles-add
 	bin/extract-vmlinux
+	bin/extract-fn
 	bin/git-qref
 	bin/git-when-merged
 	bin/ifdef-helper.py
