@@ -38,3 +38,6 @@ for ID in $SESSIONIDS; do
     qdbus org.kde.yakuake /Sessions/$ID setProfile "$PROFILE"
     qdbus org.kde.yakuake /Windows/$ID setDefaultProfile "$PROFILE"
 done
+
+sed -i "s/^DefaultProfile=.*$/DefaultProfile=$PROFILE.profile/" ~/.config/yakuakerc
+sed -i "s/^DefaultProfile=.*$/DefaultProfile=$PROFILE.profile/" ~/.config/konsolerc
