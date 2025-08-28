@@ -65,7 +65,7 @@ if [[ "$_simplecfg" = "false" ]] && hash fzf 2>/dev/null; then
       local output
       output=$(
         python3 ~/bin/dbhist.py "$1" |
-          FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS +m --read0" $(__fzfcmd) --query "$READLINE_LINE"
+          FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS +m --read0 --with-nth 2.. --preview 'histcontext --color --preview {1}'" $(__fzfcmd) --query "$READLINE_LINE" | cut -d $'\t' -f2-
       ) || return
       READLINE_LINE=${output}
       if [ -z "$READLINE_POINT" ]; then
@@ -75,10 +75,10 @@ if [[ "$_simplecfg" = "false" ]] && hash fzf 2>/dev/null; then
       fi
     }
     __fzf_history__() {
-        __fzf_history_query__ 'select command from command order by command_id desc'
+        __fzf_history_query__ 'select command_id, command from command order by command_id desc'
     }
     __fzf_cwd_history__() {
-        __fzf_history_query__ "select command from command where cwd = "\""$PWD"\"" order by command_id desc"
+        __fzf_history_query__ "select command_id, command from command where cwd = "\""$PWD"\"" order by command_id desc"
     }
     # C-x C-r - Like CTRL-R but with just commands from the current directory
     bind -m emacs-standard -x '"\C-x\C-r": __fzf_cwd_history__'

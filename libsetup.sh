@@ -23,6 +23,7 @@ LINKS=(
 	bin/extract-fn
 	bin/git-qref
 	bin/git-when-merged
+	bin/histcontext
 	bin/ifdef-helper.py
 	bin/ifdef-report
 	bin/imap-pass

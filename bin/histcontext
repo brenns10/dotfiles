@@ -1,0 +1,133 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Print shell history context of a command
+"""
+import argparse
+import datetime
+import itertools
+import os
+import sqlite3
+import sys
+from typing import NamedTuple
+
+
+COLOR = os.isatty(sys.stdout.fileno())
+
+
+class Command(NamedTuple):
+
+    command_id: int
+    shell: str
+    command: str
+    cwd: str
+    retval: int | None  # return is a keyword
+    started: int
+    ended: int
+    shellsession: str
+    loginsession: str
+
+
+def bold(s: str) -> str:
+    """Return s, but bolded (if color is enabled)"""
+    if COLOR:
+        return "\033[1m" + s + "\033[0m"
+    else:
+        return s
+
+
+def dim(s: str) -> str:
+    """Return s, but dim (if color is enabled)"""
+    if COLOR:
+        return "\033[2m" + s + "\033[0m"
+    else:
+        return s
+
+
+def red(s: str) -> str:
+    if COLOR:
+        return "\033[31m" + s + "\033[39m"
+    else:
+        return s
+
+
+def print_commands(commands: list[Command], highlight_id: int | None = None) -> None:
+    cwd = None
+    date = None
+    for c in commands:
+        dt = datetime.datetime.fromtimestamp(c.started / 1000)
+        if dt.date() != date:
+            date = dt.date()
+            ago = (datetime.date.today() - date).days
+            print(f"** DATE: {date:%a %b %d %Y} ({ago} days ago)")
+        if c.cwd != cwd:
+            cwd = c.cwd
+            print(f"** CWD: {cwd}")
+        if c.retval is None:
+            ret = '  ?'
+        elif c.retval != 0:
+            ret = red(f"{c.retval:3d}")
+        else:
+            ret = f"{c.retval:3d}"
+
+        print(dim(f"[{dt:%H:%M:%S}|{ret}] "), end="")
+        if c.command_id == highlight_id:
+            print(bold(c.command))
+        else:
+            print(c.command)
+
+
+def preview(conn: sqlite3.Connection, cid: int) -> None:
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT *
+        FROM command
+        WHERE command_id = ?;
+    """, (cid,))
+    command = Command(*cursor.fetchone())
+
+    cursor.execute("""
+        SELECT * FROM command
+        WHERE shellsession=? AND command_id < ?
+        ORDER BY command_id DESC LIMIT 10;
+    """, (command.shellsession, cid))
+    prior = list(itertools.starmap(Command, cursor.fetchall()))
+    cursor.execute("""
+        SELECT * FROM command
+        WHERE shellsession=? AND command_id > ?
+        ORDER BY command_id ASC LIMIT 10;
+    """, (command.shellsession, cid))
+    later = list(itertools.starmap(Command, cursor.fetchall()))
+
+    commands = list(reversed(prior)) + [command] + later
+    print_commands(commands, highlight_id=cid)
+    cursor.close()
+
+
+def main(args: argparse.Namespace) -> None:
+    histdb = os.path.expanduser(args.histdb)
+    conn = sqlite3.connect(f"file:{histdb}?mode=ro", uri=True)
+    if args.preview:
+        preview(conn, args.preview)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='show bash history context')
+    parser.add_argument(
+        '--histdb', type=str, default='~/.bash_db_hist.sqlite',
+        help='location of sqlite3 history database',
+    )
+    parser.add_argument(
+        '--color', action='store_true', help='use color',
+    )
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
+        '--preview',
+        type=int,
+        default=None,
+        help='print a preview for fzf'
+    )
+    args = parser.parse_args()
+    if args.color:
+        color = True
+    main(args)
