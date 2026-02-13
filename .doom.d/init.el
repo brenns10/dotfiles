@@ -111,6 +111,7 @@
        ;;tty               ; improve the terminal Emacs experience
 
        :lang
+       (beancount +lsp)
        ;;agda              ; types of types of types of types...
        (cc +lsp +tree-sitter)                ; C/C++/Obj-C madness
        ;;clojure           ; java with a lisp
