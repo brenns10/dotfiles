@@ -112,7 +112,7 @@ set shm=I
 " mouse scrolling in tmux
 set mouse=a
 " true colors: detect via "*-direct" $TERM, or COLORTERM=true/truecolor/24bit
-if $TERM =~ '.*-direct$' || $COLORTERM =~ '^true(-color)?$|^24bit$'
+if $TERM =~ '.*-direct$' || $COLORTERM =~ '^true(-?color)?$|^24bit$'
   set termguicolors
 endif
 " UNCOMMMENT tabstop
