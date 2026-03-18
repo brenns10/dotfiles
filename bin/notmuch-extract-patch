@@ -1,0 +1,110 @@
+#!/usr/bin/env python3
+#
+# Extract git patchset from notmuch emails
+#
+# Copyright (C) 2017 Aurelien Aptel <aurelien.aptel@gmail.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+import mailbox
+import sys
+import tempfile
+import subprocess
+import argparse
+import re
+
+def get_body(message):
+    body = None
+    if message.is_multipart():
+        for part in message.walk():
+            if part.is_multipart():
+                for subpart in part.walk():
+                    if subpart.get_content_type() == 'text/plain':
+                        body = subpart.get_payload(decode=True)
+            elif part.get_content_type() == 'text/plain':
+                body = part.get_payload(decode=True)
+    elif message.get_content_type() == 'text/plain':
+        body = message.get_payload(decode=True)
+
+    if isinstance(body, bytes):
+        body = body.decode('utf-8')
+    return body
+
+
+def is_git_patch(msg):
+    # we want to skip cover letters, hence why we look for @@
+    body = get_body(msg)
+    match = re.search(r'''\n@@ [0-9 +,-]+ @@''', body)
+    # return ("git-send-email" in msg['x-mailer'] and match)
+    return match
+
+
+def email_has_patch_count(e):
+    return re.search(r'''\[\s*PATCH\s+(\d+)(?:/\d+)?''', e['subject'])
+
+def email_sort_key(e):
+    return int(email_has_patch_count(e).group(1))
+
+def main():
+    ap = argparse.ArgumentParser(description=
+    """
+    Extract git patch emails from a notmuch query.
+    Prints on stdout a mbox file that 'git am' can handle.
+    Prints on stderr a list of patch subject so you can check what is extracted.
+    If there are multiple patches and they all have numbers, the script will sort them.
+    Example: notmuch-extract-patch thread:0001 thread:0002
+    """)
+    ap.add_argument("--no-sort", action="store_false", dest="sort", default=True,
+                    help="do not sort by patch number from the subject")
+    ap.add_argument("notmuchquery", nargs="+",
+                    help="all query arguments are passed to notmuch")
+    args = ap.parse_args()
+
+    n = 0
+    patches = []
+
+    with tempfile.NamedTemporaryFile() as in_mb_file:
+        out = subprocess.check_output(['notmuch', 'show', '--format=mbox']+args.notmuchquery)
+        in_mb_file.write(out)
+        in_mb_file.flush()
+
+        in_mb = mailbox.mbox(in_mb_file.name)
+
+        for m in in_mb:
+            n += 1
+            if is_git_patch(m):
+                patches.append(m)
+
+    if n == 0:
+        print("no emails returned by the query", file=sys.stderr)
+        exit(1)
+    if len(patches) == 0:
+        print("no patches found in the %d emails returned by the query"%n, file=sys.stderr)
+        exit(1)
+
+    if len(patches) > 1:
+        if args.sort and all([email_has_patch_count(x) for x in patches]):
+            list.sort(patches, key=email_sort_key)
+
+    with tempfile.NamedTemporaryFile() as out_mb_file:
+        out_mb = mailbox.mbox(out_mb_file.name)
+        for p in patches:
+            print(p['subject'], file=sys.stderr)
+            out_mb.add(p)
+        out_mb.flush()
+        print(open(out_mb_file.name).read())
+
+if __name__ == '__main__':
+    main()
+
