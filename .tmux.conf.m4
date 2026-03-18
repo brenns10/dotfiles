@@ -9,12 +9,13 @@ bind C-j send-prefix
 # Can't detect COLORTERM here
 set -g default-terminal "tmux-256color"
 set -as terminal-features ',*-direct:RGB'
+set -as terminal-features ',konsole*:RGB'
 
 # Environment variables to update at each connect:
 # https://www.babushk.in/posts/renew-environment-tmux.html
 # And see the .bashrc for tmux-refresh-env command.
 set -g update-environment "SSH_AUTH_SOCK SSH_CONNECTION \
-                           DISPLAY XDG_SESSION_ID"
+                           DISPLAY XDG_SESSION_ID COLORTERM"
 
 # Tmux scroll copy mode!
 set-option -g mouse on
@@ -60,5 +61,6 @@ bind C-n next-window
 ## CLIPBOARD INTEGRATION
 set -s set-clipboard external
 set -as terminal-features ',alacritty*:clipboard'
+set -as terminal-features ',konsole*:clipboard'
 
 source-file ~/.config/tmux/tmuxcolors-X_THEME_X.conf
