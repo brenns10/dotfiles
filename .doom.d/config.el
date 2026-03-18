@@ -69,6 +69,14 @@
  c-ts-mode-indent-offset 8
  c-ts-mode-indent-style 'linux)
 
+;; Tell evil-mode to treat an underscore as a word character, so motions behave
+;; like the vim counterpart.
+(add-hook!
+  '(c-mode-common-hook c-ts-mode-hook)
+  (modify-syntax-entry ?_ "w"))
+
+(defalias 'forward-evil-word 'forward-evil-symbol)
+
 ;; Language server configuration
 (setq
   lsp-clangd-binary-path "/usr/bin/clangd"
