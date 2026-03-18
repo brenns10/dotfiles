@@ -81,9 +81,12 @@ if [[ "$_simplecfg" = "false" ]] && hash fzf 2>/dev/null; then
         __fzf_history_query__ "select command_id, command from command where cwd = "\""$PWD"\"" order by command_id desc"
     }
     # C-x C-r - Like CTRL-R but with just commands from the current directory
-    bind -m emacs-standard -x '"\C-x\C-r": __fzf_cwd_history__'
-    bind -m vi-command -x '"\C-x\C-r": __fzf_cwd_history__'
-    bind -m vi-insert -x '"\C-x\C-r": __fzf_cwd_history__'
+    if [[ $- = *i* ]]
+    then
+        bind -m emacs-standard -x '"\C-x\C-r": __fzf_cwd_history__'
+        bind -m vi-command -x '"\C-x\C-r": __fzf_cwd_history__'
+        bind -m vi-insert -x '"\C-x\C-r": __fzf_cwd_history__'
+    fi
 fi
 
 # Source command-not-found tools if available
