@@ -31,6 +31,7 @@ LINKS=(
 	bin/monitor-internet
 	bin/myrpmbuild
 	bin/newmirrors
+	bin/notmuch-extract-patch
 	bin/paste
 	bin/post-email-hook
 	bin/ssh-list-async
