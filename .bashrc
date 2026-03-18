@@ -43,9 +43,8 @@ __cond_source() {
 # filesystem. Frequently they are read-only and there is some extra penalty
 # for accessing many files. Skip some of the more custom, exciting features
 # of my config in those cases.
-_hostname=$(hostname)
 _simplecfg=false
-if [[ "$_hostname" =~ ^(DOCKER_|masa-).*$ ]] || [ "$_hostname" = "virtme-ng" ]; then
+if [[ "$HOSTNAME" =~ ^(DOCKER_|podman-|masa-).*$ ]] || [ "$HOSTNAME" = "virtme-ng" ]; then
 	_simplecfg=true
 fi
 
