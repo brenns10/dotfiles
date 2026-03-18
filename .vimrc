@@ -118,9 +118,12 @@ endif
 " UNCOMMMENT tabstop
 "set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
+" Copy & paste to system keyboard
+set clipboard=unnamedplus
+
 " Copy to cliboard! Classy & Useful AF
 " https://sunaku.github.io/tmux-yank-osc52.html
-noremap <silent> <Leader>y y:call system('yank', @0)<Return>
+"noremap <silent> <Leader>y y:call system('yank', @0)<Return>
 
 " MAIL OPTIONS
 " Generally speaking, I would like my emails to be wrapped at 75 characters
