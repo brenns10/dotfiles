@@ -12,6 +12,13 @@
 [delta]
 	navigate = true
 	light = m4_ifelse(X_THEME_X,light,true,false)
+	# With diff.colorMoved=default, git uses bold purple for "moved from"
+	# and bold cyan for "moved to". So we use an orangey color (khaki) for
+	# the source, as it's reddish like deletion, and a blueish color
+	# (lavender) as it's cooler, like insertion green.
+	map-styles = \
+	   bold purple => syntax "khaki", \
+	   bold cyan => syntax "lavender"
 [alias]
 	st = status
 	ci = commit
