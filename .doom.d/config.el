@@ -54,15 +54,15 @@
  )
 
 ;; The C programming language. Linux kernel style, mostly.
-(after! smart-tabs-mode
-  (smart-tabs-insinuate 'c))
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (whitespace-mode)
-            (setq indent-tabs-mode t)
-            (setq tab-width 8)
-            (setq c-basic-offset 8)))
+;; https://www.reddit.com/r/emacs/comments/13xneiq/smarttabsmode_in_ctsmode/
+(smart-tabs-add-language-support c c-ts-mode-hook
+  ((treesit-indent . c-ts-mode-indent-offset)
+   (treesit-indent-region . c-ts-mode-indent-offset)))
+(smart-tabs-insinuate 'c)
 
+(setq
+ c-ts-mode-indent-offset 8
+ c-ts-mode-indent-style 'linux)
 
 ;; Language server configuration
 (setq
