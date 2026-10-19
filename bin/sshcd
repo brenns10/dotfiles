@@ -1,0 +1,20 @@
+#!/usr/bin/env python3
+"""
+Execute ssh and CD into a directory.
+"""
+import os
+import shlex
+import sys
+
+if len(sys.argv) < 2:
+    sys.exit("usage: sshcd [ARGS...] HOST:DIR")
+ssh_args = sys.argv[1:-1]
+orig_host = sys.argv[-1]
+if orig_host.startswith("-"):
+    sys.exit(f"error: host {orig_host!r} looks like an option, exiting")
+if ":" not in orig_host:
+    sys.exit(f"error: host {orig_host!r} has no directory specified, just use ssh")
+host, workdir = orig_host.split(":", 1)
+ssh_args.append("-t")
+command = f"cd {shlex.quote(workdir)} && exec $SHELL -l"
+os.execvp("ssh", ["ssh"] + ssh_args + [host, command])

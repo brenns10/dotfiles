@@ -34,6 +34,7 @@ LINKS=(
 	bin/notmuch-extract-patch
 	bin/paste
 	bin/post-email-hook
+	bin/sshcd
 	bin/ssh-list-async
 	bin/synchronize_namedqueries.py
 	bin/syncmail
