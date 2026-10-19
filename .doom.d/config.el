@@ -241,6 +241,46 @@ show all messages."
     (goto-char (point-min))))
 (define-key 'notmuch-show-part-map "d" 'my-notmuch-show-view-as-patch)
 
+(defun my-notmuch-show-view-with-delta ()
+  "View the current message part with delta in a regular Emacs buffer."
+  (interactive)
+  (require 'ansi-color)
+  (let* ((id (notmuch-show-get-message-id))
+         (msg (notmuch-show-get-message-properties))
+         (part (notmuch-show-get-part-properties))
+         (body (notmuch-get-bodypart-text msg part nil))
+         (buf (get-buffer-create (concat "*notmuch-delta-" id "*")))
+         (proc-name (concat "notmuch-delta-" id)))
+    (with-current-buffer buf
+      (let ((inhibit-read-only t))
+        (erase-buffer)
+        (fundamental-mode)))
+    (switch-to-buffer buf)
+    (condition-case err
+        (let ((proc (make-process
+                     :name proc-name
+                     :buffer buf
+                     :noquery t
+                     :connection-type 'pipe
+                     :command '("delta" "--true-color=always" "--paging=never")
+                     :sentinel (lambda (p _event)
+                                 (when (memq (process-status p) '(exit signal))
+                                   (let ((status (process-exit-status p)))
+                                     (if (and (eq (process-status p) 'exit)
+                                              (= status 0)
+                                              (buffer-live-p (process-buffer p)))
+                                         (with-current-buffer (process-buffer p)
+                                           (let ((inhibit-read-only t))
+                                             (ansi-color-apply-on-region (point-min) (point-max))
+                                             (goto-char (point-min))
+                                             (set-buffer-modified-p nil)))
+                                       (message "delta exited with status %d" status))))))))
+          (process-send-string proc body)
+          (process-send-eof proc))
+      (file-missing
+       (message "delta command not found: %s" (error-message-string err))))))
+(define-key 'notmuch-show-part-map "D" 'my-notmuch-show-view-with-delta)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Miscellaneous
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
