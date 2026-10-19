@@ -171,3 +171,6 @@ PS1="\n$FG_GREEN$_PS1_FOR_VENV$RESET$user\\u$RESET at $host\\h$RESET in $dir\\w$
 #
 # END: PS1 Configuration
 #####
+
+# Don't record duplicates in bash history, or commands starting with space.
+export HISTCONTROL=ignoreboth
