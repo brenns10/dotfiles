@@ -8,7 +8,16 @@
  '(ignored-local-variable-values
    '((eval add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\build\\'")
      (eval add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\testdata\\'")))
- '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'"))
+ '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
+ '(safe-local-variable-values
+   '((eval progn
+      (make-local-variable 'lsp-file-watch-ignored-directories)
+      (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\testdata\\'")
+      (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\buildrpm\\'")
+      (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\dist\\'")
+      (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\build\\'"))
+     (eval add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\dist\\'")
+     (eval add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\buildrpm\\'"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
