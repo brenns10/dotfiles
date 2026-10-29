@@ -60,6 +60,11 @@
    (treesit-indent-region . c-ts-mode-indent-offset)))
 (smart-tabs-insinuate 'c)
 
+(add-hook!
+ '(c-ts-mode-hook)
+ '#(setq tab-width 8)
+ )
+
 (setq
  c-ts-mode-indent-offset 8
  c-ts-mode-indent-style 'linux)
